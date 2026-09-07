@@ -1,0 +1,15 @@
+YEARS = [2021, 2022, 2023, 2024, 2025, 2026] / TRACKS = ['nakayama', 'hanshin']
+[2021 nakayama] 42 日
+[2021 hanshin] 53 日
+[2022 nakayama] 42 日
+[2022 hanshin] 54 日
+[2023 nakayama] 42 日
+[2023 hanshin] 46 日
+[2024 nakayama] 41 日
+[2024 hanshin] 16 日
+[2025 nakayama] 42 日
+[2025 hanshin] 39 日
+[2026 nakayama] 27 日
+[2026 hanshin] 26 日
+==================================================
+合計 470 日 / 326.5 MB
