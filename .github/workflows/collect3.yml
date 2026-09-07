@@ -1,0 +1,169 @@
+name: JRA成績PDF収集 v3
+
+on:
+  workflow_dispatch:
+    inputs:
+      years:
+        description: "対象年（例: 2021-2026）"
+        default: "2021-2026"
+      tracks:
+        description: "競馬場（カンマ区切り）"
+        default: "nakayama,hanshin"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: jra-collect-v3
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 依存パッケージ
+        run: pip install --quiet requests
+
+      - name: 収集スクリプトを書き出す
+        run: |
+          cat > collect3.py <<'PYEOF'
+          import csv, os, re, time, traceback
+          from pathlib import Path
+
+          import requests
+
+          BASE = "https://www.jra.go.jp"
+          PDF = BASE + "/datafile/seiseki/report/{y}/{y}-{k}{t}{n}.pdf"
+
+          root = Path("data")
+          pdfdir = Path("pdfwork")
+          pdfdir.mkdir(parents=True, exist_ok=True)
+          root.mkdir(parents=True, exist_ok=True)
+          LOG = []
+
+          def log(*a):
+              line = " ".join(str(x) for x in a)
+              LOG.append(line)
+              print(line, flush=True)
+
+          def parse_years(spec):
+              spec = (spec or "").strip() or "2021-2026"
+              if "-" in spec:
+                  a, b = spec.split("-", 1)
+                  return list(range(int(a), int(b) + 1))
+              return [int(x) for x in spec.split(",") if x.strip()]
+
+          s = requests.Session()
+          s.headers.update({
+              "User-Agent": ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                             "AppleWebKit/537.36 (KHTML, like Gecko) "
+                             "Chrome/126.0 Safari/537.36"),
+              "Accept": "text/html,application/xhtml+xml,application/pdf,*/*",
+              "Accept-Language": "ja,en;q=0.8",
+          })
+
+          def fetch(url, retries=1):
+              for i in range(retries + 1):
+                  try:
+                      r = s.get(url, timeout=90)
+                      if r.status_code == 200:
+                          return r
+                      if r.status_code in (403, 404):
+                          return None      # 存在しない開催日
+                  except Exception as e:
+                      log("    EXC", repr(e))
+                  time.sleep(2 * (i + 1))
+              return None
+
+          YEARS = parse_years(os.environ.get("YEARS"))
+          TRACKS = [t.strip().lower() for t in
+                    (os.environ.get("TRACKS") or "nakayama,hanshin").split(",") if t.strip()]
+          log("YEARS =", YEARS, "/ TRACKS =", TRACKS)
+
+          rows = []
+          try:
+              for y in YEARS:
+                  for t in TRACKS:
+                      total = 0
+                      for k in range(1, 8):
+                          hits = 0
+                          misses = 0
+                          for n in range(1, 16):
+                              name = "%d-%d%s%d.pdf" % (y, k, t, n)
+                              dst = pdfdir / str(y) / t / name
+                              if not dst.exists():
+                                  r = fetch(PDF.format(y=y, k=k, t=t, n=n))
+                                  if r is None:
+                                      misses += 1
+                                      if misses >= 2:
+                                          break
+                                      continue
+                                  dst.parent.mkdir(parents=True, exist_ok=True)
+                                  dst.write_bytes(r.content)
+                                  time.sleep(0.4)
+                              misses = 0
+                              hits += 1
+                              total += 1
+                              rows.append({"file": name, "year": y, "kai": k, "track": t,
+                                           "nichi": n, "bytes": dst.stat().st_size})
+                          if hits == 0:
+                              break
+                      log("[%d %s] %d 日" % (y, t, total))
+          except Exception:
+              log("FATAL\n" + traceback.format_exc())
+          finally:
+              rows.sort(key=lambda d: (d["year"], d["track"], d["kai"], d["nichi"]))
+              with (root / "pdf_index.csv").open("w", newline="", encoding="utf-8") as f:
+                  w = csv.DictWriter(f, fieldnames=["file", "year", "kai", "track", "nichi", "bytes"])
+                  w.writeheader()
+                  w.writerows(rows)
+              log("=" * 50)
+              log("合計 %d 日 / %.1f MB"
+                  % (len(rows), sum(r["bytes"] for r in rows) / 1048576.0))
+              (root / "pdf_log.txt").write_text("\n".join(LOG) + "\n", encoding="utf-8")
+          PYEOF
+          python -c "import ast; ast.parse(open('collect3.py',encoding='utf-8').read()); print('script syntax OK')"
+
+      - name: 実行
+        env:
+          YEARS: ${{ inputs.years || '2021-2026' }}
+          TRACKS: ${{ inputs.tracks || 'nakayama,hanshin' }}
+        run: python collect3.py
+
+      - name: 年・場ごとにアーカイブ化
+        if: always()
+        run: |
+          mkdir -p data/pdf
+          rm -f data/pdf/*.tar
+          cd pdfwork || exit 0
+          for y in */; do
+            y=${y%/}
+            for t in "$y"/*/; do
+              t=$(basename "$t")
+              tar cf "../data/pdf/${y}-${t}.tar" -C "$y" "$t"
+            done
+          done
+          cd ..
+          ls -lh data/pdf/ | head -30
+          du -sh data/pdf
+
+      - name: コミット
+        if: always()
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          echo "pdfwork/" >> .gitignore
+          git add -A data .gitignore
+          if git diff --cached --quiet; then
+            echo "変更なし"
+          else
+            git commit -m "JRA成績PDF v3 $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            git push
+          fi
