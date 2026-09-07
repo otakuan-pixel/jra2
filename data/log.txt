@@ -1,0 +1,365 @@
+YEARS = [2021, 2022, 2023, 2024, 2025, 2026] / TRACKS = ['nakayama', 'hanshin']
+[診断] datafile/seiseki/ -> OK len=63024
+[診断] index 2026 -> len=144410, .pdfリンク=300件
+[診断]   例: ['2026/2026-4nakayama2.pdf', '2026/20260906-hyo-nakayama.pdf', '2026/2026-4hanshin2.pdf']
+[診断] index 2025 -> len=147227, .pdfリンク=288件
+[診断]   例: ['/datafile/seiseki/report/2025/2025-1sapporo1.pdf', '/datafile/seiseki/report/2025/2025-1sapporo2.pdf', '/datafile/seiseki/report/2025/2025-1sapporo3.pdf']
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-1nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-1nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-1nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-1nakayama10.pdf
+  2021 nakayama 1回 -> 8日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-2nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-2nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-2nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-2nakayama10.pdf
+  2021 nakayama 2回 -> 8日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-3nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-3nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-3nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-3nakayama10.pdf
+  2021 nakayama 3回 -> 8日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-4nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-4nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-4nakayama11.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-4nakayama11.pdf
+  2021 nakayama 4回 -> 9日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-5nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-5nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-5nakayama11.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-5nakayama11.pdf
+  2021 nakayama 5回 -> 9日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-6nakayama1.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-6nakayama1.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-6nakayama2.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-6nakayama2.pdf
+  2021 nakayama 6回 -> 0日
+[2021 nakayama] 合計 42 日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-1hanshin13.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-1hanshin13.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-1hanshin14.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-1hanshin14.pdf
+  2021 hanshin 1回 -> 12日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-2hanshin13.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-2hanshin13.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-2hanshin14.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-2hanshin14.pdf
+  2021 hanshin 2回 -> 12日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-3hanshin5.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-3hanshin5.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-3hanshin6.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-3hanshin6.pdf
+  2021 hanshin 3回 -> 4日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-4hanshin9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-4hanshin9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-4hanshin10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-4hanshin10.pdf
+  2021 hanshin 4回 -> 8日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-5hanshin9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-5hanshin9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-5hanshin10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-5hanshin10.pdf
+  2021 hanshin 5回 -> 8日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-6hanshin10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-6hanshin10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-6hanshin11.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-6hanshin11.pdf
+  2021 hanshin 6回 -> 9日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-7hanshin1.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-7hanshin1.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-7hanshin2.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2021/2021-7hanshin2.pdf
+  2021 hanshin 7回 -> 0日
+[2021 hanshin] 合計 53 日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-1nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-1nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-1nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-1nakayama10.pdf
+  2022 nakayama 1回 -> 8日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-2nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-2nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-2nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-2nakayama10.pdf
+  2022 nakayama 2回 -> 8日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-3nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-3nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-3nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-3nakayama10.pdf
+  2022 nakayama 3回 -> 8日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-4nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-4nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-4nakayama11.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-4nakayama11.pdf
+  2022 nakayama 4回 -> 9日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-5nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-5nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-5nakayama11.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-5nakayama11.pdf
+  2022 nakayama 5回 -> 9日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-6nakayama1.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-6nakayama1.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-6nakayama2.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-6nakayama2.pdf
+  2022 nakayama 6回 -> 0日
+[2022 nakayama] 合計 42 日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-1hanshin13.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-1hanshin13.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-1hanshin14.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-1hanshin14.pdf
+  2022 hanshin 1回 -> 12日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-2hanshin13.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-2hanshin13.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-2hanshin14.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-2hanshin14.pdf
+  2022 hanshin 2回 -> 12日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-3hanshin5.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-3hanshin5.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-3hanshin6.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-3hanshin6.pdf
+  2022 hanshin 3回 -> 4日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-4hanshin10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-4hanshin10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-4hanshin11.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-4hanshin11.pdf
+  2022 hanshin 4回 -> 9日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-5hanshin9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-5hanshin9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-5hanshin10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-5hanshin10.pdf
+  2022 hanshin 5回 -> 8日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-6hanshin10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-6hanshin10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-6hanshin11.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-6hanshin11.pdf
+  2022 hanshin 6回 -> 9日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-7hanshin1.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-7hanshin1.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-7hanshin2.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2022/2022-7hanshin2.pdf
+  2022 hanshin 7回 -> 0日
+[2022 hanshin] 合計 54 日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-1nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-1nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-1nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-1nakayama10.pdf
+  2023 nakayama 1回 -> 8日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-2nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-2nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-2nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-2nakayama10.pdf
+  2023 nakayama 2回 -> 8日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-3nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-3nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-3nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-3nakayama10.pdf
+  2023 nakayama 3回 -> 8日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-4nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-4nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-4nakayama11.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-4nakayama11.pdf
+  2023 nakayama 4回 -> 9日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-5nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-5nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-5nakayama11.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-5nakayama11.pdf
+  2023 nakayama 5回 -> 9日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-6nakayama1.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-6nakayama1.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-6nakayama2.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-6nakayama2.pdf
+  2023 nakayama 6回 -> 0日
+[2023 nakayama] 合計 42 日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-1hanshin13.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-1hanshin13.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-1hanshin14.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-1hanshin14.pdf
+  2023 hanshin 1回 -> 12日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-2hanshin9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-2hanshin9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-2hanshin10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-2hanshin10.pdf
+  2023 hanshin 2回 -> 8日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-3hanshin9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-3hanshin9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-3hanshin10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-3hanshin10.pdf
+  2023 hanshin 3回 -> 8日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-4hanshin10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-4hanshin10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-4hanshin11.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-4hanshin11.pdf
+  2023 hanshin 4回 -> 9日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-5hanshin10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-5hanshin10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-5hanshin11.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-5hanshin11.pdf
+  2023 hanshin 5回 -> 9日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-6hanshin1.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-6hanshin1.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-6hanshin2.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2023/2023-6hanshin2.pdf
+  2023 hanshin 6回 -> 0日
+[2023 hanshin] 合計 46 日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-1nakayama8.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-1nakayama8.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-1nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-1nakayama9.pdf
+  2024 nakayama 1回 -> 7日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-2nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-2nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-2nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-2nakayama10.pdf
+  2024 nakayama 2回 -> 8日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-3nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-3nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-3nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-3nakayama10.pdf
+  2024 nakayama 3回 -> 8日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-4nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-4nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-4nakayama11.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-4nakayama11.pdf
+  2024 nakayama 4回 -> 9日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-5nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-5nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-5nakayama11.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-5nakayama11.pdf
+  2024 nakayama 5回 -> 9日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-6nakayama1.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-6nakayama1.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-6nakayama2.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-6nakayama2.pdf
+  2024 nakayama 6回 -> 0日
+[2024 nakayama] 合計 41 日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-1hanshin9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-1hanshin9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-1hanshin10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-1hanshin10.pdf
+  2024 hanshin 1回 -> 8日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-2hanshin9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-2hanshin9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-2hanshin10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-2hanshin10.pdf
+  2024 hanshin 2回 -> 8日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-3hanshin1.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-3hanshin1.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-3hanshin2.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2024/2024-3hanshin2.pdf
+  2024 hanshin 3回 -> 0日
+[2024 hanshin] 合計 16 日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-1nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-1nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-1nakayama11.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-1nakayama11.pdf
+  2025 nakayama 1回 -> 9日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-2nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-2nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-2nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-2nakayama10.pdf
+  2025 nakayama 2回 -> 8日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-3nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-3nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-3nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-3nakayama10.pdf
+  2025 nakayama 3回 -> 8日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-4nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-4nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-4nakayama11.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-4nakayama11.pdf
+  2025 nakayama 4回 -> 9日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-5nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-5nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-5nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-5nakayama10.pdf
+  2025 nakayama 5回 -> 8日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-6nakayama1.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-6nakayama1.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-6nakayama2.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-6nakayama2.pdf
+  2025 nakayama 6回 -> 0日
+[2025 nakayama] 合計 42 日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-1hanshin9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-1hanshin9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-1hanshin10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-1hanshin10.pdf
+  2025 hanshin 1回 -> 8日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-2hanshin9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-2hanshin9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-2hanshin10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-2hanshin10.pdf
+  2025 hanshin 2回 -> 8日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-3hanshin7.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-3hanshin7.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-3hanshin8.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-3hanshin8.pdf
+  2025 hanshin 3回 -> 6日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-4hanshin10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-4hanshin10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-4hanshin11.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-4hanshin11.pdf
+  2025 hanshin 4回 -> 9日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-5hanshin9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-5hanshin9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-5hanshin10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-5hanshin10.pdf
+  2025 hanshin 5回 -> 8日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-6hanshin1.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-6hanshin1.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-6hanshin2.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2025/2025-6hanshin2.pdf
+  2025 hanshin 6回 -> 0日
+[2025 hanshin] 合計 39 日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-1nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-1nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-1nakayama11.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-1nakayama11.pdf
+  2026 nakayama 1回 -> 9日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-2nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-2nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-2nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-2nakayama10.pdf
+  2026 nakayama 2回 -> 8日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-3nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-3nakayama9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-3nakayama10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-3nakayama10.pdf
+  2026 nakayama 3回 -> 8日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-4nakayama3.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-4nakayama3.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-4nakayama4.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-4nakayama4.pdf
+  2026 nakayama 4回 -> 2日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-5nakayama1.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-5nakayama1.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-5nakayama2.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-5nakayama2.pdf
+  2026 nakayama 5回 -> 0日
+[2026 nakayama] 合計 27 日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-1hanshin11.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-1hanshin11.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-1hanshin12.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-1hanshin12.pdf
+  2026 hanshin 1回 -> 10日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-2hanshin9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-2hanshin9.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-2hanshin10.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-2hanshin10.pdf
+  2026 hanshin 2回 -> 8日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-3hanshin7.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-3hanshin7.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-3hanshin8.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-3hanshin8.pdf
+  2026 hanshin 3回 -> 6日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-4hanshin3.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-4hanshin3.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-4hanshin4.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-4hanshin4.pdf
+  2026 hanshin 4回 -> 2日
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-5hanshin1.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-5hanshin1.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-5hanshin2.pdf
+    HTTP 403 https://www.jra.go.jp/datafile/seiseki/report/2026/2026-5hanshin2.pdf
+  2026 hanshin 5回 -> 0日
+[2026 hanshin] 合計 26 日
+==================================================
+対象 470 日 / テキスト化済み 470 / 新規 470 / 失敗 0
