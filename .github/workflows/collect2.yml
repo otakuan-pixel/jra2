@@ -1,0 +1,218 @@
+name: JRA成績データ収集 v2
+
+on:
+  workflow_dispatch:
+    inputs:
+      years:
+        description: "対象年（例: 2021-2026）"
+        default: "2021-2026"
+      tracks:
+        description: "競馬場（カンマ区切り）"
+        default: "nakayama,hanshin"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: jra-collect-v2
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 依存パッケージ
+        run: pip install --quiet requests pdfplumber
+
+      - name: 収集スクリプトを書き出す
+        run: |
+          cat > collect2.py <<'PYEOF'
+          import csv, os, re, sys, time, traceback
+          from pathlib import Path
+
+          import requests
+          import pdfplumber
+
+          BASE = "https://www.jra.go.jp"
+          IDX = BASE + "/datafile/seiseki/report/{y}.html"
+          PDF = BASE + "/datafile/seiseki/report/{y}/{y}-{k}{t}{n}.pdf"
+
+          root = Path("data")
+          (root / "text").mkdir(parents=True, exist_ok=True)
+          (root / "debug").mkdir(parents=True, exist_ok=True)
+          LOG = []
+
+          def log(*a):
+              line = " ".join(str(x) for x in a)
+              LOG.append(line)
+              print(line, flush=True)
+
+          def flush_log():
+              (root / "log.txt").write_text("\n".join(LOG) + "\n", encoding="utf-8")
+
+          def parse_years(spec):
+              spec = (spec or "").strip() or "2021-2026"
+              if "-" in spec:
+                  a, b = spec.split("-", 1)
+                  return list(range(int(a), int(b) + 1))
+              return [int(x) for x in spec.split(",") if x.strip()]
+
+          s = requests.Session()
+          s.headers.update({
+              "User-Agent": ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                             "AppleWebKit/537.36 (KHTML, like Gecko) "
+                             "Chrome/126.0 Safari/537.36"),
+              "Accept": "text/html,application/xhtml+xml,application/pdf,*/*",
+              "Accept-Language": "ja,en;q=0.8",
+          })
+
+          def fetch(url, retries=2):
+              """200ならResponse、404ならNone。それ以外は再試行してから None。"""
+              for i in range(retries + 1):
+                  try:
+                      r = s.get(url, timeout=90)
+                      if r.status_code == 200:
+                          return r
+                      if r.status_code == 404:
+                          return None
+                      log("    HTTP", r.status_code, url)
+                  except Exception as e:
+                      log("    EXC", repr(e), url)
+                  time.sleep(2 * (i + 1))
+              return None
+
+          YEARS = parse_years(os.environ.get("YEARS"))
+          TRACKS = [t.strip().lower() for t in
+                    (os.environ.get("TRACKS") or "nakayama,hanshin").split(",") if t.strip()]
+          log("YEARS =", YEARS, "/ TRACKS =", TRACKS)
+
+          # ---- 診断: 接続確認とインデックスページの実体 -------------------
+          probe = fetch(BASE + "/datafile/seiseki/")
+          log("[診断] datafile/seiseki/ ->", "OK len=%d" % len(probe.content) if probe else "取得不可")
+
+          y0 = YEARS[-1] if YEARS else 2025
+          for dy in (y0, y0 - 1):
+              r = fetch(IDX.format(y=dy))
+              if r is None:
+                  log("[診断] index %d -> 取得不可" % dy)
+                  continue
+              r.encoding = r.apparent_encoding or "utf-8"
+              html = r.text
+              pdfs = re.findall(r'href="([^"]+?\.pdf)"', html, flags=re.I)
+              log("[診断] index %d -> len=%d, .pdfリンク=%d件" % (dy, len(html), len(pdfs)))
+              if pdfs:
+                  log("[診断]   例:", pdfs[:3])
+              (root / "debug" / ("index-%d.html" % dy)).write_text(html[:20000], encoding="utf-8")
+
+          # ---- 本処理: URLパターン総当たり（インデックス非依存）-------------
+          rows, new, failed = [], 0, 0
+
+          def extract(pdf_bytes, txt_path, tag):
+              tmp = Path("/tmp/work.pdf")
+              tmp.write_bytes(pdf_bytes)
+              try:
+                  parts = []
+                  with pdfplumber.open(str(tmp)) as pdf:
+                      for i, p in enumerate(pdf.pages, 1):
+                          parts.append("===== PAGE %d =====" % i)
+                          parts.append(p.extract_text(x_tolerance=1.2, y_tolerance=2.0) or "")
+                  txt_path.parent.mkdir(parents=True, exist_ok=True)
+                  txt_path.write_text("\n".join(parts), encoding="utf-8")
+                  return True
+              except Exception as e:
+                  log("    PARSE NG", tag, repr(e))
+                  return False
+              finally:
+                  try:
+                      tmp.unlink()
+                  except OSError:
+                      pass
+
+          try:
+              for y in YEARS:
+                  for t in TRACKS:
+                      found_year = 0
+                      for k in range(1, 8):           # 開催回
+                          hits_this_kai = 0
+                          misses = 0
+                          for n in range(1, 16):      # 日目
+                              name = "%d-%d%s%d.pdf" % (y, k, t, n)
+                              txt = root / "text" / str(y) / (name[:-4] + ".txt")
+                              url = PDF.format(y=y, k=k, t=t, n=n)
+
+                              if txt.exists():
+                                  ok = True
+                              else:
+                                  r = fetch(url, retries=1)
+                                  if r is None:
+                                      misses += 1
+                                      if misses >= 2:
+                                          break
+                                      continue
+                                  ok = extract(r.content, txt, name)
+                                  if ok:
+                                      new += 1
+                                  else:
+                                      failed += 1
+                                  time.sleep(0.5)
+
+                              misses = 0
+                              hits_this_kai += 1
+                              found_year += 1
+                              rows.append({"file": name, "year": y, "kai": k, "track": t,
+                                           "nichi": n, "url": url, "path": str(txt),
+                                           "ok": int(txt.exists()),
+                                           "bytes": txt.stat().st_size if txt.exists() else 0})
+                          log("  %d %s %d回 -> %d日" % (y, t, k, hits_this_kai))
+                          if hits_this_kai == 0:
+                              break
+                      log("[%d %s] 合計 %d 日" % (y, t, found_year))
+          except Exception:
+              log("FATAL\n" + traceback.format_exc())
+          finally:
+              with (root / "index.csv").open("w", newline="", encoding="utf-8") as f:
+                  w = csv.DictWriter(f, fieldnames=["file", "year", "kai", "track",
+                                                    "nichi", "url", "path", "ok", "bytes"])
+                  w.writeheader()
+                  w.writerows(rows)
+              log("=" * 50)
+              log("対象 %d 日 / テキスト化済み %d / 新規 %d / 失敗 %d"
+                  % (len(rows), sum(r["ok"] for r in rows), new, failed))
+              flush_log()
+          PYEOF
+          python -c "import ast; ast.parse(open('collect2.py',encoding='utf-8').read()); print('script syntax OK')"
+
+      - name: 実行
+        env:
+          YEARS: ${{ inputs.years || '2021-2026' }}
+          TRACKS: ${{ inputs.tracks || 'nakayama,hanshin' }}
+        run: python collect2.py
+
+      - name: バンドル化
+        if: always()
+        run: |
+          mkdir -p data/text
+          tar czf /tmp/bundle.tar.gz -C data text index.csv log.txt debug 2>/dev/null || \
+          tar czf /tmp/bundle.tar.gz -C data text
+          mv /tmp/bundle.tar.gz data/bundle.tar.gz
+          ls -lh data/bundle.tar.gz
+
+      - name: コミット
+        if: always()
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A data
+          if git diff --cached --quiet; then
+            echo "変更なし"
+          else
+            git commit -m "JRA成績データ収集 v2 $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            git push
+          fi
