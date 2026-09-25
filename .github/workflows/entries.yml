@@ -1,0 +1,182 @@
+name: 出馬表と前走の取得
+
+on:
+  workflow_dispatch:
+    inputs:
+      dates:
+        description: "対象日 YYYYMMDD（カンマ区切り。空欄なら次の土日）"
+        default: ""
+      tracks:
+        description: "競馬場コード（06中山 09阪神 05東京 08京都 07中京 など。カンマ区切り）"
+        default: "06,09"
+  schedule:
+    - cron: "0 9 * * 5"    # 毎週金曜 18:00 JST（土日の出馬表）
+    - cron: "0 22 * * 5"   # 毎週土曜 07:00 JST（取り直し）
+
+permissions:
+  contents: write
+
+concurrency:
+  group: jra-entries
+  cancel-in-progress: false
+
+jobs:
+  entries:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 依存パッケージ
+        run: pip install --quiet requests
+
+      - name: 取得スクリプトを書き出す
+        run: |
+          cat > entries.py <<'PYEOF'
+          import csv, os, re, time, datetime as dt, traceback
+          from pathlib import Path
+          import requests
+
+          URL = "https://www.jra.go.jp/JRADB/accessD.html"
+          ROOT = Path("data/entries")
+          ROOT.mkdir(parents=True, exist_ok=True)
+          LOG = []
+
+          def log(*a):
+              line = " ".join(str(x) for x in a)
+              LOG.append(line)
+              print(line, flush=True)
+
+          s = requests.Session()
+          s.headers.update({
+              "User-Agent": ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                             "AppleWebKit/537.36 (KHTML, like Gecko) "
+                             "Chrome/126.0 Safari/537.36"),
+              "Accept-Language": "ja,en;q=0.8",
+          })
+
+          def fetch(cname):
+              for i in range(3):
+                  try:
+                      r = s.post(URL, data={"cname": cname}, timeout=60)
+                      if r.status_code == 200:
+                          time.sleep(1.0)
+                          return r.content
+                      log("    HTTP", r.status_code, cname)
+                  except Exception as e:
+                      log("    EXC", repr(e), cname)
+                  time.sleep(3 * (i + 1))
+              return None
+
+          def decode(b):
+              m = re.search(rb'charset=["\']?([\w-]+)', b[:3000], re.I)
+              for enc in ([m.group(1).decode()] if m else []) + ["cp932", "utf-8", "euc_jp"]:
+                  try:
+                      return b.decode(enc)
+                  except Exception:
+                      pass
+              return b.decode("cp932", "replace")
+
+          TOK = re.compile(r"pw01d[a-z]{2}[0-9A-Za-z]*/[0-9A-F]{2}")
+          DDE = re.compile(r"pw01dde\d{2}(\d{2})(\d{4})(\d{2})(\d{2})(\d{2})(\d{8})/[0-9A-F]{2}")
+
+          def tokens(html):
+              return sorted(set(TOK.findall(html)))
+
+          # 対象日：指定がなければ次の土日（JST）
+          jst = dt.datetime.utcnow() + dt.timedelta(hours=9)
+          spec = (os.environ.get("DATES") or "").strip()
+          if spec:
+              DATES = [d.strip() for d in spec.split(",") if d.strip()]
+          else:
+              d0 = jst.date()
+              while d0.weekday() not in (5, 6):
+                  d0 += dt.timedelta(days=1)
+              DATES = [d0.strftime("%Y%m%d")]
+              if d0.weekday() == 5:
+                  DATES.append((d0 + dt.timedelta(days=1)).strftime("%Y%m%d"))
+          TRACKS = [t.strip() for t in (os.environ.get("TRACKS") or "06,09").split(",") if t.strip()]
+          log("DATES =", DATES, "/ TRACKS =", TRACKS, "/ JST now =", jst.strftime("%Y-%m-%d %H:%M"))
+
+          races, rows = {}, []
+          try:
+              top = fetch("pw01dli00/F3")
+              if top is None:
+                  raise SystemExit("出馬表トップを取得できませんでした")
+              html = decode(top)
+              (ROOT / "debug_top.html").write_text(html[:40000], encoding="utf-8")
+              queue = tokens(html)
+              log("[診断] トップのトークン", len(queue), "件 例:", queue[:5])
+
+              seen, fetched = set(queue), 0
+              while queue and fetched < 80:
+                  t = queue.pop(0)
+                  m = DDE.match(t)
+                  if m:
+                      if m.group(6) in DATES and m.group(1) in TRACKS:
+                          races[t] = m
+                      continue
+                  dates_in = re.findall(r"(20\d{6})", t)
+                  if dates_in and not any(d in DATES for d in dates_in):
+                      continue
+                  b = fetch(t)
+                  fetched += 1
+                  if b is None:
+                      continue
+                  for n in tokens(decode(b)):
+                      if n not in seen:
+                          seen.add(n)
+                          queue.append(n)
+              log("[診断] 一覧ページ取得", fetched, "件 / 対象レース", len(races), "件")
+
+              for t, m in sorted(races.items(), key=lambda kv: (kv[1].group(6), kv[1].group(1), kv[1].group(5))):
+                  jo, year, kai, nichi, r, ymd = m.groups()
+                  b = fetch(t)
+                  out = ROOT / ymd / ("%s_%s.html" % (jo, r))
+                  out.parent.mkdir(parents=True, exist_ok=True)
+                  ok = b is not None
+                  if ok:
+                      out.write_bytes(b)
+                  rows.append({"date": ymd, "jo": jo, "kai": kai, "nichi": nichi, "race": r,
+                               "cname": t, "path": str(out), "ok": int(ok),
+                               "bytes": len(b) if ok else 0})
+                  log("  %s 場%s %sR -> %s" % (ymd, jo, r, "%d bytes" % len(b) if ok else "NG"))
+          except SystemExit as e:
+              log("STOP", e)
+          except Exception:
+              log("FATAL\n" + traceback.format_exc())
+          finally:
+              with (ROOT / "index.csv").open("w", newline="", encoding="utf-8") as f:
+                  w = csv.DictWriter(f, fieldnames=["date", "jo", "kai", "nichi", "race",
+                                                    "cname", "path", "ok", "bytes"])
+                  w.writeheader()
+                  w.writerows(rows)
+              log("=" * 40)
+              log("保存 %d / %d レース" % (sum(r["ok"] for r in rows), len(rows)))
+              (ROOT / "log.txt").write_text("\n".join(LOG) + "\n", encoding="utf-8")
+          PYEOF
+          python -c "import ast; ast.parse(open('entries.py',encoding='utf-8').read()); print('script syntax OK')"
+
+      - name: 実行
+        env:
+          DATES: ${{ inputs.dates }}
+          TRACKS: ${{ inputs.tracks || '06,09' }}
+        run: python entries.py
+
+      - name: コミット
+        if: always()
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A data/entries
+          if git diff --cached --quiet; then
+            echo "変更なし"
+          else
+            git commit -m "出馬表の取得 $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            git pull --rebase
+            git push
+          fi
