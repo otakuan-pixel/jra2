@@ -4,14 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       dates:
-        description: "対象日 YYYYMMDD（カンマ区切り。空欄なら次の土日）"
+        description: "対象日 YYYYMMDD（カンマ区切り。空欄なら公開中の出馬表すべて）"
         default: ""
       tracks:
-        description: "競馬場コード（06中山 09阪神 05東京 08京都 07中京 など。カンマ区切り）"
-        default: "06,09"
+        description: "競馬場コード（カンマ区切り。空欄なら全場）"
+        default: ""
   schedule:
-    - cron: "0 9 * * 5"    # 毎週金曜 18:00 JST（土日の出馬表）
-    - cron: "0 22 * * 5"   # 毎週土曜 07:00 JST（取り直し）
+    - cron: "0 9 * * 5,6"  # 金・土 18:00 JST（金＝土日分、土＝日曜の前日オッズと祝日の月曜分）
 
 permissions:
   contents: write
@@ -23,7 +22,7 @@ concurrency:
 jobs:
   entries:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
 
@@ -46,10 +45,15 @@ jobs:
           ROOT.mkdir(parents=True, exist_ok=True)
           LOG = []
 
+          LOGF = open(ROOT / "log.txt", "w", encoding="utf-8")
+
           def log(*a):
+              # 1行ごとにファイルへ書く（途中で強制終了されても記録が残る）
               line = " ".join(str(x) for x in a)
               LOG.append(line)
               print(line, flush=True)
+              LOGF.write(line + "\n")
+              LOGF.flush()
 
           s = requests.Session()
           s.headers.update({
@@ -87,20 +91,19 @@ jobs:
           def tokens(html):
               return sorted(set(TOK.findall(html)))
 
-          # 対象日：指定がなければ次の土日（JST）
+          # 対象日・競馬場：指定がなければ、JRAが公開中の出馬表すべて（今日以降）
           jst = dt.datetime.utcnow() + dt.timedelta(hours=9)
+          TODAY = jst.strftime("%Y%m%d")
           spec = (os.environ.get("DATES") or "").strip()
-          if spec:
-              DATES = [d.strip() for d in spec.split(",") if d.strip()]
-          else:
-              d0 = jst.date()
-              while d0.weekday() not in (5, 6):
-                  d0 += dt.timedelta(days=1)
-              DATES = [d0.strftime("%Y%m%d")]
-              if d0.weekday() == 5:
-                  DATES.append((d0 + dt.timedelta(days=1)).strftime("%Y%m%d"))
-          TRACKS = [t.strip() for t in (os.environ.get("TRACKS") or "06,09").split(",") if t.strip()]
-          log("DATES =", DATES, "/ TRACKS =", TRACKS, "/ JST now =", jst.strftime("%Y-%m-%d %H:%M"))
+          DATES = [d.strip() for d in spec.split(",") if d.strip()]
+          TRACKS = [t.strip() for t in (os.environ.get("TRACKS") or "").split(",") if t.strip()]
+
+          def want_date(d):
+              return (d in DATES) if DATES else (d >= TODAY)
+
+          def want_track(j):
+              return (j in TRACKS) if TRACKS else True
+          log("DATES =", DATES or "公開中すべて", "/ TRACKS =", TRACKS or "全場", "/ JST now =", jst.strftime("%Y-%m-%d %H:%M"))
 
           races, rows = {}, []
           try:
@@ -113,27 +116,30 @@ jobs:
               log("[診断] トップのトークン", len(queue), "件 例:", queue[:5])
 
               seen, fetched = set(queue), 0
-              while queue and fetched < 80:
+              while queue and fetched < 60 and len(queue) < 2000:
                   t = queue.pop(0)
                   m = DDE.match(t)
                   if m:
-                      if m.group(6) in DATES and m.group(1) in TRACKS:
+                      if want_date(m.group(6)) and want_track(m.group(1)):
                           races[t] = m
                       continue
                   dates_in = re.findall(r"(20\d{6})", t)
-                  if dates_in and not any(d in DATES for d in dates_in):
+                  if dates_in and not any(want_date(d) for d in dates_in):
                       continue
                   b = fetch(t)
                   fetched += 1
                   if b is None:
                       continue
+                  log("  一覧", t, len(b), "bytes / 待ち", len(queue))
                   for n in tokens(decode(b)):
                       if n not in seen:
                           seen.add(n)
                           queue.append(n)
               log("[診断] 一覧ページ取得", fetched, "件 / 対象レース", len(races), "件")
 
-              for t, m in sorted(races.items(), key=lambda kv: (kv[1].group(6), kv[1].group(1), kv[1].group(5))):
+              if len(races) > 400:
+                  log("[注意] 対象レースが多すぎるため先頭400件に制限", len(races))
+              for t, m in sorted(races.items(), key=lambda kv: (kv[1].group(6), kv[1].group(1), kv[1].group(5)))[:400]:
                   jo, year, kai, nichi, r, ymd = m.groups()
                   b = fetch(t)
                   out = ROOT / ymd / ("%s_%s.html" % (jo, r))
@@ -150,6 +156,12 @@ jobs:
           except Exception:
               log("FATAL\n" + traceback.format_exc())
           finally:
+              # 3週間より前の保存分は削除（リポジトリの肥大化防止）
+              import shutil
+              limit = (jst - dt.timedelta(days=21)).strftime("%Y%m%d")
+              for p in ROOT.iterdir():
+                  if p.is_dir() and re.fullmatch(r"\d{8}", p.name) and p.name < limit:
+                      shutil.rmtree(p)
               with (ROOT / "index.csv").open("w", newline="", encoding="utf-8") as f:
                   w = csv.DictWriter(f, fieldnames=["date", "jo", "kai", "nichi", "race",
                                                     "cname", "path", "ok", "bytes"])
@@ -157,15 +169,15 @@ jobs:
                   w.writerows(rows)
               log("=" * 40)
               log("保存 %d / %d レース" % (sum(r["ok"] for r in rows), len(rows)))
-              (ROOT / "log.txt").write_text("\n".join(LOG) + "\n", encoding="utf-8")
+              LOGF.close()
           PYEOF
           python -c "import ast; ast.parse(open('entries.py',encoding='utf-8').read()); print('script syntax OK')"
 
       - name: 実行
         env:
           DATES: ${{ inputs.dates }}
-          TRACKS: ${{ inputs.tracks || '06,09' }}
-        run: python entries.py
+          TRACKS: ${{ inputs.tracks }}
+        run: timeout 1500 python -u entries.py
 
       - name: コミット
         if: always()
