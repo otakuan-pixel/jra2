@@ -1009,10 +1009,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="cell time">
         発走時刻：<strong>12時25分</strong>
       </div>
-    <div class="cell baba">
-        <ul>
-          <li class="weather"><span class="inner"><span class="cap">天候</span><span class="txt">曇</span></span></li><li class="turf"><span class="inner"><span class="cap">芝</span><span class="txt">良</span></span></li></ul>
-      </div>
     </div>
 </div>
 <div class="race_title">
@@ -1070,6 +1066,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 
+  <ul>
+    <li class="result"><a class="btn-def btn-sm blue btn-block" href="/JRADB/accessS.html?CNAME=pw01sde0105202604010520261003/D3"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i>レース結果</a></li>
+    <li class="odds"><a href="#" class="btn-def btn-sm blue btn-block" onclick="return doAction('/JRADB/accessO.html', 'pw151ouS305202604010520261003Z/BA');"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i>オッズ</a></li>
+  </ul>
+
   <div class="print_btn">
     <a href="#" class="btn-def btn-sm btn-block" onclick="click_send('/accessD.pdf'); return doPrint('/JRADB/accessD.pdf', 'pw01dpr0105202604010520261003/E1');"><i class="fa fa-print" aria-hidden="true"></i>印刷用ページ</a>
   </div>
@@ -1094,7 +1095,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <tr>
 <th scope="col" class="waku">枠</th>
 <th scope="col" class="num">馬番</th>
-<th scope="col" class="horse">馬名 / 単勝オッズ(人気)<br />戦績 / 総賞金 / 馬体重<br />馬主名 / 生産者名 / 調教師名 / 血統</th>
+<th scope="col" class="horse">馬名 / 単勝オッズ(人気)<br />馬体重<br />馬主名 / 生産者名 / 調教師名 / 血統</th>
 <th scope="col" class="jockey">性齢/毛色<br />負担重量<br />騎手名
 </th>
 <th scope="col" class="past p1">前走</th>
@@ -1109,9 +1110,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <td class="num">1</td>
 <td class="horse">
 <div class="name_line">
-<div class="name"><span class="horse_icon"><img src="/JRADB/img/kigo/maru-gai.png" alt="マルガイ"></span><a href="/JRADB/accessU.html?CNAME=pw01dud002024108375/A8">センチュリースカイ</a></div></div>
+<div class="name"><span class="horse_icon"><img src="/JRADB/img/kigo/maru-gai.png" alt="マルガイ"></span><a href="/JRADB/accessU.html?CNAME=pw01dud002024108375/A8">センチュリースカイ</a></div><div class="odds"><div class="odds_line"><span class="num"><strong>24.2</strong></span><span class="pop_rank">(5<span>番人気</span>)</span></div></div></div>
 <div class="result_line">
-<div class="cell result">(0.0.0.0)</div></div><p class="owner">中水 英紀</p><p class="breeder">Three Times A Charm & Chesapeake Farm</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001194/AE');">小栗 実</a><span class="division">(栗東)</span></p>
+<div class="cell weight">532kg<span class="transition">(初出走)</span></div></div><p class="owner">中水 英紀</p><p class="breeder">Three Times A Charm & Chesapeake Farm</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001194/AE');">小栗 実</a><span class="division">(栗東)</span></p>
 <ul class="family_line">
 <li class="sire"><span>父：</span>Golden Pal</li>
 <li class="mare"><span>母：</span>Nefferkitty<span class="bloodmare">(母の父：Kitten's Joy)</span></li>
@@ -1128,9 +1129,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <td class="num">2</td>
 <td class="horse">
 <div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024105288/13">ロードディグニティ</a></div></div>
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024105288/13">ロードディグニティ</a></div><div class="odds"><div class="odds_line"><span class="num"><strong class="red">5.4</strong></span><span class="pop_rank">(3<span>番人気</span>)</span></div></div></div>
 <div class="result_line">
-<div class="cell result">(0.0.0.0)</div></div><p class="owner">(株)ロードホースクラブ</p><p class="breeder">ケイアイファーム</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001055/44');">藤原 英昭</a><span class="division">(栗東)</span></p>
+<div class="cell weight">504kg<span class="transition">(初出走)</span></div></div><p class="owner">(株)ロードホースクラブ</p><p class="breeder">ケイアイファーム</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001055/44');">藤原 英昭</a><span class="division">(栗東)</span></p>
 <ul class="family_line">
 <li class="sire"><span>父：</span>キズナ</li>
 <li class="mare"><span>母：</span>シグナライズ<span class="bloodmare">(母の父：Frankel)</span></li>
@@ -1147,9 +1148,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <td class="num">3</td>
 <td class="horse">
 <div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024106694/0A">ヴァルカモニカ</a></div></div>
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024106694/0A">ヴァルカモニカ</a></div><div class="odds"><div class="odds_line"><span class="num"><strong class="red">1.5</strong></span><span class="pop_rank">(1<span>番人気</span>)</span></div></div></div>
 <div class="result_line">
-<div class="cell result">(0.0.0.0)</div></div><p class="owner">(有)サンデーレーシング</p><p class="breeder">ノーザンファーム</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001175/64');">宮田 敬介</a><span class="division">(美浦)</span></p>
+<div class="cell weight">464kg<span class="transition">(初出走)</span></div></div><p class="owner">(有)サンデーレーシング</p><p class="breeder">ノーザンファーム</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001175/64');">宮田 敬介</a><span class="division">(美浦)</span></p>
 <ul class="family_line">
 <li class="sire"><span>父：</span>エピファネイア</li>
 <li class="mare"><span>母：</span>リナーテ<span class="bloodmare">(母の父：ステイゴールド)</span></li>
@@ -1166,9 +1167,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <td class="num">4</td>
 <td class="horse">
 <div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024102346/51">ビタークレス</a></div></div>
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024102346/51">ビタークレス</a></div><div class="odds"><div class="odds_line"><span class="num"><strong>149.4</strong></span><span class="pop_rank">(11<span>番人気</span>)</span></div></div></div>
 <div class="result_line">
-<div class="cell result">(0.0.0.0)</div></div><p class="owner">中村 祐子</p><p class="breeder">宮内牧場</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001213/14');">秋本 大介</a><span class="division">(美浦)</span></p>
+<div class="cell weight">508kg<span class="transition">(初出走)</span></div></div><p class="owner">中村 祐子</p><p class="breeder">宮内牧場</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001213/14');">秋本 大介</a><span class="division">(美浦)</span></p>
 <ul class="family_line">
 <li class="sire"><span>父：</span>ダノンプレミアム</li>
 <li class="mare"><span>母：</span>パノラマウェイ<span class="bloodmare">(母の父：ロードカナロア)</span></li>
@@ -1185,9 +1186,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <td class="num">5</td>
 <td class="horse">
 <div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024103844/4F">スキエンティア</a></div></div>
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024103844/4F">スキエンティア</a></div><div class="odds"><div class="odds_line"><span class="num"><strong>104.5</strong></span><span class="pop_rank">(8<span>番人気</span>)</span></div></div></div>
 <div class="result_line">
-<div class="cell result">(0.0.0.0)</div></div><p class="owner">落合 幸弘</p><p class="breeder">(有)村上欽哉牧場</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001094/64');">水野 貴広</a><span class="division">(美浦)</span></p>
+<div class="cell weight">462kg<span class="transition">(初出走)</span></div></div><p class="owner">落合 幸弘</p><p class="breeder">(有)村上欽哉牧場</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001094/64');">水野 貴広</a><span class="division">(美浦)</span></p>
 <ul class="family_line">
 <li class="sire"><span>父：</span>レイデオロ</li>
 <li class="mare"><span>母：</span>ソリティアズヴィジョン<span class="bloodmare">(母の父：Court Vision)</span></li>
@@ -1204,9 +1205,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <td class="num">6</td>
 <td class="horse">
 <div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024104463/27">テルケンレンコール</a></div></div>
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024104463/27">テルケンレンコール</a></div><div class="odds"><div class="odds_line"><span class="num"><strong>15.8</strong></span><span class="pop_rank">(4<span>番人気</span>)</span></div></div></div>
 <div class="result_line">
-<div class="cell result">(0.0.0.0)</div></div><p class="owner">桑田 照夫</p><p class="breeder">静内白井牧場</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001118/86');">高柳 瑞樹</a><span class="division">(美浦)</span></p>
+<div class="cell weight">448kg<span class="transition">(初出走)</span></div></div><p class="owner">桑田 照夫</p><p class="breeder">静内白井牧場</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001118/86');">高柳 瑞樹</a><span class="division">(美浦)</span></p>
 <ul class="family_line">
 <li class="sire"><span>父：</span>グレーターロンドン</li>
 <li class="mare"><span>母：</span>ピンクノミーナ<span class="bloodmare">(母の父：ダイワメジャー)</span></li>
@@ -1223,9 +1224,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <td class="num">7</td>
 <td class="horse">
 <div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024101318/18">アイアンマン</a></div></div>
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024101318/18">アイアンマン</a></div><div class="odds"><div class="odds_line"><span class="num"><strong>118.4</strong></span><span class="pop_rank">(10<span>番人気</span>)</span></div></div></div>
 <div class="result_line">
-<div class="cell result">(0.0.0.0)</div></div><p class="owner">野嶋 祥二</p><p class="breeder">川向高橋育成牧場</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001124/C1');">大和田 成</a><span class="division">(美浦)</span></p>
+<div class="cell weight">442kg<span class="transition">(初出走)</span></div></div><p class="owner">野嶋 祥二</p><p class="breeder">川向高橋育成牧場</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001124/C1');">大和田 成</a><span class="division">(美浦)</span></p>
 <ul class="family_line">
 <li class="sire"><span>父：</span>ゴールドドリーム</li>
 <li class="mare"><span>母：</span>ゴーハッピーゴー<span class="bloodmare">(母の父：オルフェーヴル)</span></li>
@@ -1242,9 +1243,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <td class="num">8</td>
 <td class="horse">
 <div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024106170/29">ヒシホライゾン</a></div></div>
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024106170/29">ヒシホライゾン</a></div><div class="odds"><div class="odds_line"><span class="num"><strong class="red">3.9</strong></span><span class="pop_rank">(2<span>番人気</span>)</span></div></div></div>
 <div class="result_line">
-<div class="cell result">(0.0.0.0)</div></div><p class="owner">Hishi Partners(同)</p><p class="breeder">ノーザンファーム</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001070/5E');">堀 宣行</a><span class="division">(美浦)</span></p>
+<div class="cell weight">484kg<span class="transition">(初出走)</span></div></div><p class="owner">Hishi Partners(同)</p><p class="breeder">ノーザンファーム</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001070/5E');">堀 宣行</a><span class="division">(美浦)</span></p>
 <ul class="family_line">
 <li class="sire"><span>父：</span>コントレイル</li>
 <li class="mare"><span>母：</span>イスパニダ<span class="bloodmare">(母の父：Pure Prize)</span></li>
@@ -1261,9 +1262,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <td class="num">9</td>
 <td class="horse">
 <div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024104331/E0">サラサシンシアズ</a></div></div>
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024104331/E0">サラサシンシアズ</a></div><div class="odds"><div class="odds_line"><span class="num"><strong>41.5</strong></span><span class="pop_rank">(6<span>番人気</span>)</span></div></div></div>
 <div class="result_line">
-<div class="cell result">(0.0.0.0)</div></div><p class="owner">横井 良明</p><p class="breeder">グランド牧場</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001079/4A');">古賀 慎明</a><span class="division">(美浦)</span></p>
+<div class="cell weight">454kg<span class="transition">(初出走)</span></div></div><p class="owner">横井 良明</p><p class="breeder">グランド牧場</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001079/4A');">古賀 慎明</a><span class="division">(美浦)</span></p>
 <ul class="family_line">
 <li class="sire"><span>父：</span>マインドユアビスケッツ</li>
 <li class="mare"><span>母：</span>シンシアズブレス<span class="bloodmare">(母の父：ダイワメジャー)</span></li>
@@ -1280,9 +1281,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <td class="num">10</td>
 <td class="horse">
 <div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024103615/30">ポルターガイスト</a></div></div>
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024103615/30">ポルターガイスト</a></div><div class="odds"><div class="odds_line"><span class="num"><strong>94.9</strong></span><span class="pop_rank">(7<span>番人気</span>)</span></div></div></div>
 <div class="result_line">
-<div class="cell result">(0.0.0.0)</div></div><p class="owner">(有)ビッグレッドファーム</p><p class="breeder">ビッグレッドファーム</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001093/D8');">松永 康利</a><span class="division">(美浦)</span></p>
+<div class="cell weight">482kg<span class="transition">(初出走)</span></div></div><p class="owner">(有)ビッグレッドファーム</p><p class="breeder">ビッグレッドファーム</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001093/D8');">松永 康利</a><span class="division">(美浦)</span></p>
 <ul class="family_line">
 <li class="sire"><span>父：</span>ベンバトル</li>
 <li class="mare"><span>母：</span>パラノーマル<span class="bloodmare">(母の父：ステイゴールド)</span></li>
@@ -1299,9 +1300,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <td class="num">11</td>
 <td class="horse">
 <div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024102104/C9">セイウンウェルス</a></div></div>
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024102104/C9">セイウンウェルス</a></div><div class="odds"><div class="odds_line"><span class="num"><strong>108.9</strong></span><span class="pop_rank">(9<span>番人気</span>)</span></div></div></div>
 <div class="result_line">
-<div class="cell result">(0.0.0.0)</div></div><p class="owner">西山 茂行</p><p class="breeder">日進牧場</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001109/A7');">伊藤 大士</a><span class="division">(美浦)</span></p>
+<div class="cell weight">474kg<span class="transition">(初出走)</span></div></div><p class="owner">西山 茂行</p><p class="breeder">日進牧場</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001109/A7');">伊藤 大士</a><span class="division">(美浦)</span></p>
 <ul class="family_line">
 <li class="sire"><span>父：</span>サトノクラウン</li>
 <li class="mare"><span>母：</span>セイウンヴィーナス<span class="bloodmare">(母の父：カレンブラックヒル)</span></li>
@@ -1316,6 +1317,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </tbody>
 </table>
 </div>
+<div class="caution mt20" id="odds_area">
+<p class="odds_line">オッズは<span class="time">最終オッズ</span></p><ul class="mt10">
+<li><span class="dot">・</span><span class="txt">オッズの赤表示は、10倍未満を示します。</span></li>
+<li><span class="dot">・</span><span class="txt">勝馬投票に的中された方がいない場合、その投票法に投票された方全員に、定められた算式に基づく金額（<a href="/kouza/yougo/w426.html">特払い</a>）を払戻しいたします。</span></li>
+<li><span class="dot">・</span><span class="txt">特定の馬番・組番に人気が著しく集中した場合、JRAプラス10の対象にならないことがあります。詳しくは<a href="/keiba/pp10/plus10.html">お知らせ</a>をご覧下さい。</span></li>
+</ul></div>
 <div class="record_unit mt30">
 <div class="title"><h2>コースレコード</h2></div>
 
