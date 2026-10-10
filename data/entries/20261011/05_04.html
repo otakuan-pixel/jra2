@@ -1055,6 +1055,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="cell time">
         発走時刻：<strong>11時35分</strong>
       </div>
+    <div class="cell baba">
+        <ul>
+          <li class="weather"><span class="inner"><span class="cap">天候</span><span class="txt">晴</span></span></li><li class="durt"><span class="inner"><span class="cap">ダート</span><span class="txt">良</span></span></li></ul>
+      </div>
     </div>
 </div>
 <div class="race_title">
@@ -1109,8 +1113,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div id="race_related_link">
 
 
+  <div class="refresh">
+    <a class="btn-def btn-sm blue btn-block" href="/JRADB/accessD.html?CNAME=pw01dde0105202604040420261011/9B"><i class="fa fa-refresh" aria-hidden="true"></i>更新</a>
+  </div>
 
 
+
+
+  <ul>
+    
+    <li class="odds"><a href="#" class="btn-def btn-sm blue btn-block" onclick="return doAction('/JRADB/accessO.html', 'pw151ouS305202604040420261011Z/3E');"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i>オッズ</a></li>
+  </ul>
 
   <div class="print_btn">
     <a href="#" class="btn-def btn-sm btn-block" onclick="click_send('/accessD.pdf'); return doPrint('/JRADB/accessD.pdf', 'pw01dpr0105202604040420261011/65');"><i class="fa fa-print" aria-hidden="true"></i>印刷用ページ</a>
@@ -1136,7 +1149,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <tr>
 <th scope="col" class="waku">枠</th>
 <th scope="col" class="num">馬番</th>
-<th scope="col" class="horse">馬名<br />調教師名<br />血統</th>
+<th scope="col" class="horse">馬名 / 単勝オッズ(人気)<br />戦績 / 総賞金 / 馬体重<br />馬主名 / 生産者名 / 調教師名 / 血統</th>
 <th scope="col" class="jockey">性齢/毛色<br />負担重量<br />騎手名
 </th>
 <th scope="col" class="past p1">前走</th>
@@ -1147,296 +1160,318 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </thead>
 <tbody>
 <tr>
-<td class="waku"></td>
-<td class="num"></td>
+<td class="waku"><img src="/JRADB/img/waku/1.png" alt="枠1白" /></td>
+<td class="num">1</td>
 <td class="horse">
 <div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024108152/CD">オーバーゼア</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001031/3E');">伊藤 伸一</a><span class="division">(美浦)</span></p>
-<ul class="family_line">
-<li class="sire"><span>父：</span>サンダースノー</li>
-<li class="mare"><span>母：</span>イサチルケイ<span class="bloodmare">(母の父：アグネスデジタル)</span></li>
-</ul>
-</td>
-<td class="jockey"><p class="age">牡2/栗</p>
-<p class="weight">
-53.0<span>kg</span>
-</p>
-<p class="jockey"><span title="3kg減量" class="mark jockey">▲</span><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001218/8D');">遠藤 汰月</a></p>
-</td><td class="past p1"></td><td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
-<tr>
-<td class="waku"></td>
-<td class="num"></td>
-<td class="horse">
-<div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024106274/26">ギルデッドグロス</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001133/A0');">黒岩 陽一</a><span class="division">(美浦)</span></p>
-<ul class="family_line">
-<li class="sire"><span>父：</span>クリソベリル</li>
-<li class="mare"><span>母：</span>ギルデッドミラー<span class="bloodmare">(母の父：オルフェーヴル)</span></li>
-</ul>
-</td>
-<td class="jockey"><p class="age">牡2/栗</p>
-<p class="weight">
-56.0<span>kg</span>
-</p>
-<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk005339/DD');">C.ルメール</a></p>
-</td><td class="past p1"></td><td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
-<tr>
-<td class="waku"></td>
-<td class="num"></td>
-<td class="horse">
-<div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024104255/9B">センターサンテ</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001056/D0');">本間 忍</a><span class="division">(美浦)</span></p>
-<ul class="family_line">
-<li class="sire"><span>父：</span>フィレンツェファイア</li>
-<li class="mare"><span>母：</span>リアンローズ<span class="bloodmare">(母の父：スターリングローズ)</span></li>
-</ul>
-</td>
-<td class="jockey"><p class="age">牡2/鹿</p>
-<p class="weight">
-55.0<span>kg</span>
-</p>
-<p class="jockey"><span title="1kg減量" class="mark jockey">☆</span><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001214/5D');">長浜 鴻緒</a></p>
-</td><td class="past p1"></td><td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
-<tr>
-<td class="waku"></td>
-<td class="num"></td>
-<td class="horse">
-<div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024106206/9C">チャームドール</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001171/34');">小手川 準</a><span class="division">(美浦)</span></p>
-<ul class="family_line">
-<li class="sire"><span>父：</span>ルヴァンスレーヴ</li>
-<li class="mare"><span>母：</span>ヴィンテージドール<span class="bloodmare">(母の父：ホワイトマズル)</span></li>
-</ul>
-</td>
-<td class="jockey"><p class="age">牝2/栃栗</p>
-<p class="weight">
-55.0<span>kg</span>
-</p>
-<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001122/66');">三浦 皇成</a></p>
-</td><td class="past p1"></td><td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
-<tr>
-<td class="waku"></td>
-<td class="num"></td>
-<td class="horse">
-<div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024104618/78">テールエメール</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001150/D2');">池上 昌和</a><span class="division">(美浦)</span></p>
-<ul class="family_line">
-<li class="sire"><span>父：</span>ドレフォン</li>
-<li class="mare"><span>母：</span>ビットレート<span class="bloodmare">(母の父：スペシャルウィーク)</span></li>
-</ul>
-</td>
-<td class="jockey"><p class="age">牡2/栗</p>
-<p class="weight">
-56.0<span>kg</span>
-</p>
-<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001077/EF');">石橋 脩</a></p>
-</td><td class="past p1"></td><td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
-<tr>
-<td class="waku"></td>
-<td class="num"></td>
-<td class="horse">
-<div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024103846/35">トラストフィスティ</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001088/29');">高木 登</a><span class="division">(美浦)</span></p>
-<ul class="family_line">
-<li class="sire"><span>父：</span>ゴールドアクター</li>
-<li class="mare"><span>母：</span>ダンシングロイヤル<span class="bloodmare">(母の父：サクラバクシンオー)</span></li>
-</ul>
-</td>
-<td class="jockey"><p class="age">牝2/黒鹿</p>
-<p class="weight">
-53.0<span>kg</span>
-</p>
-<p class="jockey"><span title="2kg減量" class="mark jockey">△</span><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001209/AE');">石神 深道</a></p>
-</td><td class="past p1"></td><td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
-<tr>
-<td class="waku"></td>
-<td class="num"></td>
-<td class="horse">
-<div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024101391/73">フェスティヴガッツ</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001080/C9');">清水 英克</a><span class="division">(美浦)</span></p>
-<ul class="family_line">
-<li class="sire"><span>父：</span>ケイティブレイブ</li>
-<li class="mare"><span>母：</span>フェスティヴマロン<span class="bloodmare">(母の父：クロフネ)</span></li>
-</ul>
-</td>
-<td class="jockey"><p class="age">牡2/鹿</p>
-<p class="weight">
-56.0<span>kg</span>
-</p>
-<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001091/7D');">丹内 祐次</a></p>
-</td><td class="past p1"></td><td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
-<tr>
-<td class="waku"></td>
-<td class="num"></td>
-<td class="horse">
-<div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024102418/38">ベアフラッシュ</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001199/6A');">千葉 直人</a><span class="division">(美浦)</span></p>
-<ul class="family_line">
-<li class="sire"><span>父：</span>エスポワールシチー</li>
-<li class="mare"><span>母：</span>エメンタールベルン<span class="bloodmare">(母の父：ディープスカイ)</span></li>
-</ul>
-</td>
-<td class="jockey"><p class="age">牝2/栗</p>
-<p class="weight">
-55.0<span>kg</span>
-</p>
-<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001085/42');">松岡 正海</a></p>
-</td><td class="past p1"></td><td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
-<tr>
-<td class="waku"></td>
-<td class="num"></td>
-<td class="horse">
-<div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024107246/CB">マイオーラ</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001220/DB');">松尾 卓哉</a><span class="division">(美浦)</span></p>
-<ul class="family_line">
-<li class="sire"><span>父：</span>ホットロッドチャーリー</li>
-<li class="mare"><span>母：</span>マリアスパン<span class="bloodmare">(母の父：ハードスパン)</span></li>
-</ul>
-</td>
-<td class="jockey"><p class="age">牡2/鹿</p>
-<p class="weight">
-56.0<span>kg</span>
-</p>
-<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk000733/F0');">吉田 豊</a></p>
-</td><td class="past p1"></td><td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
-<tr>
-<td class="waku"></td>
-<td class="num"></td>
-<td class="horse">
-<div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024104662/16">マウンテンジョオー</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001187/E7');">西田 雄一郎</a><span class="division">(美浦)</span></p>
-<ul class="family_line">
-<li class="sire"><span>父：</span>ウィルテイクチャージ</li>
-<li class="mare"><span>母：</span>ヤマガール<span class="bloodmare">(母の父：ストーミングホーム)</span></li>
-</ul>
-</td>
-<td class="jockey"><p class="age">牝2/栗</p>
-<p class="weight">
-52.0<span>kg</span>
-</p>
-<p class="jockey"><span title="3kg減量" class="mark jockey">▲</span><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001201/4E');">水沼 元輝</a></p>
-</td><td class="past p1"></td><td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
-<tr>
-<td class="waku"></td>
-<td class="num"></td>
-<td class="horse">
-<div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024105313/95">メヌフォーコン</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001199/6A');">千葉 直人</a><span class="division">(美浦)</span></p>
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024105313/95">メヌフォーコン</a></div><div class="odds"><div class="odds_line"><span class="num"><strong>12.7</strong></span><span class="pop_rank">(5<span>番人気</span>)</span></div></div></div>
+<div class="result_line">
+<div class="cell result">(0.0.0.0)</div></div><p class="owner">中村 伊三美</p><p class="breeder">ケイアイファーム</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001199/6A');">千葉 直人</a><span class="division">(美浦)</span></p>
 <ul class="family_line">
 <li class="sire"><span>父：</span>ロードカナロア</li>
 <li class="mare"><span>母：</span>メヌエット<span class="bloodmare">(母の父：Tapit)</span></li>
 </ul>
 </td>
-<td class="jockey"><p class="age">牝2/鹿</p>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牝2/鹿</p>
 <p class="weight">
 55.0<span>kg</span>
 </p>
 <p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001197/0F');">佐々木 大輔</a></p>
 </td><td class="past p1"></td><td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
 <tr>
-<td class="waku"></td>
-<td class="num"></td>
+<td class="waku"><img src="/JRADB/img/waku/1.png" alt="枠1白" /></td>
+<td class="num">2</td>
 <td class="horse">
 <div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024103697/96">ヤマトリンカーン</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001023/EB');">伊藤 圭三</a><span class="division">(美浦)</span></p>
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024104255/9B">センターサンテ</a></div><div class="odds"><div class="odds_line"><span class="num"><strong>39.4</strong></span><span class="pop_rank">(13<span>番人気</span>)</span></div></div></div>
+<div class="result_line">
+<div class="cell result">(0.0.0.0)</div></div><p class="owner">中澤 利文</p><p class="breeder">織田 正敏</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001056/D0');">本間 忍</a><span class="division">(美浦)</span></p>
 <ul class="family_line">
-<li class="sire"><span>父：</span>ルヴァンスレーヴ</li>
-<li class="mare"><span>母：</span>シー<span class="bloodmare">(母の父：ハービンジャー)</span></li>
+<li class="sire"><span>父：</span>フィレンツェファイア</li>
+<li class="mare"><span>母：</span>リアンローズ<span class="bloodmare">(母の父：スターリングローズ)</span></li>
 </ul>
 </td>
-<td class="jockey"><p class="age">牡2/黒鹿</p>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牡2/鹿</p>
 <p class="weight">
-53.0<span>kg</span>
+55.0<span>kg</span>
 </p>
-<p class="jockey"><span title="3kg減量" class="mark jockey">▲</span><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001207/96');">佐藤 翔馬</a></p>
+<p class="jockey"><span title="1kg減量" class="mark jockey">☆</span><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001214/5D');">長浜 鴻緒</a></p>
 </td><td class="past p1"></td><td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
 <tr>
-<td class="waku"></td>
-<td class="num"></td>
+<td class="waku"><img src="/JRADB/img/waku/2.png" alt="枠2黒" /></td>
+<td class="num">3</td>
 <td class="horse">
 <div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024107206/8B">ユイノゲリラゴウウ</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001174/D8');">深山 雅史</a><span class="division">(美浦)</span></p>
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024101391/73">フェスティヴガッツ</a></div><div class="odds"><div class="odds_line"><span class="num"><strong>28.7</strong></span><span class="pop_rank">(11<span>番人気</span>)</span></div></div></div>
+<div class="result_line">
+<div class="cell result">(0.0.0.0)</div></div><p class="owner">臼井 義太郎</p><p class="breeder">二風谷ファーム</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001080/C9');">清水 英克</a><span class="division">(美浦)</span></p>
 <ul class="family_line">
-<li class="sire"><span>父：</span>タワーオブロンドン</li>
-<li class="mare"><span>母：</span>シェーンフレール<span class="bloodmare">(母の父：Smart Strike)</span></li>
+<li class="sire"><span>父：</span>ケイティブレイブ</li>
+<li class="mare"><span>母：</span>フェスティヴマロン<span class="bloodmare">(母の父：クロフネ)</span></li>
 </ul>
 </td>
-<td class="jockey"><p class="age">牡2/鹿</p>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牡2/鹿</p>
 <p class="weight">
 56.0<span>kg</span>
 </p>
-<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk000422/1B');">内田 博幸</a></p>
+<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001091/7D');">丹内 祐次</a></p>
 </td><td class="past p1"></td><td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
 <tr>
-<td class="waku"></td>
-<td class="num"></td>
+<td class="waku"><img src="/JRADB/img/waku/2.png" alt="枠2黒" /></td>
+<td class="num">4</td>
 <td class="horse">
 <div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024104855/C1">リオフラウス</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001108/1B');">矢野 英一</a><span class="division">(美浦)</span></p>
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024103846/35">トラストフィスティ</a></div><div class="odds"><div class="odds_line"><span class="num"><strong>65.9</strong></span><span class="pop_rank">(14<span>番人気</span>)</span></div></div></div>
+<div class="result_line">
+<div class="cell result">(0.0.0.0)</div></div><p class="owner">菅波 雅巳</p><p class="breeder">(有)村上欽哉牧場</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001088/29');">高木 登</a><span class="division">(美浦)</span></p>
+<ul class="family_line">
+<li class="sire"><span>父：</span>ゴールドアクター</li>
+<li class="mare"><span>母：</span>ダンシングロイヤル<span class="bloodmare">(母の父：サクラバクシンオー)</span></li>
+</ul>
+</td>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACUAAAAlCAYAAADFniADAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAizSURBVFhHvVh7UJTXFb/ffusDyCijWIei2Cg2KFHR1Adp47upWkXtCFoxRiw+akZHQRAf0cRJqGJBq9UY1EaihMpDjTKKQYS9y7LALgssi684E52M/aN/mcmkjuPIr+fcbxcXxBSN9jC/Ac793XN+3znn3m9B/AR765Ver6yJiYk53hH9+/ffxOsEk2L+X6y72L8wdiG+vfEt2Frp69GjRwps33/3PXKyclr7BfYrJ3aYseklmzZZcwR/GoxFWxbBdtGmhPjs3p17yM7IRtS6qFb9zzqI/ltj10s27XVNmlpMEDYBsV0g9r1YuCwu7D+4H2ELwyD2kP+2gJ6lRP3G2PXyLEgEiD2mRab/mFaZYNpqglalQUiBbr/qBpFKYm6RmBIdpi20vpDWp2kNtG+ssf3F23QtRmvRP9dhvmqGucwMUxolTjBBz6SKLBTQtmswrSPfEvLtIV4N8RzEW226T3PIw//CLEiEiiw9nZLUUpJ6goVQRWgk2MzQs6kyc0nMShJzjHjMcRKksW5uJs5xHdqbWgXFG2GEfX6bps3Q3ObTRmCVgBN1BIu4RvAQuDqdcVyEalW1H4T5easWIv7CM9P21FydzpJRInOpGdpIDfomqhIn74zH+5lLwvVcqtobmoWyhBrJumLBYg0NqBHE7g36NDDnIokaQqI2kKiGDusdweJuGfOoDdRaKFuQkfTHLYJm477+d5qTDVQpd4egnYHni+eNH+BpFfWBOTQOfEDM582gjhzw5v0RCxafMVn1fyltLKefOWlnCfxh9aKzNX/Q4dA369B36uj2TTfoW9Rd9qaRvHOLFAnigRpq2syV0nfTJhfdP3QXdUzAPk1Sm/l3bqNXPPtNkh7Ij6tLilNFMSqo1XNoD10p6sGddAnHiEve/E/a8J8Nzxz95WiIWtpMZdYLaSD/qCHKGYUhcshjAd7Eg+Vg9JK9YKoiAV+Rn1qnWTWMk+MQJIPaCWNRr9W/Bi2T7rJk8nPFLDp6uHtg8vbJXK1fGyraW1D8zPi7Be4CFUwFpFMnVgtkfJ6BrTVb26rFa5wkT+Yhzh4HUUKV7EFIFAhoCkCpLEW0jG7j8/cIGYHLrssIfTcU4gvjodk/qnoUrGVWRLwacdyro539/uOdH+Prxq8xQo5QG3QHlfygQNqKNFiaLOrpuVq8xpwb8gZybbkQZSToD4RMeg86YnFb3sY2uc2IwW2j7+m16bB9ZkPIihCIBhJFVWV/ikzB3ea7WLBgwXekIcSQ4rUBAwb8rfRCKa7br+Mj+ZHawIivjsf6pPWoKalBgi2hzf+B/AAe6YFDOjDGOgaiiQTUUfUseWiWzSiX5egr+ypub9kbla5KbFu7DSn7UxDsDFb+UBmKSlkJj8uDfXv3cQuXGGoM02bNmuVodDWi1lqriL6AlxouYV/GPhzYdQBF9UXKFy7DYZd2VMtqJSBDZig/z1K9rIdN2pTgJJmk/Musy9BY3oi4uDh4qjyYJCcpf7JMRotsgb3ajoryCgwdOvQfXj3KwlevWn3f4/agSlYpYqJMxEjLSNxuvo3licsfzJk95+Ed9x2MkqOQIBNUUuayOH6IMGcYMqoz4La4lZ8reFaeVS3Pt+ej/Fw5QkNDv8n7JA+HnYfRT/ZDhaxAjaxRfHejG/PmzbtGWsyGJCFm7t61G00NTYrAxBJZguLqYli/siI4OPhwdHR0idvuxiHrIRTLYtTKWsVlOKUTa4+sxckvT6LOVtfmZ2TLbHAHsv+aze1ZvmzJMo/D7cAheUgJt0qr4jU3NWNT2qaHxIlUikJCQtYXFhTCWedUBCaysJtNN/H+tvdbiRIxZsyYA+x3VjnVmi9YXU0dzp87zwmxOH4xPM1GBRncRpd0gTuQvimdOX0G/nzg1rKLZeAH9MVgNNQ3IOfTHObEEYQYPHjwwYorVMpqo5QqoNWmRI4fP57fTyIgIOC9U/mn4Kw1hPvzZKXEzg93Iu9EHmrtjyvoA7cmcVnivyhMT0J0akpqK1fGn8P7Si+WYtCgQbs5nxj7xth/8oLdZm8jOWodOHP6DHr37v2hIgmxKj8vH/V19e2CMViYu8ENRw21w/L46X1gUbGzYz3eOOYpk6dc5ZbyPh+Hc1sqLYgaFmUM+9w5c1t4o38gnq/sLDUHUxRJiLez9mSp+fDndQUce/68+TzEysLDw7PKLpU9UVWOPXvW7EbmmGa8PcPjG3IfeA7WrV33A637/kQaujFlI5rd7cveFXQUpev6/MOfHFZz5M9jDTN/N7OJOa8m/SnpQcceN9Y3InZOrJvWuzGJbDgPa0deV9BRFNkv01LT7neMxbyExQn3mDA0dWNqq++OYnCveT4mjJtwQYUw7EWKCnxnyTv/9s/J4N9JLI+MiEjekPzIn6BOAr1y6FRmqxCGvUhRJhr2K3yS/YedNbAWJgyi2XnU0tzStsgnr/BUIcxm83oVwrDInzJT9EZQV4vPYibEXOBuPE3U1Mzdma3+p0pdB8VnEBgYuFlFMCyeT+PznD6uLr2q+ND8wgglxOhRo/OslVZUV1W38fxFJeWdzGu7zRmceG/WXtApmaEikJlMpjUF+QVPXJ5dASfbnL6ZZ8V4hZB17949uaigSBXAn+cT9W7u8VzUOx5filzuHdt3cJDRTGCLjIw8Wnmlst0F21U0uZqQuSuT4803otGkBwamFhcWP5sofm3QWtv/AGJiYhxcTS43z8GzwOVwgV9RFGa1Ee3FiIpYuWIlbt28pdrH4p4FfElyhYcNG/aFN97/FnXyxMl2ongw+aMMrU1gAtnwEa+PuDJ16tTLEydOfC5MmTTlcp8+fXZ447GotHNnz7UTxTcAfXzhTyVi5bGjx3Dj2g0lzOV0qZ/ptLDiKCa8DOvZs2fa0ZyjuNZyrS3v9avXsXTpUi6GiJw+bfrD4qJicBtP5J5QCAsLk2r3y7MBE9+a+PB00WmVlz/2HMk5gr59+178LzJhh8X/K2QlAAAAAElFTkSuQmCC" alt="勝負服の画像" /></p><p class="age">牝2/黒鹿</p>
+<p class="weight">
+53.0<span>kg</span>
+</p>
+<p class="jockey"><span title="2kg減量" class="mark jockey">△</span><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001209/AE');">石神 深道</a></p>
+</td><td class="past p1"></td><td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
+<tr>
+<td class="waku"><img src="/JRADB/img/waku/3.png" alt="枠3赤" /></td>
+<td class="num">5</td>
+<td class="horse">
+<div class="name_line">
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024108152/CD">オーバーゼア</a></div><div class="odds"><div class="odds_line"><span class="num"><strong>65.9</strong></span><span class="pop_rank">(14<span>番人気</span>)</span></div></div></div>
+<div class="result_line">
+<div class="cell result">(0.0.0.0)</div></div><p class="owner">(有)ミルファーム</p><p class="breeder">田原橋本牧場</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001031/3E');">伊藤 伸一</a><span class="division">(美浦)</span></p>
+<ul class="family_line">
+<li class="sire"><span>父：</span>サンダースノー</li>
+<li class="mare"><span>母：</span>イサチルケイ<span class="bloodmare">(母の父：アグネスデジタル)</span></li>
+</ul>
+</td>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牡2/栗</p>
+<p class="weight">
+53.0<span>kg</span>
+</p>
+<p class="jockey"><span title="3kg減量" class="mark jockey">▲</span><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001218/8D');">遠藤 汰月</a></p>
+</td><td class="past p1"></td><td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
+<tr>
+<td class="waku"><img src="/JRADB/img/waku/3.png" alt="枠3赤" /></td>
+<td class="num">6</td>
+<td class="horse">
+<div class="name_line">
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024104855/C1">リオフラウス</a></div><div class="odds"><div class="odds_line"><span class="num"><strong>18.8</strong></span><span class="pop_rank">(9<span>番人気</span>)</span></div></div></div>
+<div class="result_line">
+<div class="cell result">(0.0.0.0)</div></div><p class="owner">小林 照弘</p><p class="breeder">服部 牧場</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001108/1B');">矢野 英一</a><span class="division">(美浦)</span></p>
 <ul class="family_line">
 <li class="sire"><span>父：</span>コパノリッキー</li>
 <li class="mare"><span>母：</span>コパノディール<span class="bloodmare">(母の父：エンパイアメーカー)</span></li>
 </ul>
 </td>
-<td class="jockey"><p class="age">牝2/鹿</p>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牝2/鹿</p>
 <p class="weight">
 55.0<span>kg</span>
 </p>
 <p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001184/00');">原 優介</a></p>
 </td><td class="past p1"></td><td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
 <tr>
-<td class="waku"></td>
-<td class="num"></td>
+<td class="waku"><img src="/JRADB/img/waku/4.png" alt="枠4青" /></td>
+<td class="num">7</td>
 <td class="horse">
 <div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024107122/AE">レヴフィリア</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001023/EB');">伊藤 圭三</a><span class="division">(美浦)</span></p>
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024105308/C4">ロードアマデウス</a></div><div class="odds"><div class="odds_line"><span class="num"><strong class="red">8.0</strong></span><span class="pop_rank">(3<span>番人気</span>)</span></div></div></div>
+<div class="result_line">
+<div class="cell result">(0.0.0.0)</div></div><p class="owner">(株)ロードホースクラブ</p><p class="breeder">ケイアイファーム</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001195/3A');">嘉藤 貴行</a><span class="division">(美浦)</span></p>
+<ul class="family_line">
+<li class="sire"><span>父：</span>ダノンプレミアム</li>
+<li class="mare"><span>母：</span>ベイコート<span class="bloodmare">(母の父：ロードカナロア)</span></li>
+</ul>
+</td>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牡2/黒鹿</p>
+<p class="weight">
+56.0<span>kg</span>
+</p>
+<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001140/24');">横山 和生</a></p>
+</td><td class="past p1"></td><td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
+<tr>
+<td class="waku"><img src="/JRADB/img/waku/4.png" alt="枠4青" /></td>
+<td class="num">8</td>
+<td class="horse">
+<div class="name_line">
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024107122/AE">レヴフィリア</a></div><div class="odds"><div class="odds_line"><span class="num"><strong>11.2</strong></span><span class="pop_rank">(4<span>番人気</span>)</span></div></div></div>
+<div class="result_line">
+<div class="cell result">(0.0.0.0)</div></div><p class="owner">髙樽 さゆり</p><p class="breeder">(善)橋本牧場</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001023/EB');">伊藤 圭三</a><span class="division">(美浦)</span></p>
 <ul class="family_line">
 <li class="sire"><span>父：</span>オメガパフューム</li>
 <li class="mare"><span>母：</span>キャンディダム<span class="bloodmare">(母の父：ドリームジャーニー)</span></li>
 </ul>
 </td>
-<td class="jockey"><p class="age">牝2/芦</p>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牝2/芦</p>
 <p class="weight">
 53.0<span>kg</span>
 </p>
 <p class="jockey"><span title="2kg減量" class="mark jockey">◇</span><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001206/0A');">小林 美駒</a></p>
 </td><td class="past p1"></td><td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
 <tr>
-<td class="waku"></td>
-<td class="num"></td>
+<td class="waku"><img src="/JRADB/img/waku/5.png" alt="枠5黄" /></td>
+<td class="num">9</td>
 <td class="horse">
 <div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024105308/C4">ロードアマデウス</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001195/3A');">嘉藤 貴行</a><span class="division">(美浦)</span></p>
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024104618/78">テールエメール</a></div><div class="odds"><div class="odds_line"><span class="num"><strong>16.7</strong></span><span class="pop_rank">(8<span>番人気</span>)</span></div></div></div>
+<div class="result_line">
+<div class="cell result">(0.0.0.0)</div></div><p class="owner">(株)ノースヒルズ</p><p class="breeder">田中 裕之</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001150/D2');">池上 昌和</a><span class="division">(美浦)</span></p>
 <ul class="family_line">
-<li class="sire"><span>父：</span>ダノンプレミアム</li>
-<li class="mare"><span>母：</span>ベイコート<span class="bloodmare">(母の父：ロードカナロア)</span></li>
+<li class="sire"><span>父：</span>ドレフォン</li>
+<li class="mare"><span>母：</span>ビットレート<span class="bloodmare">(母の父：スペシャルウィーク)</span></li>
 </ul>
 </td>
-<td class="jockey"><p class="age">牡2/黒鹿</p>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牡2/栗</p>
 <p class="weight">
 56.0<span>kg</span>
 </p>
-<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001140/24');">横山 和生</a></p>
+<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001077/EF');">石橋 脩</a></p>
+</td><td class="past p1"></td><td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
+<tr>
+<td class="waku"><img src="/JRADB/img/waku/5.png" alt="枠5黄" /></td>
+<td class="num">10</td>
+<td class="horse">
+<div class="name_line">
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024107246/CB">マイオーラ</a></div><div class="odds"><div class="odds_line"><span class="num"><strong>33.5</strong></span><span class="pop_rank">(12<span>番人気</span>)</span></div></div></div>
+<div class="result_line">
+<div class="cell result">(0.0.0.0)</div></div><p class="owner">渡邊 英俊</p><p class="breeder">(有)佐竹牧場</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001220/DB');">松尾 卓哉</a><span class="division">(美浦)</span></p>
+<ul class="family_line">
+<li class="sire"><span>父：</span>ホットロッドチャーリー</li>
+<li class="mare"><span>母：</span>マリアスパン<span class="bloodmare">(母の父：ハードスパン)</span></li>
+</ul>
+</td>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牡2/鹿</p>
+<p class="weight">
+56.0<span>kg</span>
+</p>
+<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk000733/F0');">吉田 豊</a></p>
+</td><td class="past p1"></td><td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
+<tr>
+<td class="waku"><img src="/JRADB/img/waku/6.png" alt="枠6緑" /></td>
+<td class="num">11</td>
+<td class="horse">
+<div class="name_line">
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024103697/96">ヤマトリンカーン</a></div><div class="odds"><div class="odds_line"><span class="num"><strong>12.9</strong></span><span class="pop_rank">(6<span>番人気</span>)</span></div></div></div>
+<div class="result_line">
+<div class="cell result">(0.0.0.0)</div></div><p class="owner">有馬 博文</p><p class="breeder">発田 文広</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001023/EB');">伊藤 圭三</a><span class="division">(美浦)</span></p>
+<ul class="family_line">
+<li class="sire"><span>父：</span>ルヴァンスレーヴ</li>
+<li class="mare"><span>母：</span>シー<span class="bloodmare">(母の父：ハービンジャー)</span></li>
+</ul>
+</td>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牡2/黒鹿</p>
+<p class="weight">
+53.0<span>kg</span>
+</p>
+<p class="jockey"><span title="3kg減量" class="mark jockey">▲</span><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001207/96');">佐藤 翔馬</a></p>
+</td><td class="past p1"></td><td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
+<tr>
+<td class="waku"><img src="/JRADB/img/waku/6.png" alt="枠6緑" /></td>
+<td class="num">12</td>
+<td class="horse">
+<div class="name_line">
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024104662/16">マウンテンジョオー</a></div><div class="odds"><div class="odds_line"><span class="num"><strong>82.3</strong></span><span class="pop_rank">(16<span>番人気</span>)</span></div></div></div>
+<div class="result_line">
+<div class="cell result">(0.0.0.0)</div></div><p class="owner">西村 新一郎</p><p class="breeder">田原橋本牧場</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001187/E7');">西田 雄一郎</a><span class="division">(美浦)</span></p>
+<ul class="family_line">
+<li class="sire"><span>父：</span>ウィルテイクチャージ</li>
+<li class="mare"><span>母：</span>ヤマガール<span class="bloodmare">(母の父：ストーミングホーム)</span></li>
+</ul>
+</td>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牝2/栗</p>
+<p class="weight">
+52.0<span>kg</span>
+</p>
+<p class="jockey"><span title="3kg減量" class="mark jockey">▲</span><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001201/4E');">水沼 元輝</a></p>
+</td><td class="past p1"></td><td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
+<tr>
+<td class="waku"><img src="/JRADB/img/waku/7.png" alt="枠7橙" /></td>
+<td class="num">13</td>
+<td class="horse">
+<div class="name_line">
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024106206/9C">チャームドール</a></div><div class="odds"><div class="odds_line"><span class="num"><strong>22.3</strong></span><span class="pop_rank">(10<span>番人気</span>)</span></div></div></div>
+<div class="result_line">
+<div class="cell result">(0.0.0.0)</div></div><p class="owner">保坂 和孝</p><p class="breeder">ノーザンファーム</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001171/34');">小手川 準</a><span class="division">(美浦)</span></p>
+<ul class="family_line">
+<li class="sire"><span>父：</span>ルヴァンスレーヴ</li>
+<li class="mare"><span>母：</span>ヴィンテージドール<span class="bloodmare">(母の父：ホワイトマズル)</span></li>
+</ul>
+</td>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牝2/栃栗</p>
+<p class="weight">
+55.0<span>kg</span>
+</p>
+<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001122/66');">三浦 皇成</a></p>
+</td><td class="past p1"></td><td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
+<tr>
+<td class="waku"><img src="/JRADB/img/waku/7.png" alt="枠7橙" /></td>
+<td class="num">14</td>
+<td class="horse">
+<div class="name_line">
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024106274/26">ギルデッドグロス</a></div><div class="odds"><div class="odds_line"><span class="num"><strong class="red">2.6</strong></span><span class="pop_rank">(1<span>番人気</span>)</span></div></div></div>
+<div class="result_line">
+<div class="cell result">(0.0.0.0)</div></div><p class="owner">(有)シルクレーシング</p><p class="breeder">ノーザンファーム</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001133/A0');">黒岩 陽一</a><span class="division">(美浦)</span></p>
+<ul class="family_line">
+<li class="sire"><span>父：</span>クリソベリル</li>
+<li class="mare"><span>母：</span>ギルデッドミラー<span class="bloodmare">(母の父：オルフェーヴル)</span></li>
+</ul>
+</td>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牡2/栗</p>
+<p class="weight">
+56.0<span>kg</span>
+</p>
+<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk005339/DD');">C.ルメール</a></p>
+</td><td class="past p1"></td><td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
+<tr>
+<td class="waku"><img src="/JRADB/img/waku/8.png" alt="枠8桃" /></td>
+<td class="num">15</td>
+<td class="horse">
+<div class="name_line">
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024102418/38">ベアフラッシュ</a></div><div class="odds"><div class="odds_line"><span class="num"><strong>16.1</strong></span><span class="pop_rank">(7<span>番人気</span>)</span></div></div></div>
+<div class="result_line">
+<div class="cell result">(0.0.0.0)</div></div><p class="owner">熊木 浩</p><p class="breeder">上村 勇人</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001199/6A');">千葉 直人</a><span class="division">(美浦)</span></p>
+<ul class="family_line">
+<li class="sire"><span>父：</span>エスポワールシチー</li>
+<li class="mare"><span>母：</span>エメンタールベルン<span class="bloodmare">(母の父：ディープスカイ)</span></li>
+</ul>
+</td>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牝2/栗</p>
+<p class="weight">
+55.0<span>kg</span>
+</p>
+<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001085/42');">松岡 正海</a></p>
+</td><td class="past p1"></td><td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
+<tr>
+<td class="waku"><img src="/JRADB/img/waku/8.png" alt="枠8桃" /></td>
+<td class="num">16</td>
+<td class="horse">
+<div class="name_line">
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024107206/8B">ユイノゲリラゴウウ</a></div><div class="odds"><div class="odds_line"><span class="num"><strong class="red">6.6</strong></span><span class="pop_rank">(2<span>番人気</span>)</span></div></div></div>
+<div class="result_line">
+<div class="cell result">(0.0.0.0)</div></div><p class="owner">由井 健太郎</p><p class="breeder">惣田 英幸</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001174/D8');">深山 雅史</a><span class="division">(美浦)</span></p>
+<ul class="family_line">
+<li class="sire"><span>父：</span>タワーオブロンドン</li>
+<li class="mare"><span>母：</span>シェーンフレール<span class="bloodmare">(母の父：Smart Strike)</span></li>
+</ul>
+</td>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牡2/鹿</p>
+<p class="weight">
+56.0<span>kg</span>
+</p>
+<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk000422/1B');">内田 博幸</a></p>
 </td><td class="past p1"></td><td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
 </tbody>
 </table>
 </div>
+<div class="caution mt20" id="odds_area">
+<p class="odds_line">オッズは<span class="time">22時00分現在</span><a class="btn-def btn-xs btn-narrow blue" href="/JRADB/accessD.html?CNAME=pw01dde0105202604040420261011/9B"><i class="fa fa-refresh" aria-hidden="true"></i>更新</a></p><ul class="mt10">
+<li><span class="dot">・</span><span class="txt">オッズの赤表示は、10倍未満を示します。</span></li>
+<li><span class="dot">・</span><span class="txt">勝馬投票に的中された方がいない場合、その投票法に投票された方全員に、定められた算式に基づく金額（<a href="/kouza/yougo/w426.html">特払い</a>）を払戻しいたします。</span></li>
+<li><span class="dot">・</span><span class="txt">特定の馬番・組番に人気が著しく集中した場合、JRAプラス10の対象にならないことがあります。詳しくは<a href="/keiba/pp10/plus10.html">お知らせ</a>をご覧下さい。</span></li>
+</ul></div>
 <div class="record_unit mt30">
 <div class="title"><h2>コースレコード</h2></div>
 
@@ -1488,6 +1523,14 @@ R.ムーア<span class="weight">（56.0kg）</span>
     <a href="#" class="btn-def" onclick="return doAction('/JRADB/accessD.html', 'pw01dli00/F3');"><i class="fa fa-chevron-circle-up" aria-hidden="true"></i>開催選択へ戻る</a>
     <a href="#" class="btn-def" onclick="return doAction('/JRADB/accessD.html', 'pw01drl00052026040420261011/67');"><i class="fa fa-chevron-circle-up" aria-hidden="true"></i>レース選択へ戻る</a>
     <a href="#" class="btn-def" onclick="click_send('/accessD.pdf'); return doPrint('/JRADB/accessD.pdf', 'pw01dpr0105202604040420261011/65');"><i class="fa fa-print" aria-hidden="true"></i>印刷用ページ</a>
+  </div>
+  
+  <div class="refresh">
+    
+      <a href="/JRADB/accessD.html?CNAME=pw01dde0105202604040420261011/9B" class="btn-def btn-sm blue">
+      
+    
+    <i class="fa fa-refresh" aria-hidden="true"></i>更新</a>
   </div>
   
 </div><ul class="nav race-num mt15">
