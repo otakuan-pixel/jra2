@@ -447,6 +447,7 @@ file,year,kai,track,nichi,races,runs,bytes
 2022-2niigata4.pdf,2022,2,niigata,4,12,176,820939
 2022-3niigata1.pdf,2022,3,niigata,1,12,188,739858
 2022-3niigata2.pdf,2022,3,niigata,2,12,186,812055
+2022-3niigata3.pdf,2022,3,niigata,3,12,176,758721
 2022-3niigata4.pdf,2022,3,niigata,4,12,167,771817
 2022-3niigata5.pdf,2022,3,niigata,5,12,186,739448
 2022-3niigata6.pdf,2022,3,niigata,6,12,156,790712
@@ -520,7 +521,6 @@ file,year,kai,track,nichi,races,runs,bytes
 2023-1chukyo7.pdf,2023,1,chukyo,7,12,143,665982
 2023-1chukyo8.pdf,2023,1,chukyo,8,12,149,676182
 2023-1chukyo9.pdf,2023,1,chukyo,9,12,144,639517
-2023-1chukyo10.pdf,2023,1,chukyo,10,12,152,1081095
 2023-1chukyo11.pdf,2023,1,chukyo,11,12,159,661270
 2023-1chukyo12.pdf,2023,1,chukyo,12,12,142,751406
 2023-2chukyo1.pdf,2023,2,chukyo,1,12,176,699777
@@ -960,6 +960,7 @@ file,year,kai,track,nichi,races,runs,bytes
 2024-3niigata3.pdf,2024,3,niigata,3,12,170,675085
 2024-3niigata4.pdf,2024,3,niigata,4,12,174,713193
 2024-3niigata5.pdf,2024,3,niigata,5,12,178,711353
+2024-3niigata6.pdf,2024,3,niigata,6,11,148,725453
 2024-3niigata7.pdf,2024,3,niigata,7,12,157,646677
 2024-3niigata8.pdf,2024,3,niigata,8,12,156,750022
 2024-4niigata1.pdf,2024,4,niigata,1,12,170,441831
