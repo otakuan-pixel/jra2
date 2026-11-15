@@ -1,0 +1,76 @@
+name: 成績データの収集（全場・数字のみ保存）
+
+# JRA公式の成績PDFを読み、着順・タイム・通過順・ハロンタイムなどの数字だけを data/results/ に保存する。
+# - 取得済みの開催日は飛ばす差分方式。既存のデータ（data/pdf、data/text、data/entries）には触らない
+# - PDF本体は保存しない（全場ぶんで約1GBになるため）
+# - 毎週 月・火の朝に、その年の新しい開催日だけを追加する
+# - 手動実行（Run workflow）では年と競馬場を指定できる。競馬場は書いた順に処理し、1場ごとに保存する
+
+on:
+  workflow_dispatch:
+    inputs:
+      years:
+        description: "対象年（例: 2021-2026、2026。空欄なら今年）"
+        default: ""
+      tracks:
+        description: "競馬場（カンマ区切り。書いた順に処理）"
+        default: "kyoto,tokyo,fukushima,nakayama,hanshin,chukyo,niigata,kokura,sapporo,hakodate"
+  schedule:
+    - cron: "23 20 * * 0,1"   # 月・火 5:23 JST（土日の成績PDFが出そろった後）
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/results.yml"
+      - "tools/collect_results.py"
+      - "tools/jra_pdf.py"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: jra-results
+  cancel-in-progress: false
+
+jobs:
+  results:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 依存パッケージ
+        run: pip install --quiet requests pdfplumber
+
+      - name: 収集と保存（1場ごとにコミット）
+        env:
+          IN_YEARS: ${{ inputs.years }}
+          IN_TRACKS: ${{ inputs.tracks }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          Y=$(TZ=Asia/Tokyo date +%Y)
+          M=$(TZ=Asia/Tokyo date +%m)
+          if [ -n "$IN_YEARS" ]; then YEARS="$IN_YEARS"
+          elif [ "$EVENT" = "push" ]; then YEARS="2021-$Y"          # 仕組みを置いた直後は全期間を埋める
+          elif [ "$M" = "01" ]; then YEARS="$((Y-1))-$Y"            # 1月は前年の年末開催も拾う
+          else YEARS="$Y"; fi
+          TRACKS="${IN_TRACKS:-kyoto,tokyo,fukushima,nakayama,hanshin,chukyo,niigata,kokura,sapporo,hakodate}"
+          echo "YEARS=$YEARS TRACKS=$TRACKS"
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for t in $(echo "$TRACKS" | tr ',' ' '); do
+            python tools/collect_results.py --years "$YEARS" --tracks "$t" --cache pdfwork || echo "::warning::$t の収集でエラー"
+            git add -A data/results
+            if git diff --cached --quiet; then
+              echo "$t: 変更なし"
+            else
+              git commit -q -m "成績データ $t $YEARS $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+              git pull -q --rebase --autostash || true
+              git push -q
+              echo "$t: 保存しました"
+            fi
+            rm -rf pdfwork
+          done
