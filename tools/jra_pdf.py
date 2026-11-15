@@ -185,8 +185,30 @@ def corner_region(chars):
     return pos2, [remap[k] for k in labels]
 
 
+LAST_EXPECTED = None
+
+
+def dedupe(chars):
+    """太字の重ね打ち（同じ字をわずかにずらして2〜4回描く）を1つにまとめる"""
+    seen, out = {}, []
+    for c in chars:
+        k = (c.get("text"), round(c["x0"]), round(c.get("size", 0), 1))
+        hit = False
+        for kk in (k, (k[0], k[1] - 1, k[2]), (k[0], k[1] + 1, k[2])):
+            for o in seen.get(kk, ()):
+                if abs(o["x0"] - c["x0"]) < 1.0 and abs(o["top"] - c["top"]) < 1.2:
+                    hit = True
+                    break
+            if hit:
+                break
+        if not hit:
+            seen.setdefault(k, []).append(c)
+            out.append(c)
+    return out
+
+
 def parse_half(page, x0, x1, meta, src):
-    chars = [c for c in page.chars if x0 <= c["x0"] < x1]
+    chars = dedupe([c for c in page.chars if x0 <= c["x0"] < x1])
     if not chars:
         return None
     rx = lambda c: c["x0"] - x0
@@ -297,6 +319,13 @@ def parse_half(page, x0, x1, meta, src):
             byrow[round(c["top"])].append(c)
         drop = {t for t, cs in byrow.items() if re.search(r"\d+頭", norm(zone_text(cs)))}
         zn = [c for c in zn if round(c["top"]) not in drop]
+        # 太字の重ね打ちで、ずらし幅が大きいもの（字送りの6割未満で同じ字が続く）も1つにまとめる
+        kept = []
+        for c in sorted(zn, key=lambda c: (c["x0"], c["top"])):
+            if kept and ctext(kept[-1]) == ctext(c) and re.match(r"^[ァ-ヶー]$", ctext(c)) and c["x0"] - kept[-1]["x0"] < 0.6 * c["size"] and abs(c["top"] - kept[-1]["top"]) < 1.2:
+                continue
+            kept.append(c)
+        zn = kept
         zw = [c for c in blk if 132 <= rx(c) < 154]
         zj = [c for c in blk if 154 <= rx(c) < 190.5 and c["size"] >= 4.5 and ctext(c) not in "()（）・"]
         zt = [c for c in blk if 300 <= rx(c) < 379]
@@ -304,8 +333,8 @@ def parse_half(page, x0, x1, meta, src):
         ntx = norm(zone_text(zn)).replace(" ", "")
         mm = re.match(r"^(.+?)(牡|牝|セ|せん|\{\d+\})(\d{1,2})(.*)$", ntx)
         horse, sex, age = (mm.group(1), mm.group(2), int(mm.group(3))) if mm else (ntx, "", "")
-        if sex.startswith("{"):
-            sex = "?"
+        if sex.startswith("{") or sex == "せん":
+            sex = "セ"   # せん馬（PDFでは外字）
         mwt = re.search(r"(\d\d(?:\.\d)?)", norm(zone_text(zw)))
         wt = mwt.group(1) if mwt else ""
         jockey = norm(zone_text(zj)).replace(" ", "").replace("．", ".")
@@ -363,9 +392,14 @@ def parse_pdf(path):
     if not meta:
         return [], []
     races, runs = [], []
+    global LAST_EXPECTED
+    LAST_EXPECTED = None
     with pdfplumber.open(path) as pdf:
         for pi, page in enumerate(pdf.pages):
-            page = page.dedupe_chars(tolerance=0.6)   # 太字（同じ字を重ね打ち）のレースで馬名が何重にもなるのを防ぐ
+            try:   # 太字（同じ字を重ね打ち）のレース。本文は parse_half の dedupe、見出しの文章はこちらで処理
+                page = page.dedupe_chars(tolerance=1)
+            except Exception:
+                pass
             w = page.width
             for x0, x1 in ((0, w / 2), (w / 2, w)):
                 try:
@@ -375,7 +409,18 @@ def parse_pdf(path):
                     r = None
                 if r:
                     races.append(r[0]); runs.extend(r[1])
+                elif LAST_EXPECTED is None:
+                    t = norm(dec(page.crop((x0, 0, x1, page.height)).extract_text() or ""))
+                    m = re.search(r"第\s*\d+\s*日.*?競走回数\s*(\d+)\s*回", t, re.S)
+                    if m:
+                        LAST_EXPECTED = int(m.group(1))
     return races, runs
+
+
+def parse_pdf_checked(path):
+    """(races, runs, PDFの集計ページに書かれた実施レース数) を返す。取りやめのあった日は12より少ない"""
+    r, u = parse_pdf(path)
+    return r, u, LAST_EXPECTED
 
 
 def main():
