@@ -5,6 +5,7 @@ name: 成績データの収集（全場・数字のみ保存）
 # - PDF本体は保存しない（全場ぶんで約1GBになるため）
 # - 毎週 月・火の朝に、その年の新しい開催日だけを追加する
 # - 手動実行（Run workflow）では年と競馬場を指定できる。競馬場は書いた順に処理し、1場ごとに保存する
+# - 読み取りを直したときは tools/redo.txt に取り直すPDF名を書いて保存する（その日だけ取り直す）
 
 on:
   workflow_dispatch:
@@ -23,6 +24,7 @@ on:
       - ".github/workflows/results.yml"
       - "tools/collect_results.py"
       - "tools/jra_pdf.py"
+      - "tools/redo.txt"
 
 permissions:
   contents: write
@@ -62,8 +64,9 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           for t in $(echo "$TRACKS" | tr ',' ' '); do
-            python tools/collect_results.py --years "$YEARS" --tracks "$t" --cache pdfwork || echo "::warning::$t の収集でエラー"
+            python tools/collect_results.py --years "$YEARS" --tracks "$t" --cache pdfwork --redo tools/redo.txt || echo "::warning::$t の収集でエラー"
             git add -A data/results
+            [ -d data/debug/pdf ] && git add -A data/debug/pdf
             if git diff --cached --quiet; then
               echo "$t: 変更なし"
             else

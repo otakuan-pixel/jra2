@@ -246,14 +246,23 @@ def parse_half(page, x0, x1, meta, src):
         inner = m.group(2)
         race["inout"] = "外" if "外" in inner else ("内" if "内" in inner else "")
         race["turn"] = "左" if "左" in inner else ("右" if "右" in inner else ("直" if "直" in inner else ""))
-    line = next((l for l in nh.splitlines() if "競走" in l), "")
-    md = re.findall(r"(\d,\d{3}|\d{4})", line.split("競走", 1)[-1])
+    line = next((l for l in nh.splitlines() if re.search(r"第\s*\d{1,2}\s*競走", l)), "") or \
+        next((l for l in nh.splitlines() if "競走" in l), "")
+    tail = re.split(r"第\s*\d{1,2}\s*競走", line, 1)[-1] if re.search(r"第\s*\d{1,2}\s*競走", line) else line.split("競走", 1)[-1]
+    md = re.findall(r"(\d,\d{3}|\d{4})", tail)
     race["dist"] = int(md[-1].replace(",", "")) if md else ""
-    after = re.sub(r"\{\d+\}", "", line.split("競走", 1)[-1])
+    after = re.sub(r"\{\d+\}", "", tail)
     after = re.sub(r"(\d,\d{3}|\d{4})\s*$", "", after).strip()
     race["name"] = after.replace(" ", "")
     if re.search(r"障害|ジャンプ|J・G|Ｊ・Ｇ|ハードル", race["name"]):
         race["surf"] = "障"
+    if not race["cond"]:   # 障害戦は「(芝)良 / (ダート)稍重」の2段書き。芝の状態を採る
+        mc = re.search(r"\(\s*芝\s*\)\s*(良|稍重|重|不良)", nh) or re.search(r"\(\s*ダート\s*\)\s*(良|稍重|重|不良)", nh)
+        mw = re.search(r"日\s*(晴|曇|小雨|雨|小雪|雪)", nh)
+        if mc:
+            race["cond"] = mc.group(1)
+        if mw and not race["weather"]:
+            race["weather"] = mw.group(1)
     g = re.search(r"\((G[ⅠⅡⅢ123]|Ｇ[ⅠⅡⅢ]|J・G[ⅠⅡⅢ]|L|Ｌ|リステッド)\)", after.replace("Ｇ", "G").replace("Ｌ", "L"))
     race["grade"] = g.group(1) if g else ""
     cls = re.search(r"(新馬|未勝利|1勝クラス|2勝クラス|3勝クラス|オープン)", after) or \
@@ -356,6 +365,7 @@ def parse_pdf(path):
     races, runs = [], []
     with pdfplumber.open(path) as pdf:
         for pi, page in enumerate(pdf.pages):
+            page = page.dedupe_chars(tolerance=0.6)   # 太字（同じ字を重ね打ち）のレースで馬名が何重にもなるのを防ぐ
             w = page.width
             for x0, x1 in ((0, w / 2), (w / 2, w)):
                 try:
