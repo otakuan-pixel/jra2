@@ -397,7 +397,6 @@ file,year,kai,track,nichi,races,runs,bytes
 2022-3kokura8.pdf,2022,3,kokura,8,12,169,449338
 2022-4kokura1.pdf,2022,4,kokura,1,12,152,718778
 2022-4kokura2.pdf,2022,4,kokura,2,12,168,764605
-2022-4kokura3.pdf,2022,4,kokura,3,12,169,843911
 2022-4kokura4.pdf,2022,4,kokura,4,12,157,709388
 2022-4kokura5.pdf,2022,4,kokura,5,12,159,776117
 2022-4kokura6.pdf,2022,4,kokura,6,12,153,748240
@@ -467,6 +466,7 @@ file,year,kai,track,nichi,races,runs,bytes
 2022-1sapporo6.pdf,2022,1,sapporo,6,12,164,766816
 2022-2sapporo1.pdf,2022,2,sapporo,1,12,157,720515
 2022-2sapporo2.pdf,2022,2,sapporo,2,12,153,738142
+2022-2sapporo3.pdf,2022,2,sapporo,3,12,153,698723
 2022-2sapporo4.pdf,2022,2,sapporo,4,12,156,870900
 2022-2sapporo5.pdf,2022,2,sapporo,5,12,146,714379
 2022-2sapporo6.pdf,2022,2,sapporo,6,12,157,776192
@@ -720,6 +720,7 @@ file,year,kai,track,nichi,races,runs,bytes
 2023-2sapporo1.pdf,2023,2,sapporo,1,12,153,733119
 2023-2sapporo2.pdf,2023,2,sapporo,2,12,141,769236
 2023-2sapporo3.pdf,2023,2,sapporo,3,12,167,741343
+2023-2sapporo4.pdf,2023,2,sapporo,4,10,127,1134716
 2023-2sapporo5.pdf,2023,2,sapporo,5,12,153,789290
 2023-2sapporo6.pdf,2023,2,sapporo,6,12,156,1112801
 2023-2sapporo7.pdf,2023,2,sapporo,7,12,161,783147
@@ -1339,7 +1340,6 @@ file,year,kai,track,nichi,races,runs,bytes
 2026-1kokura3.pdf,2026,1,kokura,3,12,187,737560
 2026-1kokura4.pdf,2026,1,kokura,4,12,183,709364
 2026-1kokura5.pdf,2026,1,kokura,5,12,183,693842
-2026-1kokura6.pdf,2026,1,kokura,6,11,165,730766
 2026-1kokura7.pdf,2026,1,kokura,7,12,182,708817
 2026-1kokura8.pdf,2026,1,kokura,8,12,177,719094
 2026-1kokura9.pdf,2026,1,kokura,9,12,175,670476
