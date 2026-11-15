@@ -52,12 +52,22 @@ def main():
     ap.add_argument("--cache", default="pdfwork")
     ap.add_argument("--offline", action="store_true")
     ap.add_argument("--workers", type=int, default=os.cpu_count() or 2)
+    ap.add_argument("--redo", default="", help="取り直すPDF名を書いたファイル（1行1件。後ろに keep と書くとPDFを data/debug/pdf に残す）")
     a = ap.parse_args()
     cache = Path(a.cache)
     idx_path = ROOT / "index.csv"
     index = {}
     if idx_path.exists():
         index = {r["file"]: r for r in csv.DictReader(open(idx_path, encoding="utf-8"))}
+    keep_pdf = set()
+    if a.redo and Path(a.redo).exists():   # 読み取りを直した後の取り直し：一覧にある日は「未取得」に戻す
+        for line in open(a.redo, encoding="utf-8"):
+            w = line.split("#")[0].split()
+            if not w:
+                continue
+            index.pop(w[0], None)
+            if len(w) > 1 and w[1] == "keep":
+                keep_pdf.add(w[0])
     s = None
     if not a.offline:
         import requests
@@ -119,6 +129,11 @@ def main():
                     index[p.name] = {"file": p.name, "year": y, "kai": p.name.split("-")[1][0], "track": t,
                                      "nichi": "".join(ch for ch in p.name.split(t)[-1] if ch.isdigit()),
                                      "races": len(r), "runs": len(u), "bytes": p.stat().st_size}
+            for p in todo:
+                if p.name in keep_pdf:
+                    dbg = ROOT.parent / "debug" / "pdf"
+                    dbg.mkdir(parents=True, exist_ok=True)
+                    (dbg / p.name).write_bytes(p.read_bytes())
             new_src = {p.name for p in todo}
             rp, up = ROOT / str(y) / ("%s_races.csv.gz" % t), ROOT / str(y) / ("%s_runs.csv.gz" % t)
             old_r = [x for x in read_gz(rp) if x["src"].split("#")[0] not in new_src]
