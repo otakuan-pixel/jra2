@@ -397,6 +397,7 @@ file,year,kai,track,nichi,races,runs,bytes
 2022-3kokura8.pdf,2022,3,kokura,8,12,169,449338
 2022-4kokura1.pdf,2022,4,kokura,1,12,152,718778
 2022-4kokura2.pdf,2022,4,kokura,2,12,168,764605
+2022-4kokura3.pdf,2022,4,kokura,3,12,169,843911
 2022-4kokura4.pdf,2022,4,kokura,4,12,157,709388
 2022-4kokura5.pdf,2022,4,kokura,5,12,159,776117
 2022-4kokura6.pdf,2022,4,kokura,6,12,153,748240
@@ -447,7 +448,6 @@ file,year,kai,track,nichi,races,runs,bytes
 2022-2niigata4.pdf,2022,2,niigata,4,12,176,820939
 2022-3niigata1.pdf,2022,3,niigata,1,12,188,739858
 2022-3niigata2.pdf,2022,3,niigata,2,12,186,812055
-2022-3niigata3.pdf,2022,3,niigata,3,12,176,758721
 2022-3niigata4.pdf,2022,3,niigata,4,12,167,771817
 2022-3niigata5.pdf,2022,3,niigata,5,12,186,739448
 2022-3niigata6.pdf,2022,3,niigata,6,12,156,790712
@@ -960,7 +960,6 @@ file,year,kai,track,nichi,races,runs,bytes
 2024-3niigata3.pdf,2024,3,niigata,3,12,170,675085
 2024-3niigata4.pdf,2024,3,niigata,4,12,174,713193
 2024-3niigata5.pdf,2024,3,niigata,5,12,178,711353
-2024-3niigata6.pdf,2024,3,niigata,6,11,148,725453
 2024-3niigata7.pdf,2024,3,niigata,7,12,157,646677
 2024-3niigata8.pdf,2024,3,niigata,8,12,156,750022
 2024-4niigata1.pdf,2024,4,niigata,1,12,170,441831
@@ -1340,6 +1339,7 @@ file,year,kai,track,nichi,races,runs,bytes
 2026-1kokura3.pdf,2026,1,kokura,3,12,187,737560
 2026-1kokura4.pdf,2026,1,kokura,4,12,183,709364
 2026-1kokura5.pdf,2026,1,kokura,5,12,183,693842
+2026-1kokura6.pdf,2026,1,kokura,6,11,165,730766
 2026-1kokura7.pdf,2026,1,kokura,7,12,182,708817
 2026-1kokura8.pdf,2026,1,kokura,8,12,177,719094
 2026-1kokura9.pdf,2026,1,kokura,9,12,175,670476
