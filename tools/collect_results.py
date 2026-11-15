@@ -10,7 +10,7 @@
     data/results/<年>/<場>_runs.csv.gz    1行＝1頭（着順・タイム・通過順・騎手・斤量・馬体重・単勝オッズ・人気）
 - --cache のフォルダに同名のPDFがあればダウンロードせずそれを使う（中山・阪神の保存済みPDF用）
 """
-import argparse, csv, gzip, os, sys, time, traceback
+import argparse, re, csv, gzip, os, sys, time, traceback
 from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 
@@ -65,6 +65,8 @@ def main():
             w = line.split("#")[0].split()
             if not w:
                 continue
+            if not any(re.match(r"^\d{4}-\d%s\d+\.pdf$" % t.strip().lower(), w[0]) for t in a.tracks.split(",") if t.strip()):
+                continue   # 今回の対象でない競馬場の分には触らない（索引から消したままにしない）
             index.pop(w[0], None)
             if len(w) > 1 and w[1] == "keep":
                 keep_pdf.add(w[0])
@@ -122,10 +124,13 @@ def main():
             if not todo:
                 print("[%d %s] 追加なし（取得済み %d 日）" % (y, t, known), flush=True)
                 continue
-            races, runs = [], []
+            races, runs, bad_days = [], [], []
             with ProcessPoolExecutor(a.workers) as ex:
-                for p, (r, u) in zip(todo, ex.map(J.parse_pdf, [str(p) for p in todo])):
+                for p, (r, u, exp) in zip(todo, ex.map(J.parse_pdf_checked, [str(p) for p in todo])):
                     races += r; runs += u
+                    if exp is not None and exp != len(r):
+                        print("  ※読めたレース数がPDFの実施数と違う: %s 読めた %d / 実施 %d" % (p.name, len(r), exp), flush=True)
+                        bad_days.append(p.name)
                     index[p.name] = {"file": p.name, "year": y, "kai": p.name.split("-")[1][0], "track": t,
                                      "nichi": "".join(ch for ch in p.name.split(t)[-1] if ch.isdigit()),
                                      "races": len(r), "runs": len(u), "bytes": p.stat().st_size}
@@ -143,9 +148,9 @@ def main():
             U = sorted(old_u + runs, key=lambda x: (str(x["ymd"]), int(x["rno"] or 0), int(x["place"] or 99), int(x["num"] or 0)))
             write_gz(rp, R, J.RACE_FIELDS)
             write_gz(up, U, J.RUN_FIELDS)
-            bad = [p.name for p in todo if int(index[p.name]["races"]) != 12]
+            bad = [p.name for p in todo if p.name in bad_days]
             print("[%d %s] +%d 日（計 %d 日）レース %d・出走 %d%s" % (y, t, len(todo), known + len(todo), len(R), len(U),
-                                                         "  ※12レースでない日: " + ",".join(bad) if bad else ""), flush=True)
+                                                         "  ※要確認: " + ",".join(bad) if bad else ""), flush=True)
             ROOT.mkdir(parents=True, exist_ok=True)
             with open(idx_path, "w", encoding="utf-8", newline="") as f:
                 w = csv.DictWriter(f, fieldnames=IDX_FIELDS)
