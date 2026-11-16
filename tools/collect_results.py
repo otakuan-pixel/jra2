@@ -59,7 +59,7 @@ def main():
     index = {}
     if idx_path.exists():
         index = {r["file"]: r for r in csv.DictReader(open(idx_path, encoding="utf-8"))}
-    keep_pdf = set()
+    keep_pdf, redo_names, redone = set(), set(), set()
     if a.redo and Path(a.redo).exists():   # 読み取りを直した後の取り直し：一覧にある日は「未取得」に戻す
         for line in open(a.redo, encoding="utf-8"):
             w = line.split("#")[0].split()
@@ -67,6 +67,9 @@ def main():
                 continue
             if not any(re.match(r"^\d{4}-\d%s\d+\.pdf$" % t.strip().lower(), w[0]) for t in a.tracks.split(",") if t.strip()):
                 continue   # 今回の対象でない競馬場の分には触らない（索引から消したままにしない）
+            if int(w[0][:4]) not in set(years(a.years)):
+                continue   # 今回の対象でない年の分にも触らない
+            redo_names.add(w[0])
             index.pop(w[0], None)
             if len(w) > 1 and w[1] == "keep":
                 keep_pdf.add(w[0])
@@ -140,6 +143,7 @@ def main():
                     dbg.mkdir(parents=True, exist_ok=True)
                     (dbg / p.name).write_bytes(p.read_bytes())
             new_src = {p.name for p in todo}
+            redone |= new_src & redo_names
             rp, up = ROOT / str(y) / ("%s_races.csv.gz" % t), ROOT / str(y) / ("%s_runs.csv.gz" % t)
             old_r = [x for x in read_gz(rp) if x["src"].split("#")[0] not in new_src]
             keep = {(x["ymd"], x["rno"]) for x in old_r}
@@ -156,6 +160,16 @@ def main():
                 w = csv.DictWriter(f, fieldnames=IDX_FIELDS)
                 w.writeheader()
                 w.writerows(sorted(index.values(), key=lambda r: (int(r["year"]), r["track"], int(r["kai"]), int(r["nichi"]))))
+    if redone:   # 取り直せた分は一覧から外す（残っていると次回も取り直してしまう）
+        keep_lines = []
+        for line in open(a.redo, encoding="utf-8"):
+            w = line.split("#")[0].split()
+            if w and w[0] in redone:
+                continue
+            keep_lines.append(line)
+        with open(a.redo, "w", encoding="utf-8") as f:
+            f.writelines(keep_lines)
+        print("取り直し一覧から %d 件を外しました（残り %d 行）" % (len(redone), sum(1 for l in keep_lines if l.split("#")[0].strip())), flush=True)
 
 
 if __name__ == "__main__":

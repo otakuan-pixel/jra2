@@ -22,7 +22,7 @@ Z2H = str.maketrans("０１２３４５６７８９．，：＋−－―ー（�
 RACE_FIELDS = ["ymd", "jo", "kai", "nichi", "rno", "name", "grade", "cls_txt", "surf", "dist", "inout", "turn",
                "weather", "cond", "heads", "laps", "first3", "last3", "last4", "corner_labels", "src"]
 RUN_FIELDS = ["ymd", "jo", "kai", "nichi", "rno", "horse", "place", "status", "waku", "num", "sex", "age", "wt",
-              "jockey", "hw", "hwd", "time", "odds", "pop", "c1", "c2", "c3", "c4", "corners"]
+              "jockey", "hw", "hwd", "time", "odds", "pop", "c1", "c2", "c3", "c4", "corners", "trainer", "blinker", "owner", "breeder"]
 
 
 def ctext(ch):
@@ -44,6 +44,17 @@ def norm(s):
 
 def zone_text(chs, sep=""):
     return sep.join(ctext(c) for c in sorted(chs, key=lambda c: (c["x0"], c["top"])))
+
+
+def lines_text(chs):
+    """複数行に折り返された欄（馬主・生産者）を、上の行から順に左→右で読む"""
+    rows = []
+    for c in sorted(chs, key=lambda c: c["top"]):
+        if rows and abs(rows[-1][0] - c["top"]) <= 1.6:
+            rows[-1][1].append(c)
+        else:
+            rows.append([c["top"], [c]])
+    return "".join("".join(ctext(c) for c in sorted(r, key=lambda c: c["x0"])) for _, r in rows)
 
 
 def parse_meta_from_name(path):
@@ -328,6 +339,10 @@ def parse_half(page, x0, x1, meta, src):
         zn = kept
         zw = [c for c in blk if 132 <= rx(c) < 154]
         zj = [c for c in blk if 154 <= rx(c) < 190.5 and c["size"] >= 4.5 and ctext(c) not in "()（）・"]
+        # 調教師：頭数の多いレースは字が小さい（4.4pt）。隣の馬主（〜232）・生産者（264〜）とは横位置で分ける
+        zr = [c for c in blk if 234.5 <= rx(c) < 263 and c["size"] >= 3.8 and abs(c["top"] - top) <= 3.5 and ctext(c) not in "()（）・"]
+        zo2 = [c for c in blk if 191.5 <= rx(c) < 233.5 and c["size"] >= 3.0]
+        zb = [c for c in blk if 263.2 <= rx(c) < 302 and c["size"] >= 3.0 and ctext(c) != "B"]
         zt = [c for c in blk if 300 <= rx(c) < 379]
         zo = [c for c in blk if 379 <= rx(c) < 401]
         ntx = norm(zone_text(zn)).replace(" ", "")
@@ -339,13 +354,19 @@ def parse_half(page, x0, x1, meta, src):
         wt = mwt.group(1) if mwt else ""
         jockey = norm(zone_text(zj)).replace(" ", "").replace("．", ".")
         jockey = re.sub(r"^\{\d+\}島", "鮫島", jockey)     # 外字（鮫）
+        trainer = norm(zone_text(zr)).replace(" ", "").replace("．", ".")
+        trainer = re.sub(r"^\{\d+\}島", "鮫島", trainer)
+        trainer = re.sub(r"\{\d+\}", "〓", trainer)   # そのほかの外字（PDFごとに番号が変わるので1つの記号にそろえる）
+        gai = lambda t: re.sub(r"\{\d+\}", "〓", norm(t).replace(" ", ""))
+        owner, breeder = gai(lines_text(zo2)), gai(lines_text(zb))
         tt = norm(zone_text(zt)).replace(" ", "")
-        hw = hwd = tm = ""
+        hw = hwd = tm = blinker = ""
         status = ""
         mw = re.search(r"(\d{3})([+\-±―]?)", tt)   # 先頭に馬装（B＝ブリンカー等）が混ざることがある。―＝初出走で増減なし
         rest = tt
         if mw:
             hw = int(mw.group(1))
+            blinker = "B" if "B" in tt[:mw.start()] else ""
             rest = tt[mw.end():]
             mt = re.match(r"^(\d{0,2}?)(\d:\d\d\.\d|\d\d\.\d)", rest)
             if mt:
@@ -377,7 +398,8 @@ def parse_half(page, x0, x1, meta, src):
                      "horse": horse, "place": pl, "status": status, "waku": waku, "num": num, "sex": sex, "age": age,
                      "wt": wt, "jockey": jockey, "hw": hw, "hwd": hwd, "time": tm, "odds": odds, "pop": "",
                      "c1": cs[0] if cs else "", "c2": "", "c3": "", "c4": cs[-1] if cs else "",
-                     "corners": "-".join(str(x) for x in cs if x != "")})
+                     "corners": "-".join(str(x) for x in cs if x != ""), "trainer": trainer, "blinker": blinker,
+                     "owner": owner, "breeder": breeder})
     # 同タイムで同着の可能性は扱わない（並び順＝着順）。人気は単勝オッズの順
     od = sorted((float(r["odds"]), r["num"]) for r in runs if r["odds"])
     rank = {n: i + 1 for i, (_, n) in enumerate(od)}
