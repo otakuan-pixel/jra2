@@ -1202,6 +1202,7 @@ def _wf_work(group):
                     "t_in": int(o["time"]["p10"] <= t_win <= o["time"]["p90"]) if o.get("time") else None,
                     "t_err": (o["time"]["p50"] - t_win) / race["dist"] * 1000 if o.get("time") else None,
                     "mk": [(x["ev"], x["odds"], int(hh["place"] == 1)) for x, hh in zip(market_ev(M, race) or [], H)],
+                    "five": [(fv["cover"], sum(1 for hh in H if hh["place"] <= 3 and hh["num"] in fv["marks"])) for fv in (five_pick(o["horses"]), five_pick(o["horses"], use_odds=False))],
                     "cal": [(min(int(p[i] * 20), 8), p[i], int(H[i]["place"] == 1)) for i in range(m)]})
     print("  %s の週 %d レース" % (asof, len(out)), flush=True)
     return out
@@ -1232,7 +1233,7 @@ def cmd_validate(a):
             return
         m = [r for r in rs if r["llm"] is not None]
         t = [r["t_in"] for r in rs if r["t_in"] is not None]
-        print("【%s】%d レース：SIM本命(◎) 勝率 %.1f%%・3着内 %.1f%%・単勝回収 %.0f%%・対数損失 %.3f（全馬同率なら %.3f）" % (
+        print("【%s】%d レース：SIM勝率1位 勝率 %.1f%%・3着内 %.1f%%・単勝回収 %.0f%%・対数損失 %.3f（全馬同率なら %.3f）" % (
             lab, n, 100 * sum(r["hit"] for r in rs) / n, 100 * sum(r["top3"] for r in rs) / n, 100 * sum(r["roi"] for r in rs) / n,
             sum(r["ll"] for r in rs) / n, sum(r["llu"] for r in rs) / n))
         if m:
@@ -1254,6 +1255,14 @@ def cmd_validate(a):
     te = [r["t_err"] for r in rows if r.get("t_err") is not None]
     if te:
         print("想定勝ち時計−実際（秒/1000m）：平均 %+.3f" % (sum(te) / len(te)))
+    fr = [r["five"] for r in rows if r.get("five")]
+    if fr:
+        print("5頭推奨（◎○▲△△）で1〜3着が全部入った割合")
+        for j, lab in ((0, "確定オッズ＋SIM"), (1, "SIMだけ")):
+            v = sorted([x[j] for x in fr], key=lambda t: -t[0])
+            print("  %s：全レース %.1f%%（2頭以上 %.1f%%）　自信度・高 %.1f%%（%dレース）　中 %.1f%%（%dレース）　低 %.1f%%（%dレース）" % (
+                lab, 100 * sum(c == 3 for _, c in v) / len(v), 100 * sum(c >= 2 for _, c in v) / len(v),
+                *[x for lo, hi in ((0.6, 9), (0.45, 0.6), (-1, 0.45)) for g in [[c for pc, c in v if lo <= pc < hi]] for x in (100 * sum(c == 3 for c in g) / max(len(g), 1), len(g))]))
     mk = [x for r in rows for x in r.get("mk", [])]
     if mk:
         print("オッズ込みの期待値で単勝を買った場合（確定オッズ。係数は2025年1月〜2026年11月15日で推定したので、その期間は参考値）")
@@ -1292,24 +1301,65 @@ def style_name(e):
     return "逃げ・先行" if e < 0.2 else ("先行" if e < 0.38 else ("中団" if e < 0.62 else "後方"))
 
 
-def assign_marks(hs):
-    """印は機械的に付ける：◎○▲=勝率順、△=残りの複勝率上位2頭、☆=6番人気以下で複勝率が最も高い馬"""
-    order = sorted(hs, key=lambda h: (-h["win"], -h["top3"]))
-    marks = {}
-    for h, m in zip(order[:3], "◎○▲"):
-        marks[h["num"]] = m
-    rest = sorted((h for h in hs if h["num"] not in marks), key=lambda h: -h["top3"])
-    hole = next((h for h in rest if (h.get("pop") or 0) >= 6), None)
-    if hole:
-        marks[hole["num"]] = "☆"
-    for h in [h for h in rest if h["num"] not in marks][:2]:
-        marks[h["num"]] = "△"
-    return marks
+# 5頭推奨（◎○▲△△）：1〜3着が5頭の中に全部入る確率が最も高くなる5頭を選ぶ。
+# 1) 各馬の勝率を、単勝オッズから見た勝率とSIMの勝率で作り直す（オッズが無ければSIMの勝率だけ）
+# 2) 2着・3着は勝率を λ 乗して平らにして決める（勝率そのままだと人気馬が2・3着にも来すぎる。ヘネリー式）
+# 3) これを2万回並べて、3着以内に入る回数の多い5頭を選ぶ。◎○▲＝その中の勝率上位3頭、△△＝残り2頭
+# 係数は2025年1月〜2026年11月15日の5,735レースで推定（年を入れ替えてもほぼ同じ値）。
+FIVE_W = (0.944, 0.089)        # 勝率の作り直し：単勝オッズから見た勝率（対数）、SIMの勝率（対数）
+FIVE_LAM = (0.827, 0.718)      # 2着目・3着目の λ（オッズあり）
+FIVE_LAM_SIM = (0.815, 0.715)  # 同（SIMだけ）
+
+
+def five_pick(hs, odds=None, seed=7, S=20000, use_odds=True):
+    """hs＝simulate の horses。odds＝{馬番: 単勝}（無ければ各馬の odds を使い、1頭でも欠ければSIMだけ）。
+    返り値：marks（馬番→印）、cover（1〜3着が5頭に全部入る確率）、cover2（2頭以上入る確率）、p（作り直した勝率）、p3（3着以内の確率）、src"""
+    import numpy as np
+    H = [h for h in hs if str(h.get("num", "")).isdigit()]
+    m = len(H)
+    if m == 0:
+        return {"marks": {}, "cover": None, "cover2": None, "p": {}, "p3": {}, "src": ""}
+    od = [(odds or {}).get(int(h["num"])) if odds else h.get("odds") for h in H] if use_odds else [None]
+    sw = np.array([max(h["win"], 1e-4) for h in H])
+    if all(v and v > 0 for v in od):
+        inv = 1.0 / np.array(od, float)
+        sc = FIVE_W[0] * np.log(inv / inv.sum()) + FIVE_W[1] * np.log(sw)
+        lam, src = FIVE_LAM, "odds"
+    else:
+        sc, lam, src = np.log(sw), FIVE_LAM_SIM, "sim"
+    p = np.exp(sc - sc.max()); p /= p.sum()
+    rng = np.random.default_rng(seed)
+    lp = np.log(p)
+    first = np.argmax(lp[None, :] + rng.gumbel(size=(S, m)), axis=1)
+    g2 = lam[0] * lp[None, :] + rng.gumbel(size=(S, m)); g2[np.arange(S), first] = -np.inf
+    second = np.argmax(g2, axis=1)
+    g3 = lam[1] * lp[None, :] + rng.gumbel(size=(S, m)); g3[np.arange(S), first] = -np.inf; g3[np.arange(S), second] = -np.inf
+    third = np.argmax(g3, axis=1) if m >= 3 else second
+    t3 = (np.bincount(first, minlength=m) + np.bincount(second, minlength=m) + np.bincount(third, minlength=m)) / S
+    k = min(5, m)
+    top = sorted(range(m), key=lambda i: (-t3[i], -p[i]))[:k]
+    inn = np.zeros(m, bool); inn[top] = True
+    cnt = inn[first].astype(int) + inn[second].astype(int) + inn[third].astype(int)
+    order = sorted(top, key=lambda i: -p[i])
+    marks = {H[i]["num"]: mk for i, mk in zip(order, "◎○▲△△")}
+    return {"marks": marks, "cover": float(np.mean(cnt == 3)), "cover2": float(np.mean(cnt >= 2)),
+            "p": {H[i]["num"]: float(p[i]) for i in range(m)}, "p3": {H[i]["num"]: float(t3[i]) for i in range(m)}, "src": src}
+
+
+def five_conf(c):
+    """1〜3着が全部入る確率の目安。検証（5,735レース）では、予想60%以上→実際72%、50〜60%→58%、40〜50%→43%、30〜40%→35%、30%未満→20%前後"""
+    if c is None:
+        return "—"
+    return "高" if c >= 0.6 else "中" if c >= 0.45 else "低"
+
+
+def assign_marks(hs, odds=None):
+    return five_pick(hs, odds)["marks"]
 
 
 def note_text(race, o, meta):
     hs = sorted(o["horses"], key=lambda h: (-h["win"], -h["top3"]))
-    marks = assign_marks(o["horses"])
+    marks = o.get("marks") or assign_marks(o["horses"])
     d = race["date"]
     wd = "月火水木金土日"[dt.date(int(d[:4]), int(d[4:6]), int(d[6:])).weekday()]
     surf = {"芝": "芝", "ダ": "ダート", "障": "障害"}[race["surf"]]
@@ -1382,8 +1432,13 @@ def note_text(race, o, meta):
         L.append("")
     L.append("―――（有料にする場合は、ここから下を有料部分にする案）―――")
     L.append("")
-    L.append("## 印")
-    for h in hs:
+    L.append("## 印（5頭推奨）")
+    fv = o.get("five") or {}
+    if fv.get("cover") is not None:
+        L.append("1〜3着がこの5頭に全部入る確率 %s（自信度：%s）、2頭以上入る確率 %s。%s" % (
+            pct(fv["cover"]), five_conf(fv["cover"]), pct(fv["cover2"]),
+            "単勝オッズ（%s）とシミュレーションの勝率から計算。" % fv.get("odds_asof", "") if fv.get("src") == "odds" else "シミュレーションの勝率だけから計算（オッズは未使用）。"))
+    for h in sorted(hs, key=lambda h: "◎○▲△△".find(marks.get(h["num"], "×")) if h["num"] in marks else 9):
         if h["num"] in marks:
             extra = "　単勝%.1f倍（%d番人気）" % (h["odds"], h["pop"]) if h.get("odds") and h.get("pop") else ""
             L.append("%s %s番 %s%s" % (marks[h["num"]], h["num"], h["name"], extra))
@@ -1426,7 +1481,7 @@ def render_card(race, o, path, meta):
     INK, SUB, LINE, BG = "#0b0b0b", "#52514e", "#dddcd6", "#fcfcfb"
     C3, C2, C1 = "#86b6ef", "#3987e5", "#184f95"       # 複勝率・連対率・勝率（同じ青の濃淡）
     hs = sorted(o["horses"], key=lambda h: (-h["win"], -h["top3"]))
-    marks = assign_marks(o["horses"])
+    marks = o.get("marks") or assign_marks(o["horses"])
     n = len(hs)
     W, row, top, bot = 10.8, 0.46, 1.75, 0.95
     H = top + bot + row * n
@@ -1472,7 +1527,7 @@ def render_card(race, o, path, meta):
         ax.text(W - 0.4, y, od, fontsize=9.5, color=SUB, ha="right", va="center")
     ax.plot([x_bar, x_bar], [H - top, bot - 0.05], color="#b9b8b1", lw=0.8)
     fy = bot - 0.3
-    ax.text(0.4, fy, "勝率＝1着、連対率＝2着以内、複勝率＝3着以内に入った回数の割合。印は勝率・複勝率の順に機械的に付けています。", fontsize=8.6, color=SUB, va="center")
+    ax.text(0.4, fy, "勝率＝1着、連対率＝2着以内、複勝率＝3着以内に入った回数の割合。印は1〜3着が入りやすい5頭（◎○▲△△）。", fontsize=8.6, color=SUB, va="center")
     ax.text(0.4, fy - 0.26, "%sの試行で、勝率の誤差は%s。オッズは%s時点。的中を保証するものではありません。" % (n_txt(o["n"]), err_txt(o["n"]), meta.get("asof", "前日")),
             fontsize=8.6, color=SUB, va="center")
     fig.savefig(path, dpi=120, facecolor=BG)
@@ -1611,9 +1666,11 @@ def cmd_sim(a):
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
     tag = "%s_%s_%02d" % (race["date"], race["jo"], race["r"])
     o["race"] = {k: race[k] for k in ("date", "jo", "venue", "r", "name", "grade", "cls", "surf", "dist", "inout", "post", "day")}
-    o["marks"] = assign_marks(o["horses"])
     o["asof"] = snap
     odds_in = parse_odds(a.odds) if getattr(a, "odds", None) else None
+    fv = five_pick(o["horses"], odds_in)
+    fv["odds_asof"] = (a.odds_asof or "指定のオッズ") if odds_in else snap + "の出馬表"
+    o["marks"], o["five"] = fv["marks"], fv
     mk = market_ev(model, race, odds_in)
     if mk:
         o["market"] = {"asof": (a.odds_asof or "指定のオッズ") if odds_in else snap + "（出馬表のオッズ）", "horses": mk}
@@ -1633,6 +1690,12 @@ def cmd_sim(a):
             o["marks"].get(h["num"], "　"), h["num"], h["name"], pct(h["win"]), pct(h["top2"]), pct(h["top3"]), h["avg_rank"], style_name(h["style"]),
             h["runs"], "%d" % h["pop"] if h.get("pop") else "—", "%.1f" % h["odds"] if h.get("odds") else "—", ev,
             "%d/%d %s" % (round(o["dual"][h["num"]]["g_idx"]), round(o["dual"][h["num"]]["h_idx"]), " ".join(h["notes"]))))
+    fv = o["five"]
+    print("■ 5頭推奨 %s　1〜3着が全部入る確率 %s（自信度：%s）・2頭以上 %s　計算に使ったもの：%s" % (
+        " ".join("%s%s" % (mk, num) for num, mk in sorted(fv["marks"].items(), key=lambda kv: "◎○▲△△".find(kv[1]))),
+        pct(fv["cover"]), five_conf(fv["cover"]), pct(fv["cover2"]),
+        "単勝オッズ（%s）＋SIMの勝率" % fv["odds_asof"] if fv["src"] == "odds" else "SIMの勝率だけ（全馬のオッズがそろっていない）"))
+    print("   自信度の目安（検証5,735レース）：高（60%以上）→実際72%、中（45〜60%）→実際50〜58%、低→20〜43%。全レース平均は36%")
     if o.get("market"):
         print("■ オッズ込みの期待値（検証中）　オッズ：%s" % o["market"]["asof"])
         print("   馬番 馬名            単勝   市場の見立て  作り直した勝率  期待値")
