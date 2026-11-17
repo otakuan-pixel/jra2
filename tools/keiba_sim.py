@@ -10,10 +10,12 @@
 第4版（2026-11-17）：通し検証で残っていた偏りを、騎手の勝率・馬体重・前走の着順と上り下り・クラスの上げ下げ・
 間隔・コース適性・枠・脚質・キャリアの浅い馬の調教師、の情報で補正した。
 
+オッズ込みの期待値（検証中）：sim に --odds "馬番:単勝,…" を渡すと、オッズにSIMの能力値などを足して勝率を作り直し、期待値を出す。
+
 サブコマンド
   builddb  --repo <jra2のclone> --out <DB>         出馬表の全履歴＋成績データ → DB（runs.tsv / races.json.gz）
   list     --db <DB> [--date YYYYMMDD] [--q 名前]   レースを探す
-  sim      --db <DB> --race YYYYMMDD:場:R [--going 良:0.7,稍重:0.3] [--n 10000] --out <DIR>   良馬場・重馬場に固定した指数も同時に出す
+  sim      --db <DB> --race YYYYMMDD:場:R [--going 良:0.7,稍重:0.3] [--n 10000] [--odds "1:4.4,2:12.3,…" --odds-asof "11/22 14:50"] --out <DIR>   良馬場・重馬場に固定した指数も同時に出す
   backtest --db <DB> [--n 300]                      出馬表のあるレースで精度を測る（前日オッズとの比較つき）
   validate --db <DB> [--since YYYYMMDD] [--until YYYYMMDD] [--n 1000]
                                                     成績データの全レースを「その週までのデータ」だけで予想して精度を測る（通し検証）
@@ -84,6 +86,20 @@ P = {
 
 
 TIME_BIAS = 1.36   # 想定時計の補正（秒/1000m）。通し検証（5,735レース）で想定が速すぎた分
+# オッズ込みの期待値（検証中）：単勝オッズから見た勝率に、SIMの能力値と「市場が見誤りやすい向き」を足して勝率を作り直す。
+# 係数は2025年1月〜2026年11月15日の5,735レースで推定。四半期ごとの入れ替え検証では、期待値0.9以上（50倍未満）で単勝回収率97%（誤差の幅86〜108%）、
+# 1.0以上（50倍未満）で102%（72〜137%）。確定オッズでの検証なので、発走前のオッズで買う実戦ではこれより下がりうる。
+MK = {"lpm": 0.9816,     # 単勝オッズから見た勝率（対数）
+      "mu": 0.2493,      # SIMの能力値（秒/1000m）
+      "l10": 0.2281,     # 前走10着以下（市場が嫌いすぎる）
+      "l6_9": 0.1209,    # 前走6〜9着
+      "jk_wr": -0.0992,  # 騎手の勝率（対数。上位騎手は買われすぎ）
+      "closer": -0.1866, # 追込脚質（買われすぎ）
+      "drop": -0.1794,   # 前走より下のクラス（買われすぎ）
+      "n1": -0.1237,     # 評価できる過去走が1走だけ（買われすぎ）
+      "a3": 0.1187,      # 古馬と走る3歳（低く見られがち）
+      "quick": -0.0957,  # 連闘・中1週（買われすぎ）
+      "tr_wr": -0.0517}  # 調教師の勝率（対数。上位厩舎は買われすぎ）
 TIME_BAD = -0.38   # 不良馬場のときの追加補正（不良だけ想定が遅すぎた。137レース）
 TIME_BAND = 0.75   # 想定時計の「8割の幅」の縮め方（そのままだと実際の92%が入る広さだったため）
 
@@ -781,9 +797,26 @@ class Model:
                 mu -= Pm["k_layoff"] * min(1.0, (lay - 120) / 180.0); notes.append("休み明け%d日" % lay)
         else:
             lay = None; notes.append("初出走")
+        mkf = {}
         if surf != "障":   # 第4版の補正（平地のみ）
             fp = [r for r in rs if r["F"] is not None and r["surf"] != "障"]
             js = self.jockey_stats(date).get(jn, (0, 0, 0.0))
+            # オッズ込みの期待値（MK）で使う項目
+            mkf["jk_wr"] = math.log(((js[1] + 3.5) / (js[0] + 50.0)) / 0.07)
+            mkf["closer"] = 1.0 if len(e_w) >= 2 and sum(w * v for w, v in zip(e_w, e_v)) / sum(e_w) >= 0.8 else 0.0
+            mkf["n1"] = 1.0 if len(fs) == 1 else 0.0
+            mkf["a3"] = 1.0 if _i(h.get("age"), 0) == 3 and len({x.get("age") for x in field if x.get("age")}) > 1 else 0.0
+            if h.get("trainer"):
+                t_wr0 = self.trainer_stats(date)[0]
+                tk0 = self._name_key(h["trainer"], t_wr0)
+                if tk0 in t_wr0 and t_wr0[tk0][0] >= 1:
+                    mkf["tr_wr"] = math.log(((t_wr0[tk0][1] + 3.5) / (t_wr0[tk0][0] + 50.0)) / 0.07)
+            if fp:
+                lp0 = fp[0]["pl"] or 0
+                mkf["l10"] = 1.0 if lp0 >= 10 else 0.0
+                mkf["l6_9"] = 1.0 if 6 <= lp0 <= 9 else 0.0
+                mkf["drop"] = 1.0 if self.clv.get(race["cls"], 0.0) < self.clv.get(fp[0]["cls"], 0.0) - 0.05 else 0.0
+                mkf["quick"] = 1.0 if (d0 - dt.date(int(fp[0]["ymd"][:4]), int(fp[0]["ymd"][4:6]), int(fp[0]["ymd"][6:]))).days <= 15 else 0.0
             mu += Pm["k_jk_wr"] * math.log(((js[1] + 3.5) / (js[0] + 50.0)) / 0.07) + Pm["k_jk_vm"] * 50.0 * (js[1] - js[2]) / (js[0] + 100.0)
             m_f = len(field)
             g_rel = (_i(h.get("num"), 0) - 1) / (m_f - 1) if m_f >= 12 and _i(h.get("num"), 0) else None
@@ -837,7 +870,7 @@ class Model:
         return {"mu": mu, "sig": sig, "apt": apt, "e": e, "e_n": len(e_w), "n": len(fs), "sw": sw, "lay": lay,
                 "jd": jd, "notes": notes, "n_wet": len(wet),
                 "best": max(fs) if fs else None, "avg": (sum(w * f for w, f in zip(ws, fs)) / sw) if sw else None,
-                "last_f3": next((r["f3v"] for r in rs if r["f3v"]), None)}
+                "last_f3": next((r["f3v"] for r in rs if r["f3v"]), None), "mkf": mkf}
 
     def _adhoc(self, p, horse):
         """DBに無い過去走（当日読み込んだ出馬表の分）をその場で指数化"""
@@ -1020,7 +1053,10 @@ def backtest(races, runs, params=None, n=300, dates=None, verbose=False, models=
         wi = names.index(rr["winner"])
         p = np.array([h["win"] for h in hs]); p = (p * n + 0.5) / (n + 0.5 * len(hs))
         od = np.array([h["odds"] or np.nan for h in hs])
-        pm = (1 / od) / np.nansum(1 / od) if np.isfinite(od).all() else None
+        # 出馬表のオッズが「前日オッズ」と言えるのは、レース当日の朝9時より前に取得したものだけ（当日に取り直した分は確定オッズに近い）
+        lim = dt.datetime(int(race["date"][:4]), int(race["date"][4:6]), int(race["date"][6:]), 9, 0, tzinfo=dt.timezone(dt.timedelta(hours=9))).timestamp()
+        pre = bool(race.get("snap")) and race["snap"] < lim
+        pm = (1 / od) / np.nansum(1 / od) if pre and np.isfinite(od).all() else None
         top = int(np.argmax(p))
         row = {"key": k, "m": len(hs), "ll": -math.log(p[wi]), "llu": math.log(len(hs)), "hit": int(top == wi), "pwin": float(p[wi]),
                "top_p": float(p[top]), "top_odds": hs[top]["odds"], "top_pl": rr["place"].get(names[top]),
@@ -1081,6 +1117,41 @@ def cmd_backtest(a):
             print("  %2d〜%3d%%：%4d頭　SIM平均 %4.1f%%　実際 %4.1f%%" % (lo * 100, min(hi, 1) * 100, m.sum(), P_[m].mean() * 100, Y_[m].mean() * 100))
 
 
+# ───────────────────────── オッズ込みの期待値（検証中） ─────────────────────────
+def market_ev(model, race, odds=None):
+    """単勝オッズ（odds={馬番: オッズ}。無ければ出馬表のオッズ）から、作り直した勝率と期待値を返す。全馬のオッズがそろわなければ None"""
+    if race["surf"] == "障":
+        return None
+    H = [h for h in race["horses"] if not h.get("cancel") and str(h.get("num", "")).isdigit()]
+    od = []
+    for h in H:
+        v = (odds or {}).get(int(h["num"])) if odds else h.get("odds")
+        if not v or v <= 0:
+            return None
+        od.append(float(v))
+    if len(H) < 2:
+        return None
+    jk = model.jockeys(race["date"])
+    rt = [model.rate(h, race, jk) for h in H]
+    inv = [1.0 / v for v in od]
+    pm = [x / sum(inv) for x in inv]
+    sc = [MK["lpm"] * math.log(q) + MK["mu"] * x["mu"] + sum(MK[k] * v for k, v in x["mkf"].items() if k in MK) for q, x in zip(pm, rt)]
+    mx = max(sc)
+    ex = [math.exp(v - mx) for v in sc]
+    p = [v / sum(ex) for v in ex]
+    return [{"num": h["num"], "name": h["name"], "odds": o_, "pm": q, "p": pp, "ev": pp * o_} for h, o_, q, pp in zip(H, od, pm, p)]
+
+
+def parse_odds(s):
+    """ "1:4.4,2:12.3" または "1=4.4 2=12.3" → {1: 4.4, 2: 12.3} """
+    out = {}
+    for tok in re.split(r"[,\s]+", (s or "").strip()):
+        if tok:
+            k, v = re.split(r"[:=]", tok)
+            out[int(k)] = float(v)
+    return out
+
+
 # ───────────────────────── 通し検証（成績データの全レースを、その週までのデータだけで予想） ─────────────────────────
 _WF = {}
 
@@ -1130,6 +1201,7 @@ def _wf_work(group):
                     "roi": (H[top]["odds"] or 0.0) * int(H[top]["place"] == 1), "roi_fav": (H[fav]["odds"] or 0.0) * int(H[fav]["place"] == 1) if pm else None,
                     "t_in": int(o["time"]["p10"] <= t_win <= o["time"]["p90"]) if o.get("time") else None,
                     "t_err": (o["time"]["p50"] - t_win) / race["dist"] * 1000 if o.get("time") else None,
+                    "mk": [(x["ev"], x["odds"], int(hh["place"] == 1)) for x, hh in zip(market_ev(M, race) or [], H)],
                     "cal": [(min(int(p[i] * 20), 8), p[i], int(H[i]["place"] == 1)) for i in range(m)]})
     print("  %s の週 %d レース" % (asof, len(out)), flush=True)
     return out
@@ -1182,6 +1254,14 @@ def cmd_validate(a):
     te = [r["t_err"] for r in rows if r.get("t_err") is not None]
     if te:
         print("想定勝ち時計−実際（秒/1000m）：平均 %+.3f" % (sum(te) / len(te)))
+    mk = [x for r in rows for x in r.get("mk", [])]
+    if mk:
+        print("オッズ込みの期待値で単勝を買った場合（確定オッズ。係数は2025年1月〜2026年11月15日で推定したので、その期間は参考値）")
+        for lab, f in (("期待値1.0以上", lambda x: x[0] >= 1.0), ("期待値1.0以上・50倍未満", lambda x: x[0] >= 1.0 and x[1] < 50),
+                       ("期待値0.9以上・50倍未満", lambda x: x[0] >= 0.9 and x[1] < 50), ("期待値0.8未満・10倍未満（割高）", lambda x: x[0] < 0.8 and x[1] < 10)):
+            bb = [x for x in mk if f(x)]
+            if bb:
+                print("  %s：%d点　的中 %.1f%%　回収 %.0f%%" % (lab, len(bb), 100 * sum(x[2] for x in bb) / len(bb), 100 * sum(x[1] * x[2] for x in bb) / len(bb)))
     print("勝率の当たり具合（SIMが付けた勝率の帯ごとに、実際に勝った割合）")
     for b in sorted(acc):
         v = acc[b]
@@ -1533,6 +1613,10 @@ def cmd_sim(a):
     o["race"] = {k: race[k] for k in ("date", "jo", "venue", "r", "name", "grade", "cls", "surf", "dist", "inout", "post", "day")}
     o["marks"] = assign_marks(o["horses"])
     o["asof"] = snap
+    odds_in = parse_odds(a.odds) if getattr(a, "odds", None) else None
+    mk = market_ev(model, race, odds_in)
+    if mk:
+        o["market"] = {"asof": (a.odds_asof or "指定のオッズ") if odds_in else snap + "（出馬表のオッズ）", "horses": mk}
     json.dump(o, open(out / ("sim_%s.json" % tag), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     open(out / ("note_%s.txt" % tag), "w", encoding="utf-8").write(note_text(race, o, meta))
     card = render_card(race, o, str(out / ("card_%s.png" % tag)), meta)
@@ -1549,6 +1633,16 @@ def cmd_sim(a):
             o["marks"].get(h["num"], "　"), h["num"], h["name"], pct(h["win"]), pct(h["top2"]), pct(h["top3"]), h["avg_rank"], style_name(h["style"]),
             h["runs"], "%d" % h["pop"] if h.get("pop") else "—", "%.1f" % h["odds"] if h.get("odds") else "—", ev,
             "%d/%d %s" % (round(o["dual"][h["num"]]["g_idx"]), round(o["dual"][h["num"]]["h_idx"]), " ".join(h["notes"]))))
+    if o.get("market"):
+        print("■ オッズ込みの期待値（検証中）　オッズ：%s" % o["market"]["asof"])
+        print("   馬番 馬名            単勝   市場の見立て  作り直した勝率  期待値")
+        for x in sorted(o["market"]["horses"], key=lambda x: -x["ev"]):
+            print("%s %2s %-10s\t%6.1f   %5.1f%%       %5.1f%%      %.2f" % (
+                "★" if x["ev"] >= 1.0 and x["odds"] < 50 else "☆" if x["ev"] >= 0.9 and x["odds"] < 50 else "　", x["num"], x["name"], x["odds"], 100 * x["pm"], 100 * x["p"], x["ev"]))
+        print("   ★＝期待値1.0以上、☆＝0.9以上（どちらも単勝50倍未満だけ。50倍以上はもともと回収率が60%前後と低いので対象外）。")
+        print("   過去の検証（確定オッズ）では、★の単勝回収率は102%（誤差の幅72〜137%）、☆以上で97%（86〜108%）。オッズが動けば期待値も変わる。")
+    else:
+        print("■ オッズ込みの期待値：全馬の単勝オッズがそろっていないので出せません（--odds \"1:4.4,2:12.3,…\" で渡す）")
     print("馬連上位:", " ".join("%s(%s)" % (k, pct(v)) for k, v in o["umaren"][:5]))
     print("3連複上位:", " ".join("%s(%s)" % (k, pct(v)) for k, v in o["sanrenpuku"][:5]))
     print("出力:", out / ("sim_%s.json" % tag), out / ("note_%s.txt" % tag), card or "（画像なし：日本語フォントが見つかりません）", dual or "")
@@ -1561,6 +1655,7 @@ if __name__ == "__main__":
     b = sub.add_parser("sim"); b.add_argument("--db", required=True); b.add_argument("--race"); b.add_argument("--q"); b.add_argument("--date")
     b.add_argument("--html"); b.add_argument("--going"); b.add_argument("--n", type=int, default=10000); b.add_argument("--detail", type=int, default=6000); b.add_argument("--seed", type=int)
     b.add_argument("--front-bias", dest="front_bias", type=float, default=0.0); b.add_argument("--weather-note", dest="weather_note"); b.add_argument("--out", default="out")
+    b.add_argument("--odds", help='発走前の単勝オッズ。"1:4.4,2:12.3,…"（全馬ぶん）'); b.add_argument("--odds-asof", dest="odds_asof", help="そのオッズの時刻（例 11/22 14:50）")
     b = sub.add_parser("backtest"); b.add_argument("--db", required=True); b.add_argument("--n", type=int, default=300)
     b = sub.add_parser("validate"); b.add_argument("--db", required=True); b.add_argument("--since", default="20260101"); b.add_argument("--until", default="99999999"); b.add_argument("--n", type=int, default=1000)
     a = ap.parse_args()
