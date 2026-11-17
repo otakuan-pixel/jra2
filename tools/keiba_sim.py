@@ -7,6 +7,9 @@
 天候→馬場状態の確率と合わせて N 回レースを走らせ、勝率・連対率・複勝率・展開・想定時計を出す。
 どちらも GitHub Actions が otakuan-pixel/jra2 に保存している。
 
+第4版（2026-11-17）：通し検証で残っていた偏りを、騎手の勝率・馬体重・前走の着順と上り下り・クラスの上げ下げ・
+間隔・コース適性・枠・脚質・キャリアの浅い馬の調教師、の情報で補正した。
+
 サブコマンド
   builddb  --repo <jra2のclone> --out <DB>         出馬表の全履歴＋成績データ → DB（runs.tsv / races.json.gz）
   list     --db <DB> [--date YYYYMMDD] [--q 名前]   レースを探す
@@ -26,7 +29,7 @@ JO_R = {v: k for k, v in JO.items()}
 WET = {"良": 0.0, "稍重": 0.45, "重": 0.8, "不良": 1.0}
 RUN_FIELDS = ["horse", "ymd", "rc", "jo", "kai", "nichi", "rno", "race", "grade", "surf", "dist", "cond",
               "time", "place", "heads", "gate", "pop", "jockey", "wt", "hw", "corners", "f3", "vs", "diff", "rating",
-              "l3", "sex", "age", "odds"]
+              "l3", "sex", "age", "odds", "trainer", "owner", "breeder", "blinker"]
 
 # ───────────────────────── パラメータ（backtest で調整した値） ─────────────────────────
 P = {
@@ -49,19 +52,39 @@ P = {
     "age_adj": {3: 0.36, 4: 0.15, 6: -0.10, 7: -0.20},   # 年齢の違う馬が走るレースだけ。5歳が基準、7は7歳以上
     "fem_adj": -0.04,    # 牡馬・せん馬と走る牝馬
     "n0_gap": 0.5,       # 評価できる過去走が無い馬を、クラス平均からどれだけ下に置くか（従来 0.1）
+    # ── 第4版で足した補正（第3版の残りの偏りから。2025年で推定→2026年で確認、逆向きでも同じ符号。単位は秒/1000m） ──
+    "k_hw": 0.057,       # 馬体重（過去6走の平均）30kgあたり。470kgが基準。大型馬ほど勝ち、420kg以下は見込みの0.69倍しか勝っていなかった
+    "k_jk_wr": 0.115,    # 騎手の直近2年の勝率（7%が基準、対数）
+    "k_jk_vm": 0.065,    # 騎手が市場の見立て（単勝オッズ）より勝っている度合い
+    "last_adj": {2: 0.106, 3: 0.052, 6: -0.072, 10: -0.082},   # 前走の着順：2着、3着、6〜9着、10着以下
+    "k_trend": 0.088,    # 前走の指数−これまでの平均（上り調子・下り調子）
+    "drop_adj": 0.141,   # 前走より下のクラスに出る馬
+    "quick_adj": -0.127, # 連闘・中1週（前走から15日以内）
+    "gate_d": 0.112,     # ダート12頭以上：外枠ほど有利（内→外で±0.056）
+    "gate_t": -0.065,    # 芝12頭以上：内枠ほど有利
+    "k_front": 0.141,    # 前に行く脚質
+    "k_maxcls": 0.223,   # いまより上のクラスを走った経験
+    "k_course": 0.459,   # その競馬場（同じ芝ダ）での指数が、ほかの場より高い／低い
+    "n2_adj": 0.082,     # 評価できる過去走がちょうど2走の馬（見込みの1.15倍勝っていた）
+    "k_winrate": 0.475,  # 通算の勝率（3走以上。10%が基準）
+    "short_adj": 0.082,  # 前走から400m以上の距離短縮（同じ芝ダ）
+    "k_draw": 0.173,     # コースごとの枠の有利不利（過去の内枠・外枠の着順の差から）
+    "k_tr_young": 0.23,  # 評価できる過去走が2走以下の馬だけ：調教師の直近2年の勝率（7%が基準、対数）
+    "k_tr_debut": 0.125, # 同：その調教師の馬がデビュー1〜2戦目に出した指数の水準
     "k_going": 1.0,      # 道悪適性の反映率
     "k_dist": 0.10,      # 距離未経験の割引
     "k_rec": 0.5,        # 通算の3着内率の反映
     "k_west": 0.03,      # 栗東所属
     # ── レース中のゆらぎ ──
-    "sigma0": 0.62,      # 1走ごとのばらつき（秒/1000m）。全馬共通・裾の長い分布（ロジスティック分布）
+    "sigma0": 0.80,      # 1走ごとのばらつき（秒/1000m）。全馬共通・裾の長い分布（ロジスティック分布）
     "sigma_scale": 1.0,
     "b_pace": 0.03,      # ペース×位置取り（過去走9,958件の回帰では0.047±0.008。位置取りは結果にも左右されるので控えめに採用）
     "g_bias": 0.03,      # コース・馬場の前残り傾向×位置取り（同 0.066±0.010。同上）
 }
 
 
-TIME_BIAS = 0.79   # 想定時計の補正（秒/1000m）。通し検証（2026年・1,360レース）で想定が速すぎた分
+TIME_BIAS = 1.36   # 想定時計の補正（秒/1000m）。通し検証（5,735レース）で想定が速すぎた分
+TIME_BAD = -0.38   # 不良馬場のときの追加補正（不良だけ想定が遅すぎた。137レース）
 TIME_BAND = 0.75   # 想定時計の「8割の幅」の縮め方（そのままだと実際の92%が入る広さだったため）
 
 # ───────────────────────── 共通の小道具 ─────────────────────────
@@ -261,7 +284,8 @@ def load_results(repo):
                     "surf": ri["surf"], "dist": ri["dist"], "cond": ri["cond"], "time": u["time"], "place": u["place"],
                     "heads": str(starters), "gate": u["num"], "pop": u["pop"], "jockey": u["jockey"], "wt": u["wt"],
                     "hw": u["hw"], "corners": u["corners"], "f3": "", "vs": vs, "diff": "%.1f" % diff, "rating": "",
-                    "l3": ri["last3"], "sex": u["sex"] if u["sex"] in ("牡", "牝") else "セ", "age": u["age"], "odds": u["odds"]})
+                    "l3": ri["last3"], "sex": u["sex"] if u["sex"] in ("牡", "牝") else "セ", "age": u["age"], "odds": u["odds"],
+                    "trainer": u.get("trainer", ""), "owner": u.get("owner", ""), "breeder": u.get("breeder", ""), "blinker": u.get("blinker", "")})
     return out
 
 
@@ -607,6 +631,18 @@ class Model:
         self.front_all = tot[0] / max(tot[1], 1)
         sh = lambda v: (v[0] + 30 * self.front_all) / (v[1] + 30)
         self.front_course = {k: sh(v) for k, v in a.items()}
+        # 枠の有利不利：コース（場×芝ダ×距離）ごとに、内3分の1と外3分の1の平均着順（頭数で割った位置）の差。＋なら内が有利
+        dr = collections.defaultdict(lambda: [0, 0.0, 0, 0.0])
+        for r in self.runs:
+            g = _i(r.get("gate"))
+            if r["jra"] and r["pl"] and r["surf"] in ("芝", "ダ") and r["hd"] >= 10 and g:
+                gr, pc = (g - 1) / (r["hd"] - 1), (r["pl"] - 1) / (r["hd"] - 1)
+                v = dr[(r["jo"], r["surf"], r["d"])]
+                if gr < 1 / 3:
+                    v[0] += 1; v[1] += pc
+                elif gr > 2 / 3:
+                    v[2] += 1; v[3] += pc
+        self.draw = {k: (v[3] / v[2] - v[1] / v[0]) * min(v[0], v[2]) / (min(v[0], v[2]) + 150.0) for k, v in dr.items() if v[0] and v[2]}
         self.front_cond = {k: sh(v) for k, v in b.items()}
 
     def front_index(self, jo, surf, dist, cond):
@@ -630,6 +666,56 @@ class Model:
         out = {j: sum(v) / (len(v) + 40) for j, v in acc.items()}
         self._jockeys_cache[asof] = out
         return out
+
+    def jockey_stats(self, asof):
+        """騎手ごとの直近2年の（騎乗数, 勝ち数, 単勝オッズから見た勝ち数の見込み）。平地・JRA・オッズのある走りだけ"""
+        if not hasattr(self, "_jstat_cache"):
+            self._jstat_cache = {}
+        if asof in self._jstat_cache:
+            return self._jstat_cache[asof]
+        cut = "%04d%s" % (int(asof[:4]) - 2, asof[4:])
+        acc = collections.defaultdict(lambda: [0, 0, 0.0])
+        for r in self.runs:
+            if r["jra"] and r["pl"] is not None and r["surf"] != "障" and cut <= r["ymd"] < asof:
+                od = fl(r.get("odds"))
+                if od:
+                    a = acc[r["jockey"]]
+                    a[0] += 1; a[1] += r["pl"] == 1; a[2] += 0.8 / od
+        self._jstat_cache[asof] = acc
+        return acc
+
+    def trainer_stats(self, asof):
+        """調教師ごとの直近2年の（出走数, 勝ち数）と、管理馬のデビュー1〜2戦目の指数（クラス平均との差）の一覧"""
+        if not hasattr(self, "_tstat_cache"):
+            self._tstat_cache = {}
+        if asof in self._tstat_cache:
+            return self._tstat_cache[asof]
+        cut = "%04d%s" % (int(asof[:4]) - 2, asof[4:])
+        wr, young = collections.defaultdict(lambda: [0, 0]), collections.defaultdict(list)
+        for rs in self.by_horse.values():
+            past = [r for r in rs if r["ymd"] < asof]
+            m = len(past)
+            for i, r in enumerate(past):
+                tr = r.get("trainer")
+                if not tr or not r["jra"] or r["pl"] is None or r["surf"] == "障" or r["ymd"] < cut:
+                    continue
+                if fl(r.get("odds")):
+                    wr[tr][0] += 1; wr[tr][1] += r["pl"] == 1
+                if (m - i) <= 2 and r["F"] is not None:
+                    young[tr].append(r["F"] - self.clv.get(r["cls"], 0.0))
+        out = (dict(wr), {k: sum(v) / (len(v) + 30.0) for k, v in young.items()})
+        self._tstat_cache[asof] = out
+        return out
+
+    @staticmethod
+    def _name_key(name, table):
+        """成績PDFでは外字が「〓」になる。出馬表の名前（例：髙野）と突き合わせる"""
+        if not name or name in table:
+            return name
+        for k in table:
+            if "〓" in k and len(k) == len(name) and all(a == b or a == "〓" for a, b in zip(k, name)):
+                return k
+        return name
 
     # ── 1頭の評価 ──
     def rate(self, h, race, jk):
@@ -685,7 +771,8 @@ class Model:
             mu += Pm["age_adj"].get(min(int(h["age"]), 7), 0.0)
         if h.get("sex") == "牝" and any(x.get("sex") and x.get("sex") != "牝" for x in field):
             mu += Pm["fem_adj"]
-        jd = Pm["k_jockey"] * (jk.get(h.get("jockey"), 0.0) - jpast)
+        jn = re.sub(r"^[▲△☆★◇◆]", "", h.get("jockey") or "")   # 出馬表の騎手名には減量の印が付く。成績側の名前に合わせる
+        jd = Pm["k_jockey"] * (jk.get(jn, 0.0) - jpast)
         mu += jd
         if rs:
             last = rs[0]["ymd"]
@@ -694,6 +781,49 @@ class Model:
                 mu -= Pm["k_layoff"] * min(1.0, (lay - 120) / 180.0); notes.append("休み明け%d日" % lay)
         else:
             lay = None; notes.append("初出走")
+        if surf != "障":   # 第4版の補正（平地のみ）
+            fp = [r for r in rs if r["F"] is not None and r["surf"] != "障"]
+            js = self.jockey_stats(date).get(jn, (0, 0, 0.0))
+            mu += Pm["k_jk_wr"] * math.log(((js[1] + 3.5) / (js[0] + 50.0)) / 0.07) + Pm["k_jk_vm"] * 50.0 * (js[1] - js[2]) / (js[0] + 100.0)
+            m_f = len(field)
+            g_rel = (_i(h.get("num"), 0) - 1) / (m_f - 1) if m_f >= 12 and _i(h.get("num"), 0) else None
+            if g_rel is not None and surf in ("芝", "ダ"):
+                mu += (Pm["gate_d"] if surf == "ダ" else Pm["gate_t"]) * (g_rel - 0.5)
+            if m_f >= 2 and _i(h.get("num"), 0):
+                mu += Pm["k_draw"] * (0.5 - (_i(h["num"]) - 1) / (m_f - 1)) * self.draw.get((race.get("jo"), surf, dist), 0.0) * 10.0
+            if len(fs) == 2:
+                mu += Pm["n2_adj"]
+            if len(fs) <= 2 and h.get("trainer"):
+                t_wr, t_y = self.trainer_stats(date)
+                tk = self._name_key(h["trainer"], t_wr)
+                if tk in t_wr:
+                    mu += Pm["k_tr_young"] * math.log(((t_wr[tk][1] + 3.5) / (t_wr[tk][0] + 50.0)) / 0.07)
+                mu += Pm["k_tr_debut"] * t_y.get(self._name_key(h["trainer"], t_y), 0.0)
+            if h.get("rec") and sum(h["rec"]) >= 3:
+                mu += Pm["k_winrate"] * max(-0.1, min(0.4, (h["rec"][0] + 0.3) / (sum(h["rec"]) + 3.0) - 0.1))
+            if len(e_w) >= 2:
+                mu += Pm["k_front"] * (0.5 - sum(w * v for w, v in zip(e_w, e_v)) / sum(e_w))
+            if fp:
+                l = fp[0]
+                lp = l["pl"] or 0
+                mu += Pm["last_adj"].get(2 if lp == 2 else 3 if lp == 3 else 6 if 6 <= lp <= 9 else 10 if lp >= 10 else 0, 0.0)
+                if len(fs) >= 3 and sw > 0:
+                    mu += Pm["k_trend"] * max(-1.0, min(1.0, l["F"] - sum(w * f for w, f in zip(ws, fs)) / sw))
+                c_now = self.clv.get(race["cls"], 0.0)
+                if c_now < self.clv.get(l["cls"], 0.0) - 0.05:
+                    mu += Pm["drop_adj"]; notes.append("前走より下のクラス")
+                mu += Pm["k_maxcls"] * max(0.0, min(1.0, max(self.clv.get(r["cls"], 0.0) for r in fp) - c_now))
+                if (d0 - dt.date(int(l["ymd"][:4]), int(l["ymd"][4:6]), int(l["ymd"][6:]))).days <= 15:
+                    mu += Pm["quick_adj"]
+                if l["surf"] == surf and dist - l["d"] <= -400:
+                    mu += Pm["short_adj"]
+                hws = [_i(r.get("hw")) for r in fp[:6] if _i(r.get("hw"))]
+                if hws:
+                    mu += Pm["k_hw"] * max(-2.5, min(2.5, (sum(hws) / len(hws) - 470.0) / 30.0))
+                here = [r["F"] for r in fp[:12] if r["jo"] == race.get("jo") and r["surf"] == surf]
+                if here:
+                    f_all = sum(r["F"] for r in fp[:12]) / len(fp[:12])
+                    mu += Pm["k_course"] * max(-0.5, min(0.5, (sum(here) / len(here) - f_all) * len(here) / (len(here) + 3.0)))
         if sw > 0 and same_surf == 0:
             mu -= 0.25; notes.append("初" + ("ダート" if surf == "ダ" else "芝"))
         elif sw > 0 and near_dist == 0:
@@ -793,7 +923,7 @@ def simulate(model, race, going=None, n=300, seed=None, front_bias=0.0, detail=0
     b = model.base.get(ck) or model.sd_med.get((race["surf"], race["dist"]))
     times = None
     if b:
-        gadj = np.array([model.gadj.get((race["surf"], k), 0.0) for k in gk])[gi]
+        gadj = np.array([model.gadj.get((race["surf"], k), 0.0) + (TIME_BAD if k == "不良" else 0.0) for k in gk])[gi]
         s, c0 = model.f2t
         # その日の馬場差・レースごとのぶれ（全馬共通なので着順には影響しない）と、検証で出た偏り（TIME_BIAS）を加える
         common = rng.normal(0, model.res_sd, n)
@@ -870,7 +1000,7 @@ def backtest(races, runs, params=None, n=300, dates=None, verbose=False, models=
     res = results_from_runs(runs)
     models = models if models is not None else {}
     rows = []
-    for race in races:
+    for race in sorted(races, key=lambda r: (r["date"], r["jo"], r["r"])):
         if dates and race["date"] not in dates:
             continue
         k = (race["date"], race["jo"], race["r"])
@@ -882,6 +1012,7 @@ def backtest(races, runs, params=None, n=300, dates=None, verbose=False, models=
         if rr["winner"] not in names or len(H) < 5:
             continue
         if race["date"] not in models:
+            models.clear()   # 全成績を入れてからは1日ぶんのモデルが約1.2GBあるので、前の日のものは捨てる
             models[race["date"]] = Model(runs, params, asof=race["date"])
         M = models[race["date"]]
         o = simulate(M, race, going={rr["cond"] if rr["cond"] in WET else "良": 1.0}, n=n)
@@ -981,7 +1112,7 @@ def _wf_work(group):
             rec = [sum(1 for p in past if p["pl"] == i) for i in (1, 2, 3)] + [sum(1 for p in past if p["pl"] > 3)]
             race["horses"].append({"name": r["horse"], "num": r["gate"], "waku": "", "odds": fl(r["odds"]), "pop": _i(r["pop"]),
                                    "sex": r["sex"], "age": _i(r["age"], 0), "wt": fl(r["wt"]), "jockey": r["jockey"],
-                                   "rec": rec if sum(rec) else None, "base": "", "runs": [], "place": int(r["place"])})
+                                   "rec": rec if sum(rec) else None, "base": "", "runs": [], "place": int(r["place"]), "trainer": r.get("trainer") or ""})
         cond = r0["cond"] if r0["cond"] in WET else "良"
         o = simulate(M, race, going={cond: 1.0}, n=_WF["n"])
         H = race["horses"]
@@ -998,6 +1129,7 @@ def _wf_work(group):
                     "fav_hit": int(H[fav]["place"] == 1) if pm else None, "fav_top3": int(H[fav]["place"] <= 3) if pm else None,
                     "roi": (H[top]["odds"] or 0.0) * int(H[top]["place"] == 1), "roi_fav": (H[fav]["odds"] or 0.0) * int(H[fav]["place"] == 1) if pm else None,
                     "t_in": int(o["time"]["p10"] <= t_win <= o["time"]["p90"]) if o.get("time") else None,
+                    "t_err": (o["time"]["p50"] - t_win) / race["dist"] * 1000 if o.get("time") else None,
                     "cal": [(min(int(p[i] * 20), 8), p[i], int(H[i]["place"] == 1)) for i in range(m)]})
     print("  %s の週 %d レース" % (asof, len(out)), flush=True)
     return out
@@ -1047,6 +1179,9 @@ def cmd_validate(a):
     for r in rows:
         for b, p_, y in r["cal"]:
             acc[b][0] += 1; acc[b][1] += p_; acc[b][2] += y
+    te = [r["t_err"] for r in rows if r.get("t_err") is not None]
+    if te:
+        print("想定勝ち時計−実際（秒/1000m）：平均 %+.3f" % (sum(te) / len(te)))
     print("勝率の当たり具合（SIMが付けた勝率の帯ごとに、実際に勝った割合）")
     for b in sorted(acc):
         v = acc[b]
@@ -1178,7 +1313,7 @@ def note_text(race, o, meta):
     L.append("3連複：" + "、".join("%s（%s）" % (k, pct(v)) for k, v in o["sanrenpuku"][:5]))
     L.append("")
     L.append("## このシミュレーションについて")
-    L.append("・各馬のJRAでの全走（2021年以降）の時計・着差・相手関係・通過順・斤量・騎手と、レースごとのラップ、年齢などから能力と脚質を数値化し、馬場状態と展開をランダムに変えながら%s走らせた結果です。" % n_txt(o["n"]))
+    L.append("・各馬のJRAでの全走（2021年以降）の時計・着差・相手関係・通過順・斤量・騎手・馬体重と、レースごとのラップ、年齢、枠順などから能力と脚質を数値化し、馬場状態と展開をランダムに変えながら%s走らせた結果です。" % n_txt(o["n"]))
     L.append("・%sの試行で、勝率の誤差は%sです。" % (n_txt(o["n"]), err_txt(o["n"])))
     L.append("・調教・パドック・当日の馬体重は入っていません。データは%s時点です。" % meta.get("asof", "前日"))
     L.append("・的中を保証するものではありません。馬券の購入はご自身の判断でお願いします。")
