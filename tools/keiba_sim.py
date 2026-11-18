@@ -10,6 +10,10 @@
 第4版（2026-11-17）：通し検証で残っていた偏りを、騎手の勝率・馬体重・前走の着順と上り下り・クラスの上げ下げ・
 間隔・コース適性・枠・脚質・キャリアの浅い馬の調教師、の情報で補正した。
 
+第5版（2026-11-18）：指数の作り方を見直した（時計の反映 0.3→0.5、スローの割り戻し、レースレベルの寄せ方、過去走の人気、
+少ない出走数の寄せ方）。オッズ込みの期待値に、時計重視の能力値 mu_t・生産者の傾向・通算/前走成績・枠の有利不利を足し、
+係数を「その四半期より前のデータだけ」で推定する通し方式で確かめた。
+
 オッズ込みの期待値（検証中）：sim に --odds "馬番:単勝,…" を渡すと、オッズにSIMの能力値などを足して勝率を作り直し、期待値を出す。
 
 サブコマンド
@@ -36,16 +40,20 @@ RUN_FIELDS = ["horse", "ymd", "rc", "jo", "kai", "nichi", "rno", "race", "grade"
 # ───────────────────────── パラメータ（backtest で調整した値） ─────────────────────────
 P = {
     # ── 走りの評価（指数） ──
-    "w_resid": 0.3,      # レース全体の時計の速さを指数にどれだけ反映するか（0=相手関係と着差だけ, 1=時計そのまま）
-    "k_pace": 0.35,      # スローで時計が遅くなった分の割り戻し
+    "w_resid": 0.5,      # レース全体の時計の速さを指数にどれだけ反映するか（0=相手関係と着差だけ, 1=時計そのまま）。第5版で0.3→0.5
+    "k_pace": 0.7,       # スローで時計が遅くなった分の割り戻し（第5版で0.35→0.7）
     "k_wt": 0.05,        # 斤量1kgあたり（秒/1000m）
-    "k_level": 4.0,      # レースレベル推定をクラス平均へ寄せる強さ
-    "k_pop": 0.7,        # 過去走の人気（当時の評価）の反映
+    "k_level": 2.0,      # レースレベル推定をクラス平均へ寄せる強さ（第5版で4→2）
+    "k_pop": 0.4,        # 過去走の人気（当時の評価）の反映（第5版で0.7→0.4）
+    # 時計重視の能力値 mu_t（第5版。オッズ込みの期待値でだけ使う）：時計をそのまま使い、過去走の人気は使わない。
+    # 市場は相手関係の評価はよく織り込んでいるが、時計は織り込みきっていない（2024年の検証で、市場に足せる情報が約4倍）
+    "w_resid_t": 1.0,
+    "k_pop_t": 0.0,
     "k_style_run": 0.03, # 過去走の展開不利（速い流れを前で、遅い流れを後ろで）の割り戻し ※回帰で推定
     # ── 今回への当てはめ ──
     "top_blend": 0.2,    # 平均と「良い時の走り」の配合
     "recency_days": 180, # 新しい走りほど重く（半減の目安）
-    "prior_n": 0.3,      # 出走数が少ない馬をクラス平均へ寄せる強さ
+    "prior_n": 0.15,     # 出走数が少ない馬をクラス平均へ寄せる強さ（第5版で0.3→0.15）
     "prior_gap": 0.55,   # そのクラスの平均的な出走馬と勝ち馬の差
     "k_jockey": 1.0,     # 騎手効果の反映率（通し検証5,706レースで 0.5 では不足）
     "k_layoff": 0.1,     # 休み明けの割引（同検証で 0.3 は引きすぎ。241日以上の馬が予想の1.55倍勝っていた）
@@ -87,19 +95,26 @@ P = {
 
 TIME_BIAS = 1.36   # 想定時計の補正（秒/1000m）。通し検証（5,735レース）で想定が速すぎた分
 # オッズ込みの期待値（検証中）：単勝オッズから見た勝率に、SIMの能力値と「市場が見誤りやすい向き」を足して勝率を作り直す。
-# 係数は2025年1月〜2026年11月15日の5,735レースで推定。四半期ごとの入れ替え検証では、期待値0.9以上（50倍未満）で単勝回収率97%（誤差の幅86〜108%）、
-# 1.0以上（50倍未満）で102%（72〜137%）。確定オッズでの検証なので、発走前のオッズで買う実戦ではこれより下がりうる。
-MK = {"lpm": 0.9816,     # 単勝オッズから見た勝率（対数）
-      "mu": 0.2493,      # SIMの能力値（秒/1000m）
-      "l10": 0.2281,     # 前走10着以下（市場が嫌いすぎる）
-      "l6_9": 0.1209,    # 前走6〜9着
-      "jk_wr": -0.0992,  # 騎手の勝率（対数。上位騎手は買われすぎ）
-      "closer": -0.1866, # 追込脚質（買われすぎ）
-      "drop": -0.1794,   # 前走より下のクラス（買われすぎ）
-      "n1": -0.1237,     # 評価できる過去走が1走だけ（買われすぎ）
-      "a3": 0.1187,      # 古馬と走る3歳（低く見られがち）
-      "quick": -0.0957,  # 連闘・中1週（買われすぎ）
-      "tr_wr": -0.0517}  # 調教師の勝率（対数。上位厩舎は買われすぎ）
+# 第5版（2026-11-18）：時計重視の能力値 mu_t・通算成績と前走着順の補正（市場は買いすぎ）・枠の有利不利・生産者の傾向を足した16項目。
+# 係数は2023年1月〜2026年11月15日の11,769レースで推定。四半期ごとに「それより前のデータだけ」で推定して2025〜26年の5,728レースを採点すると、
+# 対数損失は市場1.9338→1.9273（第4版の11項目は同じ方式で1.9305）。確定オッズでの単勝回収率は、期待値1.0以上（50倍未満）で94%（誤差の幅76〜113%）、
+# 0.9以上で92%（84〜100%）、1.1以上で148%（95〜208%。207点だけ）。発走前のオッズで買う実戦ではこれより下がりうる。
+MK = {"lpm": 0.9964,     # 単勝オッズから見た勝率（対数）
+      "mu": -0.0228,     # SIMの能力値（秒/1000m）。時計重視の mu_t を入れると、ほぼ 0 になる
+      "mu_t": 0.3746,    # 時計重視の能力値（市場は時計を織り込みきっていない）
+      "c_rec": -0.8774,  # 通算の3着内率の補正量（成績の良い馬は買われすぎ）
+      "c_last": -1.2414, # 前走着順の補正量（前走好走馬は買われすぎ）
+      "c_draw": 0.5423,  # コースごとの枠の有利不利（市場は織り込みきっていない）
+      "brd_vm": 0.204,   # 生産者が市場の見立てより勝っている度合い（直近2年）
+      "l10": 0.0732,     # 前走10着以下（市場が嫌いすぎる）
+      "l6_9": -0.0006,   # 前走6〜9着
+      "jk_wr": -0.0945,  # 騎手の勝率（対数。上位騎手は買われすぎ）
+      "closer": -0.0978, # 追込脚質（買われすぎ）
+      "drop": -0.1944,   # 前走より下のクラス（買われすぎ）
+      "n1": -0.1036,     # 評価できる過去走が1走だけ（買われすぎ）
+      "a3": 0.0575,      # 古馬と走る3歳（低く見られがち）
+      "quick": -0.0379,  # 連闘・中1週（買われすぎ）
+      "tr_wr": 0.0187}   # 調教師の勝率（対数）
 TIME_BAD = -0.38   # 不良馬場のときの追加補正（不良だけ想定が遅すぎた。137レース）
 TIME_BAND = 0.75   # 想定時計の「8割の幅」の縮め方（そのままだと実際の92%が入る広さだったため）
 
@@ -625,15 +640,17 @@ class Model:
             if rp is not None and d.get("pz") is not None:
                 F += Pm["k_style_run"] * d["pz"] * (0.5 - rp) * 2   # 速い流れを前で／遅い流れを後ろで＝展開不利を割り戻す
             pp = _i(r.get("pop"))
-            if pp and r["hd"] > 1:
-                F += Pm["k_pop"] * (0.5 - (pp - 1) / (r["hd"] - 1))  # 当時の人気＝調教など成績に出ない評価の代わり
+            pop_t = (0.5 - (pp - 1) / (r["hd"] - 1)) if pp and r["hd"] > 1 else 0.0
+            F += Pm["k_pop"] * pop_t  # 当時の人気＝調教など成績に出ない評価の代わり
             r["F"], r["Fq"] = F, 1.0
+            r["Ft"] = F + (Pm["w_resid"] - Pm["w_resid_t"]) * res + (Pm["k_pop_t"] - Pm["k_pop"]) * pop_t   # 時計重視の指数（第5版）
             r["rp1"] = (r["c1"] - 1) / max(r["hd"] - 1, 1) if r["c1"] and r["hd"] > 1 else None
             r["rp4"] = rp
         for r in self.runs:   # 地方・海外の重賞だけはクラスと着差で評価
             if r["F"] is None and not r["jra"] and r["pl"] and r["cls"] in ("G1", "G2", "G3") and r["dv"] is not None and r["d"]:
                 mg = (0 if r["pl"] == 1 else r["dv"]) / r["d"] * 1000
                 r["F"], r["Fq"] = clv.get(r["cls"], 0.8) - 0.15 - min(mg, 2.0), 0.5
+                r["Ft"] = r["F"]
 
     def _bias(self):
         """前有利度：3着内の馬のうち4角3番手以内の割合（場×芝ダ×距離帯、芝ダ×馬場状態）"""
@@ -733,8 +750,26 @@ class Model:
                 return k
         return name
 
+    def breeder_stats(self, asof):
+        """生産者ごとの直近2年の（出走数, 勝ち数, 単勝オッズから見た勝ちの見込み）。平地・JRA・オッズのある走りだけ"""
+        if not hasattr(self, "_bstat_cache"):
+            self._bstat_cache = {}
+        if asof in self._bstat_cache:
+            return self._bstat_cache[asof]
+        cut = "%04d%s" % (int(asof[:4]) - 2, asof[4:])
+        acc = collections.defaultdict(lambda: [0, 0, 0.0])
+        for r in self.runs:
+            if r["jra"] and r["pl"] is not None and r["surf"] != "障" and cut <= r["ymd"] < asof and r.get("breeder"):
+                od = fl(r.get("odds"))
+                if od:
+                    a = acc[r["breeder"]]
+                    a[0] += 1; a[1] += r["pl"] == 1; a[2] += 0.8 / od
+        self._bstat_cache[asof] = acc
+        return acc
+
     # ── 1頭の評価 ──
     def rate(self, h, race, jk):
+        """1頭の能力値 mu（秒/1000m）と、その内訳 comp、時計重視の能力値 mu_t、オッズ込みの期待値で使う項目 mkf を返す"""
         Pm = self.P
         date, surf, dist = race["date"], race["surf"], race["dist"]
         d0 = dt.date(int(date[:4]), int(date[4:6]), int(date[6:]))
@@ -746,7 +781,7 @@ class Model:
             rs.append(r)
         rs.sort(key=lambda r: r["ymd"], reverse=True)
         prior = self.clv.get(race["cls"], 0.0) - Pm["prior_gap"]
-        ws, fs, jw, e_w, e_v, wet, dry = [], [], [], [], [], [], []
+        ws, fs, fts, jw, e_w, e_v, wet, dry = [], [], [], [], [], [], [], []
         same_surf = near_dist = 0
         for i, r in enumerate(rs[:12]):
             if r["F"] is None or (r["surf"] == "障") != (surf == "障"):
@@ -760,41 +795,50 @@ class Model:
             else:
                 w *= 0.2
             w *= math.exp(-abs(r["d"] - dist) / 900.0)
-            ws.append(w); fs.append(r["F"]); jw.append(jk.get(r["jockey"], 0.0))
+            ws.append(w); fs.append(r["F"]); fts.append(r["Ft"] if r.get("Ft") is not None else r["F"]); jw.append(jk.get(r["jockey"], 0.0))
             if r.get("rp1") is not None:
                 e_w.append(w + 0.05); e_v.append(0.65 * r["rp1"] + 0.35 * r["rp4"])
             if r["surf"] == surf and r["jra"]:
                 (wet if WET.get(r["cond"], 0) >= 0.45 else dry).append(r["F"])
         sw = sum(ws)
+
+        def base_of(vals):   # 過去走の重み付き平均と「良い時の走り」の配合 → 出走数の少ない馬はクラス平均へ寄せる
+            avg = sum(w * f for w, f in zip(ws, vals)) / sw
+            good = sorted((f for w, f in zip(ws, vals) if w >= 0.2 * max(ws)), reverse=True)[:2]
+            m = (1 - Pm["top_blend"]) * avg + Pm["top_blend"] * sum(good) / len(good)
+            return (sw * m + Pm["prior_n"] * prior) / (sw + Pm["prior_n"])
+
         if sw > 0:
-            avg = sum(w * f for w, f in zip(ws, fs)) / sw
-            good = sorted((f for w, f in zip(ws, fs) if w >= 0.2 * max(ws)), reverse=True)[:2]
-            top = sum(good) / len(good)
-            mu = (1 - Pm["top_blend"]) * avg + Pm["top_blend"] * top
-            mu = (sw * mu + Pm["prior_n"] * prior) / (sw + Pm["prior_n"])
+            mu0, mu0_t = base_of(fs), base_of(fts)
             jpast = sum(w * j for w, j in zip(ws, jw)) / sw
         else:
-            mu, jpast = prior - Pm["n0_gap"], 0.0
+            mu0 = mu0_t = prior - Pm["n0_gap"]
+            jpast = 0.0
+        comp = {}   # 能力値への各補正の加算量（秒/1000m）
+
+        def add(k, v):
+            comp[k] = comp.get(k, 0.0) + v
+
         notes = []
         if h.get("rec") and sum(h["rec"]) >= 3:
             n_st = sum(h["rec"])
-            mu += Pm["k_rec"] * ((h["rec"][0] + h["rec"][1] + h["rec"][2] + 1.0) / (n_st + 3.3) - 0.3)
+            add("rec", Pm["k_rec"] * ((h["rec"][0] + h["rec"][1] + h["rec"][2] + 1.0) / (n_st + 3.3) - 0.3))
         if h.get("base") == "栗東":
-            mu += Pm["k_west"]
-        mu -= Pm["k_wt_now"] * ((h.get("wt") or 55.0) - 55.0)
+            add("west", Pm["k_west"])
+        add("wt_now", -Pm["k_wt_now"] * ((h.get("wt") or 55.0) - 55.0))
         field = [x for x in race.get("horses", []) if not x.get("cancel")]
         if len({x.get("age") for x in field if x.get("age")}) > 1 and h.get("age"):
-            mu += Pm["age_adj"].get(min(int(h["age"]), 7), 0.0)
+            add("age", Pm["age_adj"].get(min(int(h["age"]), 7), 0.0))
         if h.get("sex") == "牝" and any(x.get("sex") and x.get("sex") != "牝" for x in field):
-            mu += Pm["fem_adj"]
+            add("fem", Pm["fem_adj"])
         jn = re.sub(r"^[▲△☆★◇◆]", "", h.get("jockey") or "")   # 出馬表の騎手名には減量の印が付く。成績側の名前に合わせる
         jd = Pm["k_jockey"] * (jk.get(jn, 0.0) - jpast)
-        mu += jd
+        add("jd", jd)
         if rs:
             last = rs[0]["ymd"]
             lay = (d0 - dt.date(int(last[:4]), int(last[4:6]), int(last[6:]))).days
             if lay > 120:
-                mu -= Pm["k_layoff"] * min(1.0, (lay - 120) / 180.0); notes.append("休み明け%d日" % lay)
+                add("layoff", -Pm["k_layoff"] * min(1.0, (lay - 120) / 180.0)); notes.append("休み明け%d日" % lay)
         else:
             lay = None; notes.append("初出走")
         mkf = {}
@@ -817,50 +861,62 @@ class Model:
                 mkf["l6_9"] = 1.0 if 6 <= lp0 <= 9 else 0.0
                 mkf["drop"] = 1.0 if self.clv.get(race["cls"], 0.0) < self.clv.get(fp[0]["cls"], 0.0) - 0.05 else 0.0
                 mkf["quick"] = 1.0 if (d0 - dt.date(int(fp[0]["ymd"][:4]), int(fp[0]["ymd"][4:6]), int(fp[0]["ymd"][6:]))).days <= 15 else 0.0
-            mu += Pm["k_jk_wr"] * math.log(((js[1] + 3.5) / (js[0] + 50.0)) / 0.07) + Pm["k_jk_vm"] * 50.0 * (js[1] - js[2]) / (js[0] + 100.0)
+            # 生産者が市場の見立て（単勝オッズ）より勝っている度合い（第5版）。出馬表に生産者の欄が無いので、過去走の成績データから引く
+            brd = h.get("breeder") or next((r.get("breeder") for r in rs if r.get("breeder")), "")
+            if brd:
+                bs = self.breeder_stats(date).get(brd, (0, 0, 0.0))
+                mkf["brd_vm"] = math.log((bs[1] + 5.0) / (bs[2] + 5.0))
+            add("jk_wr", Pm["k_jk_wr"] * math.log(((js[1] + 3.5) / (js[0] + 50.0)) / 0.07))
+            add("jk_vm", Pm["k_jk_vm"] * 50.0 * (js[1] - js[2]) / (js[0] + 100.0))
             m_f = len(field)
             g_rel = (_i(h.get("num"), 0) - 1) / (m_f - 1) if m_f >= 12 and _i(h.get("num"), 0) else None
             if g_rel is not None and surf in ("芝", "ダ"):
-                mu += (Pm["gate_d"] if surf == "ダ" else Pm["gate_t"]) * (g_rel - 0.5)
+                add("gate", (Pm["gate_d"] if surf == "ダ" else Pm["gate_t"]) * (g_rel - 0.5))
             if m_f >= 2 and _i(h.get("num"), 0):
-                mu += Pm["k_draw"] * (0.5 - (_i(h["num"]) - 1) / (m_f - 1)) * self.draw.get((race.get("jo"), surf, dist), 0.0) * 10.0
+                add("draw", Pm["k_draw"] * (0.5 - (_i(h["num"]) - 1) / (m_f - 1)) * self.draw.get((race.get("jo"), surf, dist), 0.0) * 10.0)
             if len(fs) == 2:
-                mu += Pm["n2_adj"]
+                add("n2", Pm["n2_adj"])
             if len(fs) <= 2 and h.get("trainer"):
                 t_wr, t_y = self.trainer_stats(date)
                 tk = self._name_key(h["trainer"], t_wr)
                 if tk in t_wr:
-                    mu += Pm["k_tr_young"] * math.log(((t_wr[tk][1] + 3.5) / (t_wr[tk][0] + 50.0)) / 0.07)
-                mu += Pm["k_tr_debut"] * t_y.get(self._name_key(h["trainer"], t_y), 0.0)
+                    add("tr_young", Pm["k_tr_young"] * math.log(((t_wr[tk][1] + 3.5) / (t_wr[tk][0] + 50.0)) / 0.07))
+                add("tr_debut", Pm["k_tr_debut"] * t_y.get(self._name_key(h["trainer"], t_y), 0.0))
             if h.get("rec") and sum(h["rec"]) >= 3:
-                mu += Pm["k_winrate"] * max(-0.1, min(0.4, (h["rec"][0] + 0.3) / (sum(h["rec"]) + 3.0) - 0.1))
+                add("winrate", Pm["k_winrate"] * max(-0.1, min(0.4, (h["rec"][0] + 0.3) / (sum(h["rec"]) + 3.0) - 0.1)))
             if len(e_w) >= 2:
-                mu += Pm["k_front"] * (0.5 - sum(w * v for w, v in zip(e_w, e_v)) / sum(e_w))
+                add("front", Pm["k_front"] * (0.5 - sum(w * v for w, v in zip(e_w, e_v)) / sum(e_w)))
             if fp:
                 l = fp[0]
                 lp = l["pl"] or 0
-                mu += Pm["last_adj"].get(2 if lp == 2 else 3 if lp == 3 else 6 if 6 <= lp <= 9 else 10 if lp >= 10 else 0, 0.0)
+                add("last", Pm["last_adj"].get(2 if lp == 2 else 3 if lp == 3 else 6 if 6 <= lp <= 9 else 10 if lp >= 10 else 0, 0.0))
                 if len(fs) >= 3 and sw > 0:
-                    mu += Pm["k_trend"] * max(-1.0, min(1.0, l["F"] - sum(w * f for w, f in zip(ws, fs)) / sw))
+                    add("trend", Pm["k_trend"] * max(-1.0, min(1.0, l["F"] - sum(w * f for w, f in zip(ws, fs)) / sw)))
                 c_now = self.clv.get(race["cls"], 0.0)
                 if c_now < self.clv.get(l["cls"], 0.0) - 0.05:
-                    mu += Pm["drop_adj"]; notes.append("前走より下のクラス")
-                mu += Pm["k_maxcls"] * max(0.0, min(1.0, max(self.clv.get(r["cls"], 0.0) for r in fp) - c_now))
+                    add("drop", Pm["drop_adj"]); notes.append("前走より下のクラス")
+                add("maxcls", Pm["k_maxcls"] * max(0.0, min(1.0, max(self.clv.get(r["cls"], 0.0) for r in fp) - c_now)))
                 if (d0 - dt.date(int(l["ymd"][:4]), int(l["ymd"][4:6]), int(l["ymd"][6:]))).days <= 15:
-                    mu += Pm["quick_adj"]
+                    add("quick", Pm["quick_adj"])
                 if l["surf"] == surf and dist - l["d"] <= -400:
-                    mu += Pm["short_adj"]
+                    add("short", Pm["short_adj"])
                 hws = [_i(r.get("hw")) for r in fp[:6] if _i(r.get("hw"))]
                 if hws:
-                    mu += Pm["k_hw"] * max(-2.5, min(2.5, (sum(hws) / len(hws) - 470.0) / 30.0))
+                    add("hw", Pm["k_hw"] * max(-2.5, min(2.5, (sum(hws) / len(hws) - 470.0) / 30.0)))
                 here = [r["F"] for r in fp[:12] if r["jo"] == race.get("jo") and r["surf"] == surf]
                 if here:
                     f_all = sum(r["F"] for r in fp[:12]) / len(fp[:12])
-                    mu += Pm["k_course"] * max(-0.5, min(0.5, (sum(here) / len(here) - f_all) * len(here) / (len(here) + 3.0)))
+                    add("course", Pm["k_course"] * max(-0.5, min(0.5, (sum(here) / len(here) - f_all) * len(here) / (len(here) + 3.0))))
         if sw > 0 and same_surf == 0:
-            mu -= 0.25; notes.append("初" + ("ダート" if surf == "ダ" else "芝"))
+            add("new_surf", -0.25); notes.append("初" + ("ダート" if surf == "ダ" else "芝"))
         elif sw > 0 and near_dist == 0:
-            mu -= Pm["k_dist"]; notes.append("距離は未経験の幅")
+            add("new_dist", -Pm["k_dist"]); notes.append("距離は未経験の幅")
+        mu = mu0 + sum(comp.values())
+        mu_t = mu0_t + sum(comp.values())   # 時計重視の能力値（オッズ込みの期待値でだけ使う。第5版）
+        if surf != "障":
+            mkf["mu_t"] = mu_t
+            for k in ("rec", "last", "draw"):
+                mkf["c_" + k] = comp.get(k, 0.0)
         apt = 0.0
         if wet and dry:
             apt = len(wet) / (len(wet) + 2.5) * (sum(wet) / len(wet) - sum(dry) / len(dry))
@@ -870,7 +926,8 @@ class Model:
         return {"mu": mu, "sig": sig, "apt": apt, "e": e, "e_n": len(e_w), "n": len(fs), "sw": sw, "lay": lay,
                 "jd": jd, "notes": notes, "n_wet": len(wet),
                 "best": max(fs) if fs else None, "avg": (sum(w * f for w, f in zip(ws, fs)) / sw) if sw else None,
-                "last_f3": next((r["f3v"] for r in rs if r["f3v"]), None), "mkf": mkf}
+                "last_f3": next((r["f3v"] for r in rs if r["f3v"]), None), "mkf": mkf,
+                "mu0": mu0, "mu_t": mu_t, "comp": comp}
 
     def _adhoc(self, p, horse):
         """DBに無い過去走（当日読み込んだ出馬表の分）をその場で指数化"""
@@ -899,9 +956,10 @@ class Model:
             if r["wtv"]:
                 F += self.P["k_wt"] * (r["wtv"] - 55.0)
             pp = _i(r.get("pop"))
-            if pp and r["hd"] > 1:
-                F += self.P["k_pop"] * (0.5 - (pp - 1) / (r["hd"] - 1))
+            pop_t = (0.5 - (pp - 1) / (r["hd"] - 1)) if pp and r["hd"] > 1 else 0.0
+            F += self.P["k_pop"] * pop_t
             r["F"], r["Fq"] = F, 0.8
+            r["Ft"] = F + (self.P["w_resid"] - self.P["w_resid_t"]) * d["res"] + (self.P["k_pop_t"] - self.P["k_pop"]) * pop_t
             r["rp1"] = (r["c1"] - 1) / max(r["hd"] - 1, 1) if r["c1"] and r["hd"] > 1 else None
             r["rp4"] = (r["c4"] - 1) / max(r["hd"] - 1, 1) if r["c4"] and r["hd"] > 1 else None
         return r
@@ -1223,7 +1281,7 @@ def cmd_validate(a):
             groups.append([d, {d}, dd])
     print("%s〜%s：%d 開催日・%d 週（1週あたり10〜20秒）" % (days[0], days[-1], len(days), len(groups)), flush=True)
     rows = []
-    with Pool(min(2, os.cpu_count() or 1), initializer=_wf_init, initargs=(a.db, a.since, a.until, a.n)) as p:
+    with Pool(min(4, os.cpu_count() or 1), initializer=_wf_init, initargs=(a.db, a.since, a.until, a.n)) as p:
         for out in p.imap(_wf_work, [(g[0], g[1]) for g in groups]):
             rows += out
 
@@ -1705,7 +1763,7 @@ def cmd_sim(a):
             print("%s %2s %-10s\t%6.1f   %5.1f%%       %5.1f%%      %.2f" % (
                 "★" if x["ev"] >= 1.0 and x["odds"] < 50 else "☆" if x["ev"] >= 0.9 and x["odds"] < 50 else "　", x["num"], x["name"], x["odds"], 100 * x["pm"], 100 * x["p"], x["ev"]))
         print("   ★＝期待値1.0以上、☆＝0.9以上（どちらも単勝50倍未満だけ。50倍以上はもともと回収率が60%前後と低いので対象外）。")
-        print("   過去の検証（確定オッズ）では、★の単勝回収率は102%（誤差の幅72〜137%）、☆以上で97%（86〜108%）。オッズが動けば期待値も変わる。")
+        print("   第5版の通し検証（2025〜26年・確定オッズ）では、★の単勝回収率は94%（誤差の幅76〜113%）、☆以上で92%（84〜100%）。100%を超えるとは言えない。オッズが動けば期待値も変わる。")
     else:
         print("■ オッズ込みの期待値：全馬の単勝オッズがそろっていないので出せません（--odds \"1:4.4,2:12.3,…\" で渡す）")
     print("馬連上位:", " ".join("%s(%s)" % (k, pct(v)) for k, v in o["umaren"][:5]))
