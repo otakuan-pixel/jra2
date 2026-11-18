@@ -1313,7 +1313,7 @@ FIVE_LAM_SIM = (0.815, 0.715)  # 同（SIMだけ）
 
 def five_pick(hs, odds=None, seed=7, S=20000, use_odds=True):
     """hs＝simulate の horses。odds＝{馬番: 単勝}（無ければ各馬の odds を使い、1頭でも欠ければSIMだけ）。
-    返り値：marks（馬番→印）、cover（1〜3着が5頭に全部入る確率）、cover2（2頭以上入る確率）、p（作り直した勝率）、p3（3着以内の確率）、src"""
+    返り値：marks（馬番→印）、cover（1〜3着が5頭に全部入る確率）、cover_u（1・2着が5頭に入る確率＝馬連ボックス）、cover2（2頭以上入る確率）、p（作り直した勝率）、p3（3着以内の確率）、src"""
     import numpy as np
     H = [h for h in hs if str(h.get("num", "")).isdigit()]
     m = len(H)
@@ -1343,6 +1343,7 @@ def five_pick(hs, odds=None, seed=7, S=20000, use_odds=True):
     order = sorted(top, key=lambda i: -p[i])
     marks = {H[i]["num"]: mk for i, mk in zip(order, "◎○▲△△")}
     return {"marks": marks, "cover": float(np.mean(cnt == 3)), "cover2": float(np.mean(cnt >= 2)),
+            "cover_u": float(np.mean(inn[first] & inn[second])),
             "p": {H[i]["num"]: float(p[i]) for i in range(m)}, "p3": {H[i]["num"]: float(t3[i]) for i in range(m)}, "src": src}
 
 
@@ -1435,8 +1436,8 @@ def note_text(race, o, meta):
     L.append("## 印（5頭推奨）")
     fv = o.get("five") or {}
     if fv.get("cover") is not None:
-        L.append("1〜3着がこの5頭に全部入る確率 %s（自信度：%s）、2頭以上入る確率 %s。%s" % (
-            pct(fv["cover"]), five_conf(fv["cover"]), pct(fv["cover2"]),
+        L.append("1〜3着がこの5頭に全部入る確率 %s（自信度：%s）、1・2着が入る確率 %s、2頭以上入る確率 %s。%s" % (
+            pct(fv["cover"]), five_conf(fv["cover"]), pct(fv.get("cover_u")), pct(fv["cover2"]),
             "単勝オッズ（%s）とシミュレーションの勝率から計算。" % fv.get("odds_asof", "") if fv.get("src") == "odds" else "シミュレーションの勝率だけから計算（オッズは未使用）。"))
     for h in sorted(hs, key=lambda h: "◎○▲△△".find(marks.get(h["num"], "×")) if h["num"] in marks else 9):
         if h["num"] in marks:
@@ -1691,11 +1692,12 @@ def cmd_sim(a):
             h["runs"], "%d" % h["pop"] if h.get("pop") else "—", "%.1f" % h["odds"] if h.get("odds") else "—", ev,
             "%d/%d %s" % (round(o["dual"][h["num"]]["g_idx"]), round(o["dual"][h["num"]]["h_idx"]), " ".join(h["notes"]))))
     fv = o["five"]
-    print("■ 5頭推奨 %s　1〜3着が全部入る確率 %s（自信度：%s）・2頭以上 %s　計算に使ったもの：%s" % (
+    print("■ 5頭推奨 %s　1〜3着が全部入る確率 %s（自信度：%s）・1・2着が入る %s・2頭以上 %s　計算に使ったもの：%s" % (
         " ".join("%s%s" % (mk, num) for num, mk in sorted(fv["marks"].items(), key=lambda kv: "◎○▲△△".find(kv[1]))),
-        pct(fv["cover"]), five_conf(fv["cover"]), pct(fv["cover2"]),
+        pct(fv["cover"]), five_conf(fv["cover"]), pct(fv.get("cover_u")), pct(fv["cover2"]),
         "単勝オッズ（%s）＋SIMの勝率" % fv["odds_asof"] if fv["src"] == "odds" else "SIMの勝率だけ（全馬のオッズがそろっていない）"))
     print("   自信度の目安（検証5,735レース）：高（60%以上）→実際72%、中（45〜60%）→実際50〜58%、低→20〜43%。全レース平均は36%")
+    print("   5頭ボックスの上限（検証5,692レース・確定オッズ）：馬連 約60%・3連複 約37%。81要素の機械学習でも超えられなかった")
     if o.get("market"):
         print("■ オッズ込みの期待値（検証中）　オッズ：%s" % o["market"]["asof"])
         print("   馬番 馬名            単勝   市場の見立て  作り直した勝率  期待値")
