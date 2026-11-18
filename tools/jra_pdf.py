@@ -20,7 +20,7 @@ JO_NAME = {"01": "札幌", "02": "函館", "03": "福島", "04": "新潟", "05":
            "06": "中山", "07": "中京", "08": "京都", "09": "阪神", "10": "小倉"}
 Z2H = str.maketrans("０１２３４５６７８９．，：＋−－―ー（）", "0123456789.,:+--―ー()")
 RACE_FIELDS = ["ymd", "jo", "kai", "nichi", "rno", "name", "grade", "cls_txt", "surf", "dist", "inout", "turn",
-               "weather", "cond", "heads", "laps", "first3", "last3", "last4", "corner_labels", "src"]
+               "weather", "cond", "heads", "laps", "first3", "last3", "last4", "corner_labels", "src", "notes"]
 RUN_FIELDS = ["ymd", "jo", "kai", "nichi", "rno", "horse", "place", "status", "waku", "num", "sex", "age", "wt",
               "jockey", "hw", "hwd", "time", "odds", "pop", "c1", "c2", "c3", "c4", "corners", "trainer", "blinker", "owner", "breeder"]
 
@@ -218,6 +218,21 @@ def dedupe(chars):
     return out
 
 
+def race_notes(nt):
+    """レースの下にある〔発走状況〕〔制裁〕〔その他〕などの記事（競走中の出来事）を1行にまとめて返す。
+    折り返しはつなぐ。「追加記事」以降は別の日・別のレースの記事なので含めない"""
+    out, on = [], False
+    for l in nt.splitlines():
+        t = l.strip()
+        if re.search(r"追\s*加\s*記\s*事", t):
+            break
+        if t.startswith("〔"):
+            on = True
+        if on and t:
+            out.append(t)
+    return re.sub(r"\s+", " ", "".join(out)).strip()
+
+
 def parse_half(page, x0, x1, meta, src):
     chars = dedupe([c for c in page.chars if x0 <= c["x0"] < x1])
     if not chars:
@@ -314,6 +329,7 @@ def parse_half(page, x0, x1, meta, src):
         race["last4"], race["last3"] = m.group(1), m.group(2)
     m = re.search(r"\((\d{1,2})頭\)", nt)
     race["heads"] = int(m.group(1)) if m else len(anchors)
+    race["notes"] = race_notes(nt)
     cpos, labels = corner_region(chars)
     race["corner_labels"] = "-".join(str(x) for x in labels)
 
