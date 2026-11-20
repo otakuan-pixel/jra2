@@ -86,6 +86,23 @@ P = {
 
 
 TIME_BIAS = 1.36   # 想定時計の補正（秒/1000m）。通し検証（5,735レース）で想定が速すぎた分
+# 人気を使わないモード（--no-pop、または環境変数 KEIBA_NO_POP=1）：
+# 過去走の人気（k_pop）・騎手の「市場より勝っている度合い」（k_jk_vm）を0にし、5頭推奨にもオッズを使わない。
+NO_POP = os.environ.get("KEIBA_NO_POP") == "1"
+
+
+def set_no_pop(on=True):
+    global NO_POP
+    NO_POP = bool(on)
+    if on:
+        os.environ["KEIBA_NO_POP"] = "1"
+        P["k_pop"] = 0.0
+        P["k_jk_vm"] = 0.0
+
+
+if NO_POP:
+    set_no_pop(True)
+
 # オッズ込みの期待値（検証中）：単勝オッズから見た勝率に、SIMの能力値と「市場が見誤りやすい向き」を足して勝率を作り直す。
 # 係数は2025年1月〜2026年11月15日の5,735レースで推定。四半期ごとの入れ替え検証では、期待値0.9以上（50倍未満）で単勝回収率97%（誤差の幅86〜108%）、
 # 1.0以上（50倍未満）で102%（72〜137%）。確定オッズでの検証なので、発走前のオッズで買う実戦ではこれより下がりうる。
@@ -1355,7 +1372,7 @@ def five_conf(c):
 
 
 def assign_marks(hs, odds=None):
-    return five_pick(hs, odds)["marks"]
+    return five_pick(hs, odds, use_odds=not NO_POP)["marks"]
 
 
 def note_text(race, o, meta):
@@ -1669,7 +1686,7 @@ def cmd_sim(a):
     o["race"] = {k: race[k] for k in ("date", "jo", "venue", "r", "name", "grade", "cls", "surf", "dist", "inout", "post", "day")}
     o["asof"] = snap
     odds_in = parse_odds(a.odds) if getattr(a, "odds", None) else None
-    fv = five_pick(o["horses"], odds_in)
+    fv = five_pick(o["horses"], odds_in, use_odds=not NO_POP)
     fv["odds_asof"] = (a.odds_asof or "指定のオッズ") if odds_in else snap + "の出馬表"
     o["marks"], o["five"] = fv["marks"], fv
     mk = market_ev(model, race, odds_in)
@@ -1721,7 +1738,11 @@ if __name__ == "__main__":
     b.add_argument("--html"); b.add_argument("--going"); b.add_argument("--n", type=int, default=10000); b.add_argument("--detail", type=int, default=6000); b.add_argument("--seed", type=int)
     b.add_argument("--front-bias", dest="front_bias", type=float, default=0.0); b.add_argument("--weather-note", dest="weather_note"); b.add_argument("--out", default="out")
     b.add_argument("--odds", help='発走前の単勝オッズ。"1:4.4,2:12.3,…"（全馬ぶん）'); b.add_argument("--odds-asof", dest="odds_asof", help="そのオッズの時刻（例 11/22 14:50）")
+    b.add_argument("--no-pop", dest="no_pop", action="store_true", help="人気・オッズを一切使わずに予想する（過去走の人気・騎手の対市場成績・5頭推奨のオッズを外す）")
     b = sub.add_parser("backtest"); b.add_argument("--db", required=True); b.add_argument("--n", type=int, default=300)
     b = sub.add_parser("validate"); b.add_argument("--db", required=True); b.add_argument("--since", default="20260101"); b.add_argument("--until", default="99999999"); b.add_argument("--n", type=int, default=1000)
+    b.add_argument("--no-pop", dest="no_pop", action="store_true")
     a = ap.parse_args()
+    if getattr(a, "no_pop", False):
+        set_no_pop(True)
     {"builddb": cmd_builddb, "list": cmd_list, "sim": cmd_sim, "backtest": cmd_backtest, "validate": cmd_validate}[a.cmd](a)
