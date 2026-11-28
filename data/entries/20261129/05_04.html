@@ -1130,7 +1130,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <tr>
 <th scope="col" class="waku">枠</th>
 <th scope="col" class="num">馬番</th>
-<th scope="col" class="horse">馬名<br />調教師名<br />血統</th>
+<th scope="col" class="horse">馬名 / 単勝オッズ(人気)<br />戦績 / 総賞金 / 馬体重<br />馬主名 / 生産者名 / 調教師名 / 血統</th>
 <th scope="col" class="jockey">性齢/毛色<br />負担重量<br />騎手名
 </th>
 <th scope="col" class="past p1">前走</th>
@@ -1141,207 +1141,98 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </thead>
 <tbody>
 <tr>
-<td class="waku"></td>
-<td class="num"></td>
+<td class="waku"><img src="/JRADB/img/waku/1.png" alt="枠1白" /></td>
+<td class="num">1</td>
 <td class="horse">
 <div class="name_line">
-<div class="name"><span class="horse_icon"><img src="/JRADB/img/kigo/maru-gai.png" alt="マルガイ"></span><a href="/JRADB/accessU.html?CNAME=pw01dud002024108191/9A">インワンズブラッド</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001075/1A');">矢作 芳人</a><span class="division">(栗東)</span></p>
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024102782/89">ビップラージャ</a></div></div>
+<div class="result_line">
+<div class="cell result">(0.0.1.3)</div><div class="cell win" title="2,870,000円">287万円</div></div><p class="owner">鈴木 邦英</p><p class="breeder">ヒダカフアーム</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001195/3A');">嘉藤 貴行</a><span class="division">(美浦)</span></p>
 <ul class="family_line">
-<li class="sire"><span>父：</span>Baaeed</li>
-<li class="mare"><span>母：</span>Anasheed<span class="bloodmare">(母の父：Frankel)</span></li>
+<li class="sire"><span>父：</span>グレーターロンドン</li>
+<li class="mare"><span>母：</span>ルピナスベル<span class="bloodmare">(母の父：ホワイトマズル)</span></li>
 </ul>
 </td>
-<td class="jockey"><p class="age">牡2/栗</p>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牡2/栗</p>
 <p class="weight">
 56.0<span>kg</span>
 </p>
-<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001163/9E');">坂井 瑠星</a></p>
-</td><td class="past p1 place2" data-place="place2" data-same-race="sameRace1">
+<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001174/95');">岩田 望来</a></p>
+</td><td class="past p1 place3" data-place="place3" data-same-race="sameRace4">
 <div class="date_line">
 <div class="date">2026年11月7日</div>
 <div class="rc">東京</div>
 </div>
 <div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202605010720261107/BC">新馬</a></div>
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202605010320261107/E8">未勝利</a></div>
 <div class="r_class"></div>
 </div>
 <div class="place_line">
-<div class="place">2<span>着</span></div>
-<div class="num"><span class="max">18<span>頭</span></span><span class="gate">12<span>番</span></span><span class="pop">6<span>番人気</span></span></div>
+<div class="place">3<span>着</span></div>
+<div class="num"><span class="max">16<span>頭</span></span><span class="gate">8<span>番</span></span><span class="pop">11<span>番人気</span></span></div>
 </div>
 <div class="info_line1">
-<div class="jockey">津村 明秀</div>
+<div class="jockey">菅原 明良</div>
 <div class="weight">56.0<span>kg</span></div>
 </div>
 <div class="info_line2">
 <div class="line">
 <div class="col left"><span class="dist">1400芝</span></div>
-<div class="col right"><p class="time">1:22.4</p></div>
+<div class="col right"><p class="time">1:22.9</p></div>
 </div>
 <div class="line">
 <div class="col left"><span class="condition">良</span></div>
 <div class="col center">
 </div>
-<div class="col right"><p class="h_weight">428<span>kg</span></p></div>
+<div class="col right"><p class="h_weight">424<span>kg</span></p></div>
 </div>
 </div>
 <div class="info_line3">
 <div class="line">
-<div class="corner_list"><ul><li title="3コーナー通過順位">1</li><li title="4コーナー通過順位">1</li></ul></div>
-<div class="f3">3F 34.5</div>
+<div class="corner_list"><ul><li title="3コーナー通過順位">11</li><li title="4コーナー通過順位">11</li></ul></div>
+<div class="f3">3F 34.1</div>
 </div>
-<p class="fin">クードルアラマン<span class="time">(0.4)</span></p>
+<p class="fin">ハマナスノサクコロ<span class="time">(0.4)</span></p>
 </div>
 </td>
 <td class="past p2" data-place="" data-same-race="">
 <div class="date_line">
-<div class="date">2026年8月1日</div>
-<div class="rc">札幌</div>
-</div>
-<div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1001202601030520260801/23">新馬</a></div>
-<div class="r_class"></div>
-</div>
-<div class="place_line">
-<div class="place stop">除外</div>
-<div class="num"><span class="max">12<span>頭</span></span><span class="gate">4<span>番</span></span></div>
-</div>
-<div class="info_line1">
-<div class="jockey">武 豊</div>
-<div class="weight">55.0<span>kg</span></div>
-</div>
-<div class="info_line2">
-<div class="line">
-<div class="col left"><span class="dist">1500芝</span></div>
-<div class="col right"><p class="time">&nbsp;</p></div>
-</div>
-<div class="line">
-<div class="col left"><span class="condition">稍重</span></div>
-<div class="col center">
-</div>
-<div class="col right"><p class="h_weight">432<span>kg</span></p></div>
-</div>
-</div>
-<div class="info_line3">
-<div class="line">
-<div class="corner_list">&nbsp;</div>
-<div class="f3"></div>
-</div>
-<p class="fin">ブルージェイ</p>
-</div>
-</td>
-<td class="past p3"></td><td class="past p4"></td></tr>
-<tr>
-<td class="waku"></td>
-<td class="num"></td>
-<td class="horse">
-<div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024105987/F7">ヴァルフォース</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001059/74');">加藤 征弘</a><span class="division">(美浦)</span></p>
-<ul class="family_line">
-<li class="sire"><span>父：</span>ロードカナロア</li>
-<li class="mare"><span>母：</span>ハーエミネンシー<span class="bloodmare">(母の父：Successful Appeal)</span></li>
-</ul>
-</td>
-<td class="jockey"><p class="age">牝2/鹿</p>
-<p class="weight">
-55.0<span>kg</span>
-</p>
-<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04krc015504/85');">M.バルザローナ</a></p>
-</td><td class="past p1" data-place="" data-same-race="">
-<div class="date_line">
-<div class="date">2026年10月10日</div>
+<div class="date">2026年10月12日</div>
 <div class="rc">東京</div>
 </div>
 <div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202604030220261010/9C">牝未勝利</a></div>
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202604050220261012/FC">未勝利</a></div>
 <div class="r_class"></div>
 </div>
 <div class="place_line">
-<div class="place">4<span>着</span></div>
-<div class="num"><span class="max">13<span>頭</span></span><span class="gate">10<span>番</span></span><span class="pop">2<span>番人気</span></span></div>
+<div class="place">5<span>着</span></div>
+<div class="num"><span class="max">12<span>頭</span></span><span class="gate">10<span>番</span></span><span class="pop">7<span>番人気</span></span></div>
 </div>
 <div class="info_line1">
-<div class="jockey">横山 武史</div>
-<div class="weight">55.0<span>kg</span></div>
+<div class="jockey">江田 照男</div>
+<div class="weight">56.0<span>kg</span></div>
 </div>
 <div class="info_line2">
 <div class="line">
-<div class="col left"><span class="dist">1600芝</span></div>
-<div class="col right"><p class="time">1:34.6</p></div>
+<div class="col left"><span class="dist">1400芝</span></div>
+<div class="col right"><p class="time">1:23.3</p></div>
 </div>
 <div class="line">
 <div class="col left"><span class="condition">良</span></div>
 <div class="col center">
 </div>
-<div class="col right"><p class="h_weight">430<span>kg</span></p></div>
+<div class="col right"><p class="h_weight">426<span>kg</span></p></div>
 </div>
 </div>
 <div class="info_line3">
 <div class="line">
-<div class="corner_list"><ul><li title="3コーナー通過順位">2</li><li title="4コーナー通過順位">2</li></ul></div>
-<div class="f3">3F 35.4</div>
+<div class="corner_list"><ul><li title="3コーナー通過順位">3</li><li title="4コーナー通過順位">5</li></ul></div>
+<div class="f3">3F 34.2</div>
 </div>
-<p class="fin">ゴールデンハニビー<span class="time">(0.4)</span></p>
-</div>
-</td>
-<td class="past p2 place3" data-place="place3" data-same-race="">
-<div class="date_line">
-<div class="date">2026年8月2日</div>
-<div class="rc">新潟</div>
-</div>
-<div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1004202602040320260802/F8">新馬</a></div>
-<div class="r_class"></div>
-</div>
-<div class="place_line">
-<div class="place">3<span>着</span></div>
-<div class="num"><span class="max">13<span>頭</span></span><span class="gate">11<span>番</span></span><span class="pop">3<span>番人気</span></span></div>
-</div>
-<div class="info_line1">
-<div class="jockey">三浦 皇成</div>
-<div class="weight">55.0<span>kg</span></div>
-</div>
-<div class="info_line2">
-<div class="line">
-<div class="col left"><span class="dist">1600芝</span></div>
-<div class="col right"><p class="time">1:37.0</p></div>
-</div>
-<div class="line">
-<div class="col left"><span class="condition">良</span></div>
-<div class="col center">
-</div>
-<div class="col right"><p class="h_weight">434<span>kg</span></p></div>
-</div>
-</div>
-<div class="info_line3">
-<div class="line">
-<div class="corner_list"><ul><li title="3コーナー通過順位">12</li><li title="4コーナー通過順位">11</li></ul></div>
-<div class="f3">3F 34.4</div>
-</div>
-<p class="fin">ニシノトラノスケ<span class="time">(0.3)</span></p>
+<p class="fin">ソニックアイル<span class="time">(0.7)</span></p>
 </div>
 </td>
-<td class="past p3"></td><td class="past p4"></td></tr>
-<tr>
-<td class="waku"></td>
-<td class="num"></td>
-<td class="horse">
-<div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024103668/D9">エーアイクワイ</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001020/47');">相沢 郁</a><span class="division">(美浦)</span></p>
-<ul class="family_line">
-<li class="sire"><span>父：</span>ビッグアーサー</li>
-<li class="mare"><span>母：</span>ヴェルジェーズ<span class="bloodmare">(母の父：ハーツクライ)</span></li>
-</ul>
-</td>
-<td class="jockey"><p class="age">牡2/栗</p>
-<p class="weight">
-56.0<span>kg</span>
-</p>
-<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001150/8F');">石川 裕紀人</a></p>
-</td><td class="past p1" data-place="" data-same-race="sameRace7">
+<td class="past p3" data-place="" data-same-race="sameRace7">
 <div class="date_line">
 <div class="date">2026年10月4日</div>
 <div class="rc">東京</div>
@@ -1351,146 +1242,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="r_class"></div>
 </div>
 <div class="place_line">
-<div class="place">7<span>着</span></div>
-<div class="num"><span class="max">16<span>頭</span></span><span class="gate">10<span>番</span></span><span class="pop">5<span>番人気</span></span></div>
+<div class="place">14<span>着</span></div>
+<div class="num"><span class="max">16<span>頭</span></span><span class="gate">11<span>番</span></span><span class="pop">3<span>番人気</span></span></div>
 </div>
 <div class="info_line1">
-<div class="jockey">横山 琉人</div>
+<div class="jockey">戸崎 圭太</div>
 <div class="weight">56.0<span>kg</span></div>
 </div>
 <div class="info_line2">
 <div class="line">
 <div class="col left"><span class="dist">1400芝</span></div>
-<div class="col right"><p class="time">1:22.7</p></div>
-</div>
-<div class="line">
-<div class="col left"><span class="condition">良</span></div>
-<div class="col center">
-</div>
-<div class="col right"><p class="h_weight">492<span>kg</span></p></div>
-</div>
-</div>
-<div class="info_line3">
-<div class="line">
-<div class="corner_list"><ul><li title="3コーナー通過順位">5</li><li title="4コーナー通過順位">5</li></ul></div>
-<div class="f3">3F 35.1</div>
-</div>
-<p class="fin">ピクシーブラスト<span class="time">(0.9)</span></p>
-</div>
-</td>
-<td class="past p2 place2" data-place="place2" data-same-race="sameRace8">
-<div class="date_line">
-<div class="date">2026年7月18日</div>
-<div class="rc">福島</div>
-</div>
-<div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1003202602070120260718/EA">未勝利</a></div>
-<div class="r_class"></div>
-</div>
-<div class="place_line">
-<div class="place">2<span>着</span></div>
-<div class="num"><span class="max">12<span>頭</span></span><span class="gate">5<span>番</span></span><span class="pop">3<span>番人気</span></span></div>
-</div>
-<div class="info_line1">
-<div class="jockey">石川 裕紀人</div>
-<div class="weight">55.0<span>kg</span></div>
-</div>
-<div class="info_line2">
-<div class="line">
-<div class="col left"><span class="dist">1200芝</span></div>
-<div class="col right"><p class="time">1:09.8</p></div>
-</div>
-<div class="line">
-<div class="col left"><span class="condition">良</span></div>
-<div class="col center">
-</div>
-<div class="col right"><p class="h_weight">482<span>kg</span></p></div>
-</div>
-</div>
-<div class="info_line3">
-<div class="line">
-<div class="corner_list"><ul><li title="3コーナー通過順位">4</li><li title="4コーナー通過順位">3</li></ul></div>
-<div class="f3">3F 35.5</div>
-</div>
-<p class="fin">ショウナンハーヴェ<span class="time">(0.2)</span></p>
-</div>
-</td>
-<td class="past p3 place2" data-place="place2" data-same-race="">
-<div class="date_line">
-<div class="date">2026年6月27日</div>
-<div class="rc">福島</div>
-</div>
-<div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1003202602010520260627/2E">新馬</a></div>
-<div class="r_class"></div>
-</div>
-<div class="place_line">
-<div class="place">2<span>着</span></div>
-<div class="num"><span class="max">11<span>頭</span></span><span class="gate">6<span>番</span></span><span class="pop">2<span>番人気</span></span></div>
-</div>
-<div class="info_line1">
-<div class="jockey">石川 裕紀人</div>
-<div class="weight">55.0<span>kg</span></div>
-</div>
-<div class="info_line2">
-<div class="line">
-<div class="col left"><span class="dist">1200芝</span></div>
-<div class="col right"><p class="time">1:10.1</p></div>
-</div>
-<div class="line">
-<div class="col left"><span class="condition">良</span></div>
-<div class="col center">
-</div>
-<div class="col right"><p class="h_weight">478<span>kg</span></p></div>
-</div>
-</div>
-<div class="info_line3">
-<div class="line">
-<div class="corner_list"><ul><li title="3コーナー通過順位">3</li><li title="4コーナー通過順位">4</li></ul></div>
-<div class="f3">3F 35.3</div>
-</div>
-<p class="fin">アンムート<span class="time">(0.8)</span></p>
-</div>
-</td>
-<td class="past p4"></td></tr>
-<tr>
-<td class="waku"></td>
-<td class="num"></td>
-<td class="horse">
-<div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024100145/9E">キタノレイナ</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001031/3E');">伊藤 伸一</a><span class="division">(美浦)</span></p>
-<ul class="family_line">
-<li class="sire"><span>父：</span>マインドユアビスケッツ</li>
-<li class="mare"><span>母：</span>ホウショウマツエ<span class="bloodmare">(母の父：Malibu Moon)</span></li>
-</ul>
-</td>
-<td class="jockey"><p class="age">牝2/栗</p>
-<p class="weight">
-52.0<span>kg</span>
-</p>
-<p class="jockey"><span title="3kg減量" class="mark jockey">▲</span><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001218/8D');">遠藤 汰月</a></p>
-</td><td class="past p1" data-place="" data-same-race="sameRace1">
-<div class="date_line">
-<div class="date">2026年11月7日</div>
-<div class="rc">東京</div>
-</div>
-<div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202605010720261107/BC">新馬</a></div>
-<div class="r_class"></div>
-</div>
-<div class="place_line">
-<div class="place">14<span>着</span></div>
-<div class="num"><span class="max">18<span>頭</span></span><span class="gate">18<span>番</span></span><span class="pop">18<span>番人気</span></span></div>
-</div>
-<div class="info_line1">
-<div class="jockey"><span title="3kg減量" class="mark jockey">▲</span>遠藤 汰月</div>
-<div class="weight">52.0<span>kg</span></div>
-</div>
-<div class="info_line2">
-<div class="line">
-<div class="col left"><span class="dist">1400芝</span></div>
-<div class="col right"><p class="time">1:24.6</p></div>
+<div class="col right"><p class="time">1:23.9</p></div>
 </div>
 <div class="line">
 <div class="col left"><span class="condition">良</span></div>
@@ -1501,140 +1263,68 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 <div class="info_line3">
 <div class="line">
-<div class="corner_list"><ul><li title="3コーナー通過順位">18</li><li title="4コーナー通過順位">18</li></ul></div>
-<div class="f3">3F 34.4</div>
+<div class="corner_list"><ul><li title="3コーナー通過順位">14</li><li title="4コーナー通過順位">14</li></ul></div>
+<div class="f3">3F 35.3</div>
 </div>
-<p class="fin">クードルアラマン<span class="time">(2.6)</span></p>
+<p class="fin">ピクシーブラスト<span class="time">(2.1)</span></p>
 </div>
 </td>
-<td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
-<tr>
-<td class="waku"></td>
-<td class="num"></td>
-<td class="horse">
-<div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024100435/21">シエルフルール</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001189/FF');">堀内 岳志</a><span class="division">(美浦)</span></p>
-<ul class="family_line">
-<li class="sire"><span>父：</span>マテラスカイ</li>
-<li class="mare"><span>母：</span>サトノレーヌ<span class="bloodmare">(母の父：キングカメハメハ)</span></li>
-</ul>
-</td>
-<td class="jockey"><p class="age">牝2/鹿</p>
-<p class="weight">
-55.0<span>kg</span>
-</p>
-<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001096/39');">大野 拓弥</a></p>
-</td><td class="past p1" data-place="" data-same-race="sameRace1">
+<td class="past p4" data-place="" data-same-race="">
 <div class="date_line">
-<div class="date">2026年11月7日</div>
-<div class="rc">東京</div>
+<div class="date">2026年8月16日</div>
+<div class="rc">新潟</div>
 </div>
 <div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202605010720261107/BC">新馬</a></div>
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1004202602080420260816/C7">新馬</a></div>
 <div class="r_class"></div>
 </div>
 <div class="place_line">
-<div class="place">7<span>着</span></div>
-<div class="num"><span class="max">18<span>頭</span></span><span class="gate">17<span>番</span></span><span class="pop">10<span>番人気</span></span></div>
+<div class="place">5<span>着</span></div>
+<div class="num"><span class="max">13<span>頭</span></span><span class="gate">2<span>番</span></span><span class="pop">10<span>番人気</span></span></div>
 </div>
 <div class="info_line1">
-<div class="jockey">大野 拓弥</div>
+<div class="jockey">江田 照男</div>
 <div class="weight">55.0<span>kg</span></div>
 </div>
 <div class="info_line2">
 <div class="line">
-<div class="col left"><span class="dist">1400芝</span></div>
-<div class="col right"><p class="time">1:23.0</p></div>
+<div class="col left"><span class="dist">1600芝</span></div>
+<div class="col right"><p class="time">1:35.1</p></div>
 </div>
 <div class="line">
 <div class="col left"><span class="condition">良</span></div>
 <div class="col center">
 </div>
-<div class="col right"><p class="h_weight">438<span>kg</span></p></div>
+<div class="col right"><p class="h_weight">416<span>kg</span></p></div>
 </div>
 </div>
 <div class="info_line3">
 <div class="line">
-<div class="corner_list"><ul><li title="3コーナー通過順位">13</li><li title="4コーナー通過順位">14</li></ul></div>
-<div class="f3">3F 33.5</div>
+<div class="corner_list"><ul><li title="3コーナー通過順位">10</li><li title="4コーナー通過順位">10</li></ul></div>
+<div class="f3">3F 33.1</div>
 </div>
-<p class="fin">クードルアラマン<span class="time">(1.0)</span></p>
+<p class="fin">トップレイアー<span class="time">(0.8)</span></p>
 </div>
 </td>
-<td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
+</tr>
 <tr>
-<td class="waku"></td>
-<td class="num"></td>
-<td class="horse">
-<div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024101106/C0">スウィートルミナス</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001189/FF');">堀内 岳志</a><span class="division">(美浦)</span></p>
-<ul class="family_line">
-<li class="sire"><span>父：</span>タワーオブロンドン</li>
-<li class="mare"><span>母：</span>スウィートラブミー<span class="bloodmare">(母の父：キングズベスト)</span></li>
-</ul>
-</td>
-<td class="jockey"><p class="age">牝2/栗</p>
-<p class="weight">
-55.0<span>kg</span>
-</p>
-<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001153/33');">木幡 初也</a></p>
-</td><td class="past p1" data-place="" data-same-race="">
-<div class="date_line">
-<div class="date">2026年11月7日</div>
-<div class="rc">福島</div>
-</div>
-<div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1003202603010520261107/5C">新馬</a></div>
-<div class="r_class"></div>
-</div>
-<div class="place_line">
-<div class="place">8<span>着</span></div>
-<div class="num"><span class="max">16<span>頭</span></span><span class="gate">5<span>番</span></span><span class="pop">5<span>番人気</span></span></div>
-</div>
-<div class="info_line1">
-<div class="jockey">木幡 初也</div>
-<div class="weight">55.0<span>kg</span></div>
-</div>
-<div class="info_line2">
-<div class="line">
-<div class="col left"><span class="dist">1200芝</span></div>
-<div class="col right"><p class="time">1:11.3</p></div>
-</div>
-<div class="line">
-<div class="col left"><span class="condition">良</span></div>
-<div class="col center">
-</div>
-<div class="col right"><p class="h_weight">428<span>kg</span></p></div>
-</div>
-</div>
-<div class="info_line3">
-<div class="line">
-<div class="corner_list"><ul><li title="3コーナー通過順位">12</li><li title="4コーナー通過順位">12</li></ul></div>
-<div class="f3">3F 35.1</div>
-</div>
-<p class="fin">ツクバディーヴァ<span class="time">(1.2)</span></p>
-</div>
-</td>
-<td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
-<tr>
-<td class="waku"></td>
-<td class="num"></td>
+<td class="waku"><img src="/JRADB/img/waku/1.png" alt="枠1白" /></td>
+<td class="num">2</td>
 <td class="horse">
 <div class="name_line">
 <div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024106407/71">ダブルスプリング</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001208/65');">柄崎 将寿</a><span class="division">(美浦)</span></p>
+<div class="result_line">
+<div class="cell result">(0.1.1.0)</div><div class="cell win" title="4,400,000円">440万円</div></div><p class="owner">(有)シルクレーシング</p><p class="breeder">ノーザンファーム</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001208/65');">柄崎 将寿</a><span class="division">(美浦)</span></p>
 <ul class="family_line">
 <li class="sire"><span>父：</span>アルアイン</li>
 <li class="mare"><span>母：</span>スプリングゲイル<span class="bloodmare">(母の父：キンシャサノキセキ)</span></li>
 </ul>
 </td>
-<td class="jockey"><p class="age">牡2/黒鹿</p>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACUAAAAlCAYAAADFniADAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAoaSURBVFhHvVgJeI1nFv4nN7aE1ChSRfA0KkjRViaUKCF2IcS+ThYqaGJJhBBJ5Ga5N9uVXWKtKrGFkGCCYkwRI1yJfUlra5laohGRSd6e8/33517VmTLMeZ7z/Pfec75z3u98Z/n+K/0P5GRlZeXTtWvX1S+ytbX1fJYTmwnN/wfVqFl72bAhQ3D5fDEUqqqqEsxU+vAhdDGa6noWtfeRelN51Vumj1zcC/zW7YPv4gjs3ZUjgCh0q+QKoiLUGDcvtHrwHA1I3UVe9ZapRcduh9JvA9FngTHR6+DxZSCOfJuPpOQUuEzwwaS03Vj1CPBO28ugusur3h5Z1qpjpe05eebjgb5qjFWvQGxxBSKLytGmS2+4LVmBzPtA2OGbGKPOwOeTfPHxgLGFtM5BXv7mqY+d04Bi/22FWE5Riix4gJEhqejl4Q+v5I3oMXkexketx9D5MXD2nAuv1FwknK/GskvAID91uXlNC07+N0aWDZraxo4KS4fuIpB0FdCeBuKKgJTvgXg6wmnpe9F11BcY8GUEZmcVCJ3EK0CMnvSoFtJvAnO3nEC7nq4HyN5HstnXp96dXSfpg/ddRdoN2UEMAYogp2HXATU92TGDyPiJnN8CdOeBKOKlJF/6A6Ah0Lwm+RpvoAoD/SLKXjtq7zRuFjlGnYkk2nHiZdkwA4ik48jK3I8jPiHYmrwTGnKmPlqKVp84YVRIJnQELOXgTzjkF4X98xOQcLwU0QSS13NUOWrzth6DrWPvg+SmieztD1Dddxv5dOo/hoxUU17IYJg5MpvTckEl9Yzz4rKw+MxjvP9hBwxdnILUK2W4Q58V+VWngQTqKbR03GyDj37VPVA+ZqBRy7bF5M5S9vqfyXaAb2S5z+q/Y3gQOaFjUECF0RHqh3uZgLrUyxVq+l13gVoE6a5bX2AiZ07Lv4UokrON+HNAcP5NKpD5CD1YgnqNmyYa/P4+Wf654arQQ3docTX6TF2EqBO/INawy/ASIG/pShOHB+doEU4JH3uGQFFUE4/cRfk7DZ7JS5vYIIEqlXsa20ihPBu9dBUmxW7CmlLqc+FrSU36TPb+crJz9gis4KROJUfDg5LgmbQTSZQ3bFDLjgnsgYB4XO7pisOzwulY/i2OhvOFgUVQzq1bfwzn6fgvOQ/Dqq1FiOScpPW8OU1hObq4eyPy+CMRNc7Xtj0G7TH4/y3Vf6+5ZsmB26L0ecGivT+g5xR/OdHJqABGhjliagLKEdLQ9zgGc7wM2lNViCWdCNJnOXMU2Yo1FAlXqWdKLkYsShER4+TnAIyP/oaj1U1GYUqWDkOn3DTOIe41g2dHwz/7nMgZ5Xdj5kIIO3wXNWrVQd/pS5DKzl6ix8wRd5m2GIE7Lz0rIN58JFWota39agMOExo0KXazODbFCEdoxpoj1BTVsjPeMTG3Be5BfCzcu6IKytBt7Ex4Ju9CIsm4N3EU1RRRxRZHf+5mvWiwyUY+mDla3cf5PiQMDWUoBrKy66hbxA6oz7BBhaNopDgHJFA07ggADGTljvPIVa/Fmk2nxFFxLjHoZeQ4igDFn6xAjnYDtibmCH3ORW6eQxYkwoOAae+SbQIsfNAzjlrE5KyTkGpbTjDAEfQnl0+cCnLTtyNbtw3ZCc85L2M7Qif44a9JuxD3IyfxP/C0jqWorCqVOTal7xYdnnfM+aU9U4GSri7Pqm9/YAIiyHGEvhL9Bo5DTtzm3/jISdqGTTQ37eq/u9KAR5BNtCSVK4Ze5FhJqugwxb8ytgw47T7NRHaxz3CEU5Q4/6Jp52s3FprIq2rURNrRRwiiamti1eDaKSPZizxdks4RFnMZkiQNyHmJEjMdNGwkKa3Z50N2RlKkvp2vM5Ef814kQPltOIGgo3ewcg+doZH8l0bvI+3CE3hm7KOvkkeQJBUZy405Q5IqScdOIKL7qt/1lygxr5OkalKxtXXslagprqbbQQX+OcGXRklH0d0T9WUIpoZJOugxcTYSKT+yE7bitr0Drn/qhK+/OoxlPwOjQjNZp0FrSQoqfcGHwieJVZI0kjFJ7SQp+U4zW9xv2Rr3Wsh8n582tuhrpuL5JNWytJqxcNdlJFD+8AzUUNKLJ5W2tvApJsZkIWD7OSRQifPv0fTk0cKFkEo5Ra3gFpmpTdwpvn7D6getnvtS/JU0t0UblYoyiah1lz4bYk4/QXxRNTU6mXV0QQv+2w3UaWQdKpQkaVrgzovi0hZD1SQGLD1FWdOT71bcy3jg8m8sV4YwyxyHexcZ7JjbDxh3NomrVv/cH/vWniiHTXsHOdm7jJhanES9gnevcCI1US/OA5Wql1CSpL7eqXlIpihwl+Zo8L1JudI8Y/quRFEZLwzqs1HTOYkFNbJtHxtOvS2ONqH407JPyk2HYZ5UC/Ru9ungiUXJRo2OOY1AufrHl5FceUVq7U7jQUd38OV7SrBh1UGkHvhRNFJljDAgHsq8c5av2XwaEVSVL4JSqVRus776TowdY5+MofPgyadZp1W/GUsrxCxSFLjZ0QJH92l6ktdgJaJ2wzQbkHXgMsoaNBaJyc/VWwpF3vA6Pi7N2QpccHEX8mozFXbEbkQ8JboxKKIP3UOWl784khg8zdoHrNB6RHB6tfHM42nOY6FN9365woRMAtSDHq4mFaMf4S2uvryOR0/e0tUm8qcWdZF5thJ/mehnDMrC2WvhHT4NxSczY3APTqdlVO5uC5OrjEHF0xGEH/kZ1h/YxwkTMrUbGrMJ10fPNHF6eFaEGBe8jm8Fm+mdz1h+r0UbpF6rguN4X2NQZh36jdzPG1fuagooxsIKLVwDEqpSKdEVISsH5V2Dmbm5nzAhk90wuuCtuPCY7klu4uiKhk6B5lylSFJlLefQ/kAdHjVuKnrVyh1nkECzztHNU7QWheycBuZytf4eKGePpJxqHpiKkEEF599ATYu6C4QFmUZNpSjo6OLP/WfZd/ILgfK2oqzlfOTK0x2j+xV95grkPtV3eggXTUvZlCR90Pnzr7WnnshvSIa1xqC8uOnxlUMRMsCp9C6nUtXqLywQmZmZ+SzIvSJuAvIN9HkfehkzWCWC7Gx02Ao6TcMIITKvWXtO0O4SEQBljTGoyXO36E1ul1wF46PXs5GPWYGpub1DpubkU8Qb7eyPMm/SMymH7bnJ1iSppkU9/0V7vn81UDw2SPbsP4C2PQYXcDfnN2O+P70KLyPbC2hEkZkvZGtvBpRt/1lqrPiXnG+vytwkOXdsOjiuN9j776D8s8+agqJ+40G3RpJ1YQWidi07ddvfsZ9bvr3za3Bvt/wOLu75Vg3fW2KwR6DqBoTQRDAGxddieknlW4k0le9CGXRXYmDM/Lnv9FBG3J4V3gaZ17YI8PumQPz/IPxSK+F/c3p7L+RgSHYd+4+pDNqrBx+j/zY9vevr0cjG9pBY/faomX2f4ZWLDX4DsvXwpbfreg2b5P0KaMufDjcdY3gAAAAASUVORK5CYII=" alt="勝負服の画像" /></p><p class="age">牡2/黒鹿</p>
 <p class="weight">
 56.0<span>kg</span>
 </p>
-<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04krc015678/EC');">A.プーシャン</a></p>
+<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk005678/DB');">A.プーシャン</a></p>
 </td><td class="past p1 place2" data-place="place2" data-same-race="">
 <div class="date_line">
 <div class="date">2026年11月15日</div>
@@ -1711,22 +1401,339 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </td>
 <td class="past p3"></td><td class="past p4"></td></tr>
 <tr>
-<td class="waku"></td>
-<td class="num"></td>
+<td class="waku"><img src="/JRADB/img/waku/2.png" alt="枠2黒" /></td>
+<td class="num">3</td>
+<td class="horse">
+<div class="name_line">
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024105183/A3">ユリア</a></div></div>
+<div class="result_line">
+<div class="cell result">(0.1.1.1)</div><div class="cell win" title="4,400,000円">440万円</div></div><p class="owner">中西 純穂</p><p class="breeder">沖田 博志</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001067/C7');">久保田 貴士</a><span class="division">(美浦)</span></p>
+<ul class="family_line">
+<li class="sire"><span>父：</span>シスキン</li>
+<li class="mare"><span>母：</span>アルギュロス<span class="bloodmare">(母の父：マンハッタンカフェ)</span></li>
+</ul>
+</td>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牝2/青鹿</p>
+<p class="weight">
+55.0<span>kg</span>
+</p>
+<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001160/FA');">荻野 極</a></p>
+</td><td class="past p1" data-place="" data-same-race="">
+<div class="date_line">
+<div class="date">2026年11月23日</div>
+<div class="rc">福島</div>
+</div>
+<div class="race_line">
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1003202603060620261123/10">未勝利</a></div>
+<div class="r_class"></div>
+</div>
+<div class="place_line">
+<div class="place">8<span>着</span></div>
+<div class="num"><span class="max">16<span>頭</span></span><span class="gate">3<span>番</span></span><span class="pop">1<span>番人気</span></span></div>
+</div>
+<div class="info_line1">
+<div class="jockey">荻野 極</div>
+<div class="weight">55.0<span>kg</span></div>
+</div>
+<div class="info_line2">
+<div class="line">
+<div class="col left"><span class="dist">1200芝</span></div>
+<div class="col right"><p class="time">1:12.1</p></div>
+</div>
+<div class="line">
+<div class="col left"><span class="condition">良</span></div>
+<div class="col center">
+</div>
+<div class="col right"><p class="h_weight">474<span>kg</span></p></div>
+</div>
+</div>
+<div class="info_line3">
+<div class="line">
+<div class="corner_list"><ul><li title="3コーナー通過順位">4</li><li title="4コーナー通過順位">4</li></ul></div>
+<div class="f3">3F 37.3</div>
+</div>
+<p class="fin">ロジパンドラ<span class="time">(1.3)</span></p>
+</div>
+</td>
+<td class="past p2 place2" data-place="place2" data-same-race="sameRace5">
+<div class="date_line">
+<div class="date">2026年11月1日</div>
+<div class="rc">東京</div>
+</div>
+<div class="race_line">
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202604110120261101/EF">牝未勝利</a></div>
+<div class="r_class"></div>
+</div>
+<div class="place_line">
+<div class="place">2<span>着</span></div>
+<div class="num"><span class="max">15<span>頭</span></span><span class="gate">13<span>番</span></span><span class="pop">2<span>番人気</span></span></div>
+</div>
+<div class="info_line1">
+<div class="jockey">荻野 極</div>
+<div class="weight">55.0<span>kg</span></div>
+</div>
+<div class="info_line2">
+<div class="line">
+<div class="col left"><span class="dist">1400芝</span></div>
+<div class="col right"><p class="time">1:21.7</p></div>
+</div>
+<div class="line">
+<div class="col left"><span class="condition">良</span></div>
+<div class="col center">
+</div>
+<div class="col right"><p class="h_weight">468<span>kg</span></p></div>
+</div>
+</div>
+<div class="info_line3">
+<div class="line">
+<div class="corner_list"><ul><li title="3コーナー通過順位">1</li><li title="4コーナー通過順位">1</li></ul></div>
+<div class="f3">3F 35.7</div>
+</div>
+<p class="fin">インサイドエッジ<span class="time">(0.3)</span></p>
+</div>
+</td>
+<td class="past p3 place3" data-place="place3" data-same-race="">
+<div class="date_line">
+<div class="date">2026年6月20日</div>
+<div class="rc">東京</div>
+</div>
+<div class="race_line">
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202603050420260620/DF">牝新馬</a></div>
+<div class="r_class"></div>
+</div>
+<div class="place_line">
+<div class="place">3<span>着</span></div>
+<div class="num"><span class="max">11<span>頭</span></span><span class="gate">11<span>番</span></span><span class="pop">6<span>番人気</span></span></div>
+</div>
+<div class="info_line1">
+<div class="jockey">荻野 極</div>
+<div class="weight">55.0<span>kg</span></div>
+</div>
+<div class="info_line2">
+<div class="line">
+<div class="col left"><span class="dist">1400芝</span></div>
+<div class="col right"><p class="time">1:22.7</p></div>
+</div>
+<div class="line">
+<div class="col left"><span class="condition">稍重</span></div>
+<div class="col center">
+</div>
+<div class="col right"><p class="h_weight">460<span>kg</span></p></div>
+</div>
+</div>
+<div class="info_line3">
+<div class="line">
+<div class="corner_list"><ul><li title="3コーナー通過順位">2</li><li title="4コーナー通過順位">2</li></ul></div>
+<div class="f3">3F 34.2</div>
+</div>
+<p class="fin">ルークウォーム<span class="time">(0.4)</span></p>
+</div>
+</td>
+<td class="past p4"></td></tr>
+<tr>
+<td class="waku"><img src="/JRADB/img/waku/2.png" alt="枠2黒" /></td>
+<td class="num">4</td>
+<td class="horse">
+<div class="name_line">
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024105555/1D">ピリナカピリナ</a></div></div>
+<div class="result_line">
+<div class="cell result">(0.0.0.2)</div></div><p class="owner">友水 達也</p><p class="breeder">前川 勝春</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001094/64');">水野 貴広</a><span class="division">(美浦)</span></p>
+<ul class="family_line">
+<li class="sire"><span>父：</span>ステルヴィオ</li>
+<li class="mare"><span>母：</span>オールプリュネル<span class="bloodmare">(母の父：ステイゴールド)</span></li>
+</ul>
+</td>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牝2/鹿</p>
+<p class="weight">
+55.0<span>kg</span>
+</p>
+<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001169/E6');">武藤 雅</a></p>
+</td><td class="past p1" data-place="" data-same-race="sameRace2">
+<div class="date_line">
+<div class="date">2026年11月8日</div>
+<div class="rc">福島</div>
+</div>
+<div class="race_line">
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1003202603020220261108/6D">未勝利</a></div>
+<div class="r_class"></div>
+</div>
+<div class="place_line">
+<div class="place">11<span>着</span></div>
+<div class="num"><span class="max">16<span>頭</span></span><span class="gate">8<span>番</span></span><span class="pop">15<span>番人気</span></span></div>
+</div>
+<div class="info_line1">
+<div class="jockey">武藤 雅</div>
+<div class="weight">55.0<span>kg</span></div>
+</div>
+<div class="info_line2">
+<div class="line">
+<div class="col left"><span class="dist">1200芝</span></div>
+<div class="col right"><p class="time">1:12.2</p></div>
+</div>
+<div class="line">
+<div class="col left"><span class="condition">稍重</span></div>
+<div class="col center">
+</div>
+<div class="col right"><p class="h_weight">448<span>kg</span></p></div>
+</div>
+</div>
+<div class="info_line3">
+<div class="line">
+<div class="corner_list"><ul><li title="3コーナー通過順位">7</li><li title="4コーナー通過順位">7</li></ul></div>
+<div class="f3">3F 37.3</div>
+</div>
+<p class="fin">ゴールドショーマン<span class="time">(1.5)</span></p>
+</div>
+</td>
+<td class="past p2" data-place="" data-same-race="sameRace8">
+<div class="date_line">
+<div class="date">2026年7月18日</div>
+<div class="rc">福島</div>
+</div>
+<div class="race_line">
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1003202602070120260718/EA">未勝利</a></div>
+<div class="r_class"></div>
+</div>
+<div class="place_line">
+<div class="place stop">除外</div>
+<div class="num"><span class="max">12<span>頭</span></span><span class="gate">7<span>番</span></span></div>
+</div>
+<div class="info_line1">
+<div class="jockey">武藤 雅</div>
+<div class="weight">55.0<span>kg</span></div>
+</div>
+<div class="info_line2">
+<div class="line">
+<div class="col left"><span class="dist">1200芝</span></div>
+<div class="col right"><p class="time">&nbsp;</p></div>
+</div>
+<div class="line">
+<div class="col left"><span class="condition">良</span></div>
+<div class="col center">
+</div>
+<div class="col right"><p class="h_weight">442<span>kg</span></p></div>
+</div>
+</div>
+<div class="info_line3">
+<div class="line">
+<div class="corner_list">&nbsp;</div>
+<div class="f3"></div>
+</div>
+<p class="fin">ショウナンハーヴェ</p>
+</div>
+</td>
+<td class="past p3" data-place="" data-same-race="">
+<div class="date_line">
+<div class="date">2026年6月28日</div>
+<div class="rc">福島</div>
+</div>
+<div class="race_line">
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1003202602020420260628/A9">牝新馬</a></div>
+<div class="r_class"></div>
+</div>
+<div class="place_line">
+<div class="place">11<span>着</span></div>
+<div class="num"><span class="max">14<span>頭</span></span><span class="gate">5<span>番</span></span><span class="pop">4<span>番人気</span></span></div>
+</div>
+<div class="info_line1">
+<div class="jockey">武藤 雅</div>
+<div class="weight">55.0<span>kg</span></div>
+</div>
+<div class="info_line2">
+<div class="line">
+<div class="col left"><span class="dist">1200芝</span></div>
+<div class="col right"><p class="time">1:11.2</p></div>
+</div>
+<div class="line">
+<div class="col left"><span class="condition">良</span></div>
+<div class="col center">
+</div>
+<div class="col right"><p class="h_weight">442<span>kg</span></p></div>
+</div>
+</div>
+<div class="info_line3">
+<div class="line">
+<div class="corner_list"><ul><li title="3コーナー通過順位">12</li><li title="4コーナー通過順位">11</li></ul></div>
+<div class="f3">3F 34.9</div>
+</div>
+<p class="fin">ジーティーマイカ<span class="time">(2.8)</span></p>
+</div>
+</td>
+<td class="past p4"></td></tr>
+<tr>
+<td class="waku"><img src="/JRADB/img/waku/3.png" alt="枠3赤" /></td>
+<td class="num">5</td>
+<td class="horse">
+<div class="name_line">
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024100145/9E">キタノレイナ</a></div></div>
+<div class="result_line">
+<div class="cell result">(0.0.0.1)</div></div><p class="owner">北所 直人</p><p class="breeder">エトルタファーム</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001031/3E');">伊藤 伸一</a><span class="division">(美浦)</span></p>
+<ul class="family_line">
+<li class="sire"><span>父：</span>マインドユアビスケッツ</li>
+<li class="mare"><span>母：</span>ホウショウマツエ<span class="bloodmare">(母の父：Malibu Moon)</span></li>
+</ul>
+</td>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牝2/栗</p>
+<p class="weight">
+52.0<span>kg</span>
+</p>
+<p class="jockey"><span title="3kg減量" class="mark jockey">▲</span><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001218/8D');">遠藤 汰月</a></p>
+</td><td class="past p1" data-place="" data-same-race="sameRace1">
+<div class="date_line">
+<div class="date">2026年11月7日</div>
+<div class="rc">東京</div>
+</div>
+<div class="race_line">
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202605010720261107/BC">新馬</a></div>
+<div class="r_class"></div>
+</div>
+<div class="place_line">
+<div class="place">14<span>着</span></div>
+<div class="num"><span class="max">18<span>頭</span></span><span class="gate">18<span>番</span></span><span class="pop">18<span>番人気</span></span></div>
+</div>
+<div class="info_line1">
+<div class="jockey"><span title="3kg減量" class="mark jockey">▲</span>遠藤 汰月</div>
+<div class="weight">52.0<span>kg</span></div>
+</div>
+<div class="info_line2">
+<div class="line">
+<div class="col left"><span class="dist">1400芝</span></div>
+<div class="col right"><p class="time">1:24.6</p></div>
+</div>
+<div class="line">
+<div class="col left"><span class="condition">良</span></div>
+<div class="col center">
+</div>
+<div class="col right"><p class="h_weight">420<span>kg</span></p></div>
+</div>
+</div>
+<div class="info_line3">
+<div class="line">
+<div class="corner_list"><ul><li title="3コーナー通過順位">18</li><li title="4コーナー通過順位">18</li></ul></div>
+<div class="f3">3F 34.4</div>
+</div>
+<p class="fin">クードルアラマン<span class="time">(2.6)</span></p>
+</div>
+</td>
+<td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
+<tr>
+<td class="waku"><img src="/JRADB/img/waku/3.png" alt="枠3赤" /></td>
+<td class="num">6</td>
 <td class="horse">
 <div class="name_line">
 <div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024101107/33">ダンシングアワー</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001221/67');">室井 潔</a><span class="division">(美浦)</span></p>
+<div class="result_line">
+<div class="cell result">(0.2.0.2)</div><div class="cell win" title="4,800,000円">480万円</div></div><p class="owner">(有)コスモヴューファーム</p><p class="breeder">槇本牧場</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001221/67');">室井 潔</a><span class="division">(美浦)</span></p>
 <ul class="family_line">
 <li class="sire"><span>父：</span>ディーマジェスティ</li>
 <li class="mare"><span>母：</span>トリマゴラッキ<span class="bloodmare">(母の父：スマートボーイ)</span></li>
 </ul>
 </td>
-<td class="jockey"><p class="age">牝2/鹿</p>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牝2/鹿</p>
 <p class="weight">
 55.0<span>kg</span>
 </p>
-<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04krc015626/BD');">T.マーカンド</a></p>
+<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk005626/AC');">T.マーカンド</a></p>
 </td><td class="past p1 place2" data-place="place2" data-same-race="sameRace3">
 <div class="date_line">
 <div class="date">2026年11月8日</div>
@@ -1877,184 +1884,261 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </td>
 </tr>
 <tr>
-<td class="waku"></td>
-<td class="num"></td>
+<td class="waku"><img src="/JRADB/img/waku/4.png" alt="枠4青" /></td>
+<td class="num">7</td>
 <td class="horse">
 <div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024101524/BE">トムキャット</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001031/3E');">伊藤 伸一</a><span class="division">(美浦)</span></p>
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024103522/B6">フェロックス</a></div></div>
+<div class="result_line">
+<div class="cell result">(0.0.0.2)</div><div class="cell win" title="2,090,000円">209万円</div></div><p class="owner">内田 裕美</p><p class="breeder">ハクレイファーム</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001079/4A');">古賀 慎明</a><span class="division">(美浦)</span></p>
 <ul class="family_line">
-<li class="sire"><span>父：</span>ステルヴィオ</li>
-<li class="mare"><span>母：</span>メガミチャン<span class="bloodmare">(母の父：クロフネ)</span></li>
+<li class="sire"><span>父：</span>アドマイヤマーズ</li>
+<li class="mare"><span>母：</span>ワールドイズマイン<span class="bloodmare">(母の父：Elusive Quality)</span></li>
 </ul>
 </td>
-<td class="jockey"><p class="age">牝2/鹿</p>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牡2/鹿</p>
 <p class="weight">
-55.0<span>kg</span>
+56.0<span>kg</span>
 </p>
-<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001085/42');">松岡 正海</a></p>
-</td><td class="past p1" data-place="" data-same-race="sameRace3">
+<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk005509/30');">J.モレイラ</a></p>
+</td><td class="past p1" data-place="" data-same-race="sameRace4">
 <div class="date_line">
-<div class="date">2026年11月8日</div>
+<div class="date">2026年11月7日</div>
 <div class="rc">東京</div>
 </div>
 <div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202605020220261108/63">牝未勝利</a></div>
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202605010320261107/E8">未勝利</a></div>
 <div class="r_class"></div>
 </div>
 <div class="place_line">
-<div class="place">9<span>着</span></div>
-<div class="num"><span class="max">11<span>頭</span></span><span class="gate">5<span>番</span></span><span class="pop">11<span>番人気</span></span></div>
+<div class="place">4<span>着</span></div>
+<div class="num"><span class="max">16<span>頭</span></span><span class="gate">15<span>番</span></span><span class="pop">6<span>番人気</span></span></div>
 </div>
 <div class="info_line1">
-<div class="jockey">松岡 正海</div>
-<div class="weight">55.0<span>kg</span></div>
+<div class="jockey">三浦 皇成</div>
+<div class="weight">56.0<span>kg</span></div>
 </div>
 <div class="info_line2">
 <div class="line">
-<div class="col left"><span class="dist">1600芝</span></div>
-<div class="col right"><p class="time">1:36.6</p></div>
+<div class="col left"><span class="dist">1400芝</span></div>
+<div class="col right"><p class="time">1:23.0</p></div>
 </div>
 <div class="line">
 <div class="col left"><span class="condition">良</span></div>
 <div class="col center">
 </div>
 <div class="col right"><p class="h_weight">436<span>kg</span></p></div>
+</div>
+</div>
+<div class="info_line3">
+<div class="line">
+<div class="corner_list"><ul><li title="3コーナー通過順位">2</li><li title="4コーナー通過順位">2</li></ul></div>
+<div class="f3">3F 34.9</div>
+</div>
+<p class="fin">ハマナスノサクコロ<span class="time">(0.5)</span></p>
+</div>
+</td>
+<td class="past p2" data-place="" data-same-race="">
+<div class="date_line">
+<div class="date">2026年10月10日</div>
+<div class="rc">東京</div>
+</div>
+<div class="race_line">
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202604030620261010/70">新馬</a></div>
+<div class="r_class"></div>
+</div>
+<div class="place_line">
+<div class="place">4<span>着</span></div>
+<div class="num"><span class="max">14<span>頭</span></span><span class="gate">8<span>番</span></span><span class="pop">3<span>番人気</span></span></div>
+</div>
+<div class="info_line1">
+<div class="jockey">三浦 皇成</div>
+<div class="weight">56.0<span>kg</span></div>
+</div>
+<div class="info_line2">
+<div class="line">
+<div class="col left"><span class="dist">1600芝</span></div>
+<div class="col right"><p class="time">1:36.7</p></div>
+</div>
+<div class="line">
+<div class="col left"><span class="condition">良</span></div>
+<div class="col center">
+</div>
+<div class="col right"><p class="h_weight">436<span>kg</span></p></div>
+</div>
+</div>
+<div class="info_line3">
+<div class="line">
+<div class="corner_list"><ul><li title="3コーナー通過順位">4</li><li title="4コーナー通過順位">2</li></ul></div>
+<div class="f3">3F 34.3</div>
+</div>
+<p class="fin">ブレイクソロ<span class="time">(0.5)</span></p>
+</div>
+</td>
+<td class="past p3"></td><td class="past p4"></td></tr>
+<tr>
+<td class="waku"><img src="/JRADB/img/waku/4.png" alt="枠4青" /></td>
+<td class="num">8</td>
+<td class="horse">
+<div class="name_line">
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024100435/21">シエルフルール</a></div></div>
+<div class="result_line">
+<div class="cell result">(0.0.0.1)</div></div><p class="owner">酒井 高雄</p><p class="breeder">下河辺牧場</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001189/FF');">堀内 岳志</a><span class="division">(美浦)</span></p>
+<ul class="family_line">
+<li class="sire"><span>父：</span>マテラスカイ</li>
+<li class="mare"><span>母：</span>サトノレーヌ<span class="bloodmare">(母の父：キングカメハメハ)</span></li>
+</ul>
+</td>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牝2/鹿</p>
+<p class="weight">
+55.0<span>kg</span>
+</p>
+<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001096/39');">大野 拓弥</a></p>
+</td><td class="past p1" data-place="" data-same-race="sameRace1">
+<div class="date_line">
+<div class="date">2026年11月7日</div>
+<div class="rc">東京</div>
+</div>
+<div class="race_line">
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202605010720261107/BC">新馬</a></div>
+<div class="r_class"></div>
+</div>
+<div class="place_line">
+<div class="place">7<span>着</span></div>
+<div class="num"><span class="max">18<span>頭</span></span><span class="gate">17<span>番</span></span><span class="pop">10<span>番人気</span></span></div>
+</div>
+<div class="info_line1">
+<div class="jockey">大野 拓弥</div>
+<div class="weight">55.0<span>kg</span></div>
+</div>
+<div class="info_line2">
+<div class="line">
+<div class="col left"><span class="dist">1400芝</span></div>
+<div class="col right"><p class="time">1:23.0</p></div>
+</div>
+<div class="line">
+<div class="col left"><span class="condition">良</span></div>
+<div class="col center">
+</div>
+<div class="col right"><p class="h_weight">438<span>kg</span></p></div>
+</div>
+</div>
+<div class="info_line3">
+<div class="line">
+<div class="corner_list"><ul><li title="3コーナー通過順位">13</li><li title="4コーナー通過順位">14</li></ul></div>
+<div class="f3">3F 33.5</div>
+</div>
+<p class="fin">クードルアラマン<span class="time">(1.0)</span></p>
+</div>
+</td>
+<td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
+<tr>
+<td class="waku"><img src="/JRADB/img/waku/5.png" alt="枠5黄" /></td>
+<td class="num">9</td>
+<td class="horse">
+<div class="name_line">
+<div class="name"><span class="horse_icon"><img src="/JRADB/img/kigo/maru-gai.png" alt="マルガイ"></span><a href="/JRADB/accessU.html?CNAME=pw01dud002024108191/9A">インワンズブラッド</a></div></div>
+<div class="result_line">
+<div class="cell result">(0.1.0.0)</div><div class="cell win" title="3,100,000円">310万円</div></div><p class="owner">広尾レース(株)</p><p class="breeder">Whatton Manor Stud & Partners</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001075/1A');">矢作 芳人</a><span class="division">(栗東)</span></p>
+<ul class="family_line">
+<li class="sire"><span>父：</span>Baaeed</li>
+<li class="mare"><span>母：</span>Anasheed<span class="bloodmare">(母の父：Frankel)</span></li>
+</ul>
+</td>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACUAAAAlCAYAAADFniADAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAbBSURBVFhHvVgJUJVVFP7e+39HBCJzww1SAwE33HADNEUFc0kFlUUEBQGR0jLUTEep1LRMjbTc0mnKypymcqXEJqfUhkaTAW1T26y0aXLJyAhO5/z3vfrf470nIvTNfMPPveee891zz73//R9uA9G+fn65AwcO3OFMf3//BdLPtBqW/ws0r+cSJ46l78+Vk6CaWVVVZVBw7eoV2ly4urplU69itm6nBjU0OiSU+MUX05TsFXS0eI8hxI4rF8/S2lXLqcvogmprv9XE1iPUoIaGf+QRPECEqcyoV2hcykI6efwQrS/cSO365xKiDxLmcN+o90RUlBrUcPBBI7+n0T3vD0QsJ9y7jZB5g5BSQXpADKE//5/HYlIvEIZsIXSfQ+iUdJLHRajh9Y/haD+qHPEnCQ9y4OmXOSMvEMLzCbFvELo+wiJ3EgY+w23zCHH7CdnVhBy2jVheAd1bir/e4APfoDUYvEkFyGVmMmcyZzOzmLJMYTkcfAVhQomymcUUO+mXpZ74KSFw3Afsr7tyW3fEIHhaKZLPKcciRAI5U0RIDUkGs21trmyyqkT4dVjrmjWf9isxZKuasX3WriiZSOOlbB3Ny8n29ky6oj1r8Z8Q2sZ8yFHaqGC1QZOWubgnkZ1wTbibuZ0SaNpvhGY9CIOe9yzKzoeY0bwR7gwr52g+KqhnBKHvygqM+YgQuVHtJleOzZRllXq72QSEMokk3p3hC/hI+Ybg3a7QFtcDvFpsx9RLKku9FvMu+919LZlZGxuhTHLwdkLMm4R5/DzkZTnLBqngrhGK8IU3jHWXnSXLMXJv7ZZEMnAzYdI/o4IQOpOQfk2NkXoNHF1ki+8CPgGrkfKTWgojzd8RevA55KnQhRIs/Tohg3eXq347ZXKxfH6Zy0L+Dn1NshWpRDjCB8HpFxxqSJxErCIknHFfL9Ke+gtBb0LovdRzDYq/XksIk7/6z59MPv0q4a5uO2w6HDAaMbvVstmdSIbGfkzoy68Ud8EkS9M5S13yOAv7VJZd2Un7xFL2xQesOYZQyqXrnCusoYWSYodX+HpM4c50ZqqJacwe6/hZip+fzc7sFGEiWgJn2NqcKUL6FRJGsLAZ/GyOIf0xJ3gJfaba1BiwoE90iWXVu2R5/G2yFJgobelz2RlnoTYF74oiOu1vzlIyWVbsrhnjSeYyrquA5i/Z9BgItM5Chf45SD9u4jHmFyBrHm6gQ36lx3qRpXaXSWlPlgO22XltB/ssNcWwsxxkGY8zrEVXkoBR2lMa6SeZR0w8ynxfI/jjRTQfu9coTpl1jcB8po3nF27KRdf9kuE4vmMBMyypKNNLdcc4wlM6WedbK9km1FDE5TVXf4vVnmAeNbEMpC22VrNFEFoPLTSCOwcVoVN/loCEbrzMrrIpbfJeBJqhLR7Ti9h3iVOsUxxrG/vQMEkkAZ2wQXsnhLSDYaTttXEfsziULBGavJ84qX6zMfnrmrtLRGZUcqHucn90SJH3XPIje/Fi9rTmtarWjphiCYuYu0K4rrRVRjy0G/46Mv/ktedMSDaEOczkHwiN/QuUEbIx6Uv3W14CiyBXu0/6QmaW2fzoCEw+rTaNKZ4Rm0/7VhG2Yg/JKjcKVRzaKYNiiznl2lBlhJGIO1C3HSiiwmZJESs07boG0/hsM7Jsoky4c8ZnYmJFUGpZjWBSBwPWXud++ydSMCL5+utpB7qjsyhNm4Bxx2pOUP4PSjslJh3R54kbxkBng9DsUu5vJEaMLkax1ocooDOiNlfU8CV23fMvi0EwojZVOxhIWiWV7WP3Gy4U6lOUN8IXXarhS/6P4m8BRhAGbahyMJCCnfarvCSfNVwo1KcoKzpOOmxM3HzEiG/RwrgbA9Y5ihLjKecJVn2u4UIh9LZqKiRDHS12BNy335OoYRi5p9qh6MQ4iY8D3fdRw4HCZMQV1W33SbBey2TTdFCuGK2HvIoMOYac7GyiMo1Dz3yRk8DyLac1jjMcGLDmYvJZ9+eUJ0qwaP56/vcVwrB6PYwpfEc3+zOJSjPuOWZRku5h/LUL9BIDA80jtmLGX47pri1lkiP3iL8JyhlDvyMfid/eoih5bZh/AwgcU2LYiKhbpQSWVxSQo5wx6kEUf3bx7XMut4uTW6VkSmqnZf+dNn+1EBV/uqaoWCPdA8SA0QWtIg+j44RD6FBHdkw4BO/WS23+WJTvfKTw7cIsSq7F0VvkVoIs4y4kvwWIMKE89y4QxV3FoEGge8/H/SXq9wd7XHnuuUiSwTuiU2IlEnkJZRnjbfQLOmIMbji0x90TK5Fki5vAFJFN2hz4Bzs1IABDDlIRAAAAAElFTkSuQmCC" alt="勝負服の画像" /></p><p class="age">牡2/栗</p>
+<p class="weight">
+56.0<span>kg</span>
+</p>
+<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001163/9E');">坂井 瑠星</a></p>
+</td><td class="past p1 place2" data-place="place2" data-same-race="sameRace1">
+<div class="date_line">
+<div class="date">2026年11月7日</div>
+<div class="rc">東京</div>
+</div>
+<div class="race_line">
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202605010720261107/BC">新馬</a></div>
+<div class="r_class"></div>
+</div>
+<div class="place_line">
+<div class="place">2<span>着</span></div>
+<div class="num"><span class="max">18<span>頭</span></span><span class="gate">12<span>番</span></span><span class="pop">6<span>番人気</span></span></div>
+</div>
+<div class="info_line1">
+<div class="jockey">津村 明秀</div>
+<div class="weight">56.0<span>kg</span></div>
+</div>
+<div class="info_line2">
+<div class="line">
+<div class="col left"><span class="dist">1400芝</span></div>
+<div class="col right"><p class="time">1:22.4</p></div>
+</div>
+<div class="line">
+<div class="col left"><span class="condition">良</span></div>
+<div class="col center">
+</div>
+<div class="col right"><p class="h_weight">428<span>kg</span></p></div>
 </div>
 </div>
 <div class="info_line3">
 <div class="line">
 <div class="corner_list"><ul><li title="3コーナー通過順位">1</li><li title="4コーナー通過順位">1</li></ul></div>
-<div class="f3">3F 36.4</div>
+<div class="f3">3F 34.5</div>
 </div>
-<p class="fin">クリスタルシュガー<span class="time">(1.8)</span></p>
+<p class="fin">クードルアラマン<span class="time">(0.4)</span></p>
 </div>
 </td>
-<td class="past p2" data-place="" data-same-race="sameRace6">
+<td class="past p2" data-place="" data-same-race="">
 <div class="date_line">
-<div class="date">2026年10月18日</div>
-<div class="rc">東京</div>
+<div class="date">2026年8月1日</div>
+<div class="rc">札幌</div>
 </div>
 <div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202604070220261018/50">未勝利</a></div>
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1001202601030520260801/23">新馬</a></div>
 <div class="r_class"></div>
 </div>
 <div class="place_line">
-<div class="place">6<span>着</span></div>
-<div class="num"><span class="max">10<span>頭</span></span><span class="gate">4<span>番</span></span><span class="pop">6<span>番人気</span></span></div>
+<div class="place stop">除外</div>
+<div class="num"><span class="max">12<span>頭</span></span><span class="gate">4<span>番</span></span></div>
 </div>
 <div class="info_line1">
-<div class="jockey">松岡 正海</div>
+<div class="jockey">武 豊</div>
 <div class="weight">55.0<span>kg</span></div>
 </div>
 <div class="info_line2">
 <div class="line">
-<div class="col left"><span class="dist">1600芝</span></div>
-<div class="col right"><p class="time">1:37.3</p></div>
+<div class="col left"><span class="dist">1500芝</span></div>
+<div class="col right"><p class="time">&nbsp;</p></div>
 </div>
 <div class="line">
-<div class="col left"><span class="condition">良</span></div>
+<div class="col left"><span class="condition">稍重</span></div>
 <div class="col center">
 </div>
-<div class="col right"><p class="h_weight">436<span>kg</span></p></div>
+<div class="col right"><p class="h_weight">432<span>kg</span></p></div>
 </div>
 </div>
 <div class="info_line3">
 <div class="line">
-<div class="corner_list"><ul><li title="3コーナー通過順位">4</li><li title="4コーナー通過順位">5</li></ul></div>
-<div class="f3">3F 36.1</div>
+<div class="corner_list">&nbsp;</div>
+<div class="f3"></div>
 </div>
-<p class="fin">ティアラード<span class="time">(1.5)</span></p>
-</div>
-</td>
-<td class="past p3" data-place="" data-same-race="">
-<div class="date_line">
-<div class="date">2026年7月19日</div>
-<div class="rc">福島</div>
-</div>
-<div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1003202602080120260719/1A">未勝利</a></div>
-<div class="r_class"></div>
-</div>
-<div class="place_line">
-<div class="place">6<span>着</span></div>
-<div class="num"><span class="max">10<span>頭</span></span><span class="gate">4<span>番</span></span><span class="pop">6<span>番人気</span></span></div>
-</div>
-<div class="info_line1">
-<div class="jockey">松岡 正海</div>
-<div class="weight">55.0<span>kg</span></div>
-</div>
-<div class="info_line2">
-<div class="line">
-<div class="col left"><span class="dist">1150ダ</span></div>
-<div class="col right"><p class="time">1:12.5</p></div>
-</div>
-<div class="line">
-<div class="col left"><span class="condition">良</span></div>
-<div class="col center">
-</div>
-<div class="col right"><p class="h_weight">434<span>kg</span></p></div>
-</div>
-</div>
-<div class="info_line3">
-<div class="line">
-<div class="corner_list"><ul><li title="3コーナー通過順位">7</li><li title="4コーナー通過順位">6</li></ul></div>
-<div class="f3">3F 39.5</div>
-</div>
-<p class="fin">ムーンベリル<span class="time">(2.9)</span></p>
+<p class="fin">ブルージェイ</p>
 </div>
 </td>
-<td class="past p4" data-place="" data-same-race="">
-<div class="date_line">
-<div class="date">2026年7月11日</div>
-<div class="rc">福島</div>
-</div>
-<div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1003202602050520260711/AD">新馬</a></div>
-<div class="r_class"></div>
-</div>
-<div class="place_line">
-<div class="place">5<span>着</span></div>
-<div class="num"><span class="max">11<span>頭</span></span><span class="gate">6<span>番</span></span><span class="pop">10<span>番人気</span></span></div>
-</div>
-<div class="info_line1">
-<div class="jockey">松岡 正海</div>
-<div class="weight">55.0<span>kg</span></div>
-</div>
-<div class="info_line2">
-<div class="line">
-<div class="col left"><span class="dist">1200芝</span></div>
-<div class="col right"><p class="time">1:11.4</p></div>
-</div>
-<div class="line">
-<div class="col left"><span class="condition">良</span></div>
-<div class="col center">
-</div>
-<div class="col right"><p class="h_weight">436<span>kg</span></p></div>
-</div>
-</div>
-<div class="info_line3">
-<div class="line">
-<div class="corner_list"><ul><li title="3コーナー通過順位">5</li><li title="4コーナー通過順位">7</li></ul></div>
-<div class="f3">3F 35.6</div>
-</div>
-<p class="fin">ニシノイサリビ<span class="time">(0.6)</span></p>
-</div>
-</td>
-</tr>
+<td class="past p3"></td><td class="past p4"></td></tr>
 <tr>
-<td class="waku"></td>
-<td class="num"></td>
+<td class="waku"><img src="/JRADB/img/waku/5.png" alt="枠5黄" /></td>
+<td class="num">10</td>
 <td class="horse">
 <div class="name_line">
 <div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024104757/76">トーセンシントラ</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001008/D1');">杉浦 宏昭</a><span class="division">(美浦)</span></p>
+<div class="result_line">
+<div class="cell result">(0.0.0.3)</div></div><p class="owner">島川 隆哉</p><p class="breeder">飛野牧場</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001008/D1');">杉浦 宏昭</a><span class="division">(美浦)</span></p>
 <ul class="family_line">
 <li class="sire"><span>父：</span>ハイランドリール</li>
 <li class="mare"><span>母：</span>ヘルメット<span class="bloodmare">(母の父：タイキシャトル)</span></li>
 </ul>
 </td>
-<td class="jockey"><p class="age">牡2/鹿</p>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牡2/鹿</p>
 <p class="weight">
 56.0<span>kg</span>
 </p>
@@ -2172,147 +2256,149 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </td>
 <td class="past p4"></td></tr>
 <tr>
-<td class="waku"></td>
-<td class="num"></td>
+<td class="waku"><img src="/JRADB/img/waku/6.png" alt="枠6緑" /></td>
+<td class="num">11</td>
 <td class="horse">
 <div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024105973/1B">ノルトハウゼン</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001115/E2');">菊沢 隆徳</a><span class="division">(美浦)</span></p>
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024103668/D9">エーアイクワイ</a></div></div>
+<div class="result_line">
+<div class="cell result">(0.2.0.1)</div><div class="cell win" title="5,500,000円">550万円</div></div><p class="owner">(株)C2M</p><p class="breeder">豊栄牧場</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001020/47');">相沢 郁</a><span class="division">(美浦)</span></p>
 <ul class="family_line">
-<li class="sire"><span>父：</span>イスラボニータ</li>
-<li class="mare"><span>母：</span>ナレラ<span class="bloodmare">(母の父：Reliable Man)</span></li>
+<li class="sire"><span>父：</span>ビッグアーサー</li>
+<li class="mare"><span>母：</span>ヴェルジェーズ<span class="bloodmare">(母の父：ハーツクライ)</span></li>
 </ul>
 </td>
-<td class="jockey"><p class="age">牡2/黒鹿</p>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牡2/栗</p>
 <p class="weight">
 56.0<span>kg</span>
 </p>
-<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001122/66');">三浦 皇成</a></p>
-</td><td class="past p1" data-place="" data-same-race="">
+<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001150/8F');">石川 裕紀人</a></p>
+</td><td class="past p1" data-place="" data-same-race="sameRace7">
 <div class="date_line">
-<div class="date">2026年9月19日</div>
-<div class="rc">中山</div>
-</div>
-<div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1006202604050320260919/61">未勝利</a></div>
-<div class="r_class"></div>
-</div>
-<div class="place_line">
-<div class="place">4<span>着</span></div>
-<div class="num"><span class="max">12<span>頭</span></span><span class="gate">9<span>番</span></span><span class="pop">2<span>番人気</span></span></div>
-</div>
-<div class="info_line1">
-<div class="jockey">三浦 皇成</div>
-<div class="weight">55.0<span>kg</span></div>
-</div>
-<div class="info_line2">
-<div class="line">
-<div class="col left"><span class="dist">1600芝</span></div>
-<div class="col right"><p class="time">1:35.3</p></div>
-</div>
-<div class="line">
-<div class="col left"><span class="condition">良</span></div>
-<div class="col center">
-</div>
-<div class="col right"><p class="h_weight">450<span>kg</span></p></div>
-</div>
-</div>
-<div class="info_line3">
-<div class="line">
-<div class="corner_list"><ul><li title="2コーナー通過順位">8</li><li title="3コーナー通過順位">8</li><li title="4コーナー通過順位">7</li></ul></div>
-<div class="f3">3F 35.3</div>
-</div>
-<p class="fin">トルタパスカリーナ<span class="time">(0.7)</span></p>
-</div>
-</td>
-<td class="past p2 place3" data-place="place3" data-same-race="">
-<div class="date_line">
-<div class="date">2026年8月29日</div>
-<div class="rc">新潟</div>
-</div>
-<div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1004202603030320260829/95">未勝利</a></div>
-<div class="r_class"></div>
-</div>
-<div class="place_line">
-<div class="place">3<span>着</span></div>
-<div class="num"><span class="max">11<span>頭</span></span><span class="gate">2<span>番</span></span><span class="pop">3<span>番人気</span></span></div>
-</div>
-<div class="info_line1">
-<div class="jockey">三浦 皇成</div>
-<div class="weight">55.0<span>kg</span></div>
-</div>
-<div class="info_line2">
-<div class="line">
-<div class="col left"><span class="dist">1600芝</span></div>
-<div class="col right"><p class="time">1:35.2</p></div>
-</div>
-<div class="line">
-<div class="col left"><span class="condition">良</span></div>
-<div class="col center">
-</div>
-<div class="col right"><p class="h_weight">444<span>kg</span></p></div>
-</div>
-</div>
-<div class="info_line3">
-<div class="line">
-<div class="corner_list"><ul><li title="3コーナー通過順位">4</li><li title="4コーナー通過順位">4</li></ul></div>
-<div class="f3">3F 35.5</div>
-</div>
-<p class="fin">キムケンシーサー<span class="time">(0.3)</span></p>
-</div>
-</td>
-<td class="past p3" data-place="" data-same-race="">
-<div class="date_line">
-<div class="date">2026年6月13日</div>
+<div class="date">2026年10月4日</div>
 <div class="rc">東京</div>
 </div>
 <div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202603030620260613/40">新馬</a></div>
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202604020220261004/C3">未勝利</a></div>
 <div class="r_class"></div>
 </div>
 <div class="place_line">
-<div class="place">4<span>着</span></div>
-<div class="num"><span class="max">9<span>頭</span></span><span class="gate">7<span>番</span></span><span class="pop">3<span>番人気</span></span></div>
+<div class="place">7<span>着</span></div>
+<div class="num"><span class="max">16<span>頭</span></span><span class="gate">10<span>番</span></span><span class="pop">5<span>番人気</span></span></div>
 </div>
 <div class="info_line1">
-<div class="jockey">菊沢 一樹</div>
-<div class="weight">55.0<span>kg</span></div>
+<div class="jockey">横山 琉人</div>
+<div class="weight">56.0<span>kg</span></div>
 </div>
 <div class="info_line2">
 <div class="line">
 <div class="col left"><span class="dist">1400芝</span></div>
-<div class="col right"><p class="time">1:23.2</p></div>
+<div class="col right"><p class="time">1:22.7</p></div>
 </div>
 <div class="line">
 <div class="col left"><span class="condition">良</span></div>
 <div class="col center">
 </div>
-<div class="col right"><p class="h_weight">450<span>kg</span></p></div>
+<div class="col right"><p class="h_weight">492<span>kg</span></p></div>
 </div>
 </div>
 <div class="info_line3">
 <div class="line">
-<div class="corner_list"><ul><li title="3コーナー通過順位">7</li><li title="4コーナー通過順位">7</li></ul></div>
-<div class="f3">3F 33.8</div>
+<div class="corner_list"><ul><li title="3コーナー通過順位">5</li><li title="4コーナー通過順位">5</li></ul></div>
+<div class="f3">3F 35.1</div>
 </div>
-<p class="fin">デミアン<span class="time">(0.4)</span></p>
+<p class="fin">ピクシーブラスト<span class="time">(0.9)</span></p>
+</div>
+</td>
+<td class="past p2 place2" data-place="place2" data-same-race="sameRace8">
+<div class="date_line">
+<div class="date">2026年7月18日</div>
+<div class="rc">福島</div>
+</div>
+<div class="race_line">
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1003202602070120260718/EA">未勝利</a></div>
+<div class="r_class"></div>
+</div>
+<div class="place_line">
+<div class="place">2<span>着</span></div>
+<div class="num"><span class="max">12<span>頭</span></span><span class="gate">5<span>番</span></span><span class="pop">3<span>番人気</span></span></div>
+</div>
+<div class="info_line1">
+<div class="jockey">石川 裕紀人</div>
+<div class="weight">55.0<span>kg</span></div>
+</div>
+<div class="info_line2">
+<div class="line">
+<div class="col left"><span class="dist">1200芝</span></div>
+<div class="col right"><p class="time">1:09.8</p></div>
+</div>
+<div class="line">
+<div class="col left"><span class="condition">良</span></div>
+<div class="col center">
+</div>
+<div class="col right"><p class="h_weight">482<span>kg</span></p></div>
+</div>
+</div>
+<div class="info_line3">
+<div class="line">
+<div class="corner_list"><ul><li title="3コーナー通過順位">4</li><li title="4コーナー通過順位">3</li></ul></div>
+<div class="f3">3F 35.5</div>
+</div>
+<p class="fin">ショウナンハーヴェ<span class="time">(0.2)</span></p>
+</div>
+</td>
+<td class="past p3 place2" data-place="place2" data-same-race="">
+<div class="date_line">
+<div class="date">2026年6月27日</div>
+<div class="rc">福島</div>
+</div>
+<div class="race_line">
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1003202602010520260627/2E">新馬</a></div>
+<div class="r_class"></div>
+</div>
+<div class="place_line">
+<div class="place">2<span>着</span></div>
+<div class="num"><span class="max">11<span>頭</span></span><span class="gate">6<span>番</span></span><span class="pop">2<span>番人気</span></span></div>
+</div>
+<div class="info_line1">
+<div class="jockey">石川 裕紀人</div>
+<div class="weight">55.0<span>kg</span></div>
+</div>
+<div class="info_line2">
+<div class="line">
+<div class="col left"><span class="dist">1200芝</span></div>
+<div class="col right"><p class="time">1:10.1</p></div>
+</div>
+<div class="line">
+<div class="col left"><span class="condition">良</span></div>
+<div class="col center">
+</div>
+<div class="col right"><p class="h_weight">478<span>kg</span></p></div>
+</div>
+</div>
+<div class="info_line3">
+<div class="line">
+<div class="corner_list"><ul><li title="3コーナー通過順位">3</li><li title="4コーナー通過順位">4</li></ul></div>
+<div class="f3">3F 35.3</div>
+</div>
+<p class="fin">アンムート<span class="time">(0.8)</span></p>
 </div>
 </td>
 <td class="past p4"></td></tr>
 <tr>
-<td class="waku"></td>
-<td class="num"></td>
+<td class="waku"><img src="/JRADB/img/waku/6.png" alt="枠6緑" /></td>
+<td class="num">12</td>
 <td class="horse">
 <div class="name_line">
 <div class="name"><span class="horse_icon"><img src="/JRADB/img/kigo/maru-gai.png" alt="マルガイ"></span><a href="/JRADB/accessU.html?CNAME=pw01dud002024108273/91">バクソウシャチョウ</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk000427/1A');">森 秀行</a><span class="division">(栗東)</span></p>
+<div class="result_line">
+<div class="cell result">(0.2.1.3)</div><div class="cell win" title="7,190,000円">719万円</div></div><p class="owner">(株)ミキハウスHKサービス</p><p class="breeder">Don Alberto Corporation</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk000427/1A');">森 秀行</a><span class="division">(栗東)</span></p>
 <ul class="family_line">
 <li class="sire"><span>父：</span>Charlatan</li>
 <li class="mare"><span>母：</span>Wind and Hope<span class="bloodmare">(母の父：Tapit)</span></li>
 </ul>
 </td>
-<td class="jockey"><p class="age">牡2/栗</p>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牡2/栗</p>
 <p class="weight">
 56.0<span>kg</span>
 </p>
@@ -2468,589 +2554,465 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </td>
 </tr>
 <tr>
-<td class="waku"></td>
-<td class="num"></td>
+<td class="waku"><img src="/JRADB/img/waku/7.png" alt="枠7橙" /></td>
+<td class="num">13</td>
 <td class="horse">
 <div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024102782/89">ビップラージャ</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001195/3A');">嘉藤 貴行</a><span class="division">(美浦)</span></p>
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024105973/1B">ノルトハウゼン</a></div></div>
+<div class="result_line">
+<div class="cell result">(0.0.1.2)</div><div class="cell win" title="3,590,000円">359万円</div></div><p class="owner">村野 康司</p><p class="breeder">社台ファーム</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001115/E2');">菊沢 隆徳</a><span class="division">(美浦)</span></p>
 <ul class="family_line">
-<li class="sire"><span>父：</span>グレーターロンドン</li>
-<li class="mare"><span>母：</span>ルピナスベル<span class="bloodmare">(母の父：ホワイトマズル)</span></li>
+<li class="sire"><span>父：</span>イスラボニータ</li>
+<li class="mare"><span>母：</span>ナレラ<span class="bloodmare">(母の父：Reliable Man)</span></li>
 </ul>
 </td>
-<td class="jockey"><p class="age">牡2/栗</p>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牡2/黒鹿</p>
 <p class="weight">
 56.0<span>kg</span>
 </p>
-<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001174/95');">岩田 望来</a></p>
-</td><td class="past p1 place3" data-place="place3" data-same-race="sameRace4">
+<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001122/66');">三浦 皇成</a></p>
+</td><td class="past p1" data-place="" data-same-race="">
 <div class="date_line">
-<div class="date">2026年11月7日</div>
-<div class="rc">東京</div>
+<div class="date">2026年9月19日</div>
+<div class="rc">中山</div>
 </div>
 <div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202605010320261107/E8">未勝利</a></div>
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1006202604050320260919/61">未勝利</a></div>
+<div class="r_class"></div>
+</div>
+<div class="place_line">
+<div class="place">4<span>着</span></div>
+<div class="num"><span class="max">12<span>頭</span></span><span class="gate">9<span>番</span></span><span class="pop">2<span>番人気</span></span></div>
+</div>
+<div class="info_line1">
+<div class="jockey">三浦 皇成</div>
+<div class="weight">55.0<span>kg</span></div>
+</div>
+<div class="info_line2">
+<div class="line">
+<div class="col left"><span class="dist">1600芝</span></div>
+<div class="col right"><p class="time">1:35.3</p></div>
+</div>
+<div class="line">
+<div class="col left"><span class="condition">良</span></div>
+<div class="col center">
+</div>
+<div class="col right"><p class="h_weight">450<span>kg</span></p></div>
+</div>
+</div>
+<div class="info_line3">
+<div class="line">
+<div class="corner_list"><ul><li title="2コーナー通過順位">8</li><li title="3コーナー通過順位">8</li><li title="4コーナー通過順位">7</li></ul></div>
+<div class="f3">3F 35.3</div>
+</div>
+<p class="fin">トルタパスカリーナ<span class="time">(0.7)</span></p>
+</div>
+</td>
+<td class="past p2 place3" data-place="place3" data-same-race="">
+<div class="date_line">
+<div class="date">2026年8月29日</div>
+<div class="rc">新潟</div>
+</div>
+<div class="race_line">
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1004202603030320260829/95">未勝利</a></div>
 <div class="r_class"></div>
 </div>
 <div class="place_line">
 <div class="place">3<span>着</span></div>
-<div class="num"><span class="max">16<span>頭</span></span><span class="gate">8<span>番</span></span><span class="pop">11<span>番人気</span></span></div>
+<div class="num"><span class="max">11<span>頭</span></span><span class="gate">2<span>番</span></span><span class="pop">3<span>番人気</span></span></div>
 </div>
 <div class="info_line1">
-<div class="jockey">菅原 明良</div>
-<div class="weight">56.0<span>kg</span></div>
-</div>
-<div class="info_line2">
-<div class="line">
-<div class="col left"><span class="dist">1400芝</span></div>
-<div class="col right"><p class="time">1:22.9</p></div>
-</div>
-<div class="line">
-<div class="col left"><span class="condition">良</span></div>
-<div class="col center">
-</div>
-<div class="col right"><p class="h_weight">424<span>kg</span></p></div>
-</div>
-</div>
-<div class="info_line3">
-<div class="line">
-<div class="corner_list"><ul><li title="3コーナー通過順位">11</li><li title="4コーナー通過順位">11</li></ul></div>
-<div class="f3">3F 34.1</div>
-</div>
-<p class="fin">ハマナスノサクコロ<span class="time">(0.4)</span></p>
-</div>
-</td>
-<td class="past p2" data-place="" data-same-race="">
-<div class="date_line">
-<div class="date">2026年10月12日</div>
-<div class="rc">東京</div>
-</div>
-<div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202604050220261012/FC">未勝利</a></div>
-<div class="r_class"></div>
-</div>
-<div class="place_line">
-<div class="place">5<span>着</span></div>
-<div class="num"><span class="max">12<span>頭</span></span><span class="gate">10<span>番</span></span><span class="pop">7<span>番人気</span></span></div>
-</div>
-<div class="info_line1">
-<div class="jockey">江田 照男</div>
-<div class="weight">56.0<span>kg</span></div>
-</div>
-<div class="info_line2">
-<div class="line">
-<div class="col left"><span class="dist">1400芝</span></div>
-<div class="col right"><p class="time">1:23.3</p></div>
-</div>
-<div class="line">
-<div class="col left"><span class="condition">良</span></div>
-<div class="col center">
-</div>
-<div class="col right"><p class="h_weight">426<span>kg</span></p></div>
-</div>
-</div>
-<div class="info_line3">
-<div class="line">
-<div class="corner_list"><ul><li title="3コーナー通過順位">3</li><li title="4コーナー通過順位">5</li></ul></div>
-<div class="f3">3F 34.2</div>
-</div>
-<p class="fin">ソニックアイル<span class="time">(0.7)</span></p>
-</div>
-</td>
-<td class="past p3" data-place="" data-same-race="sameRace7">
-<div class="date_line">
-<div class="date">2026年10月4日</div>
-<div class="rc">東京</div>
-</div>
-<div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202604020220261004/C3">未勝利</a></div>
-<div class="r_class"></div>
-</div>
-<div class="place_line">
-<div class="place">14<span>着</span></div>
-<div class="num"><span class="max">16<span>頭</span></span><span class="gate">11<span>番</span></span><span class="pop">3<span>番人気</span></span></div>
-</div>
-<div class="info_line1">
-<div class="jockey">戸崎 圭太</div>
-<div class="weight">56.0<span>kg</span></div>
-</div>
-<div class="info_line2">
-<div class="line">
-<div class="col left"><span class="dist">1400芝</span></div>
-<div class="col right"><p class="time">1:23.9</p></div>
-</div>
-<div class="line">
-<div class="col left"><span class="condition">良</span></div>
-<div class="col center">
-</div>
-<div class="col right"><p class="h_weight">420<span>kg</span></p></div>
-</div>
-</div>
-<div class="info_line3">
-<div class="line">
-<div class="corner_list"><ul><li title="3コーナー通過順位">14</li><li title="4コーナー通過順位">14</li></ul></div>
-<div class="f3">3F 35.3</div>
-</div>
-<p class="fin">ピクシーブラスト<span class="time">(2.1)</span></p>
-</div>
-</td>
-<td class="past p4" data-place="" data-same-race="">
-<div class="date_line">
-<div class="date">2026年8月16日</div>
-<div class="rc">新潟</div>
-</div>
-<div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1004202602080420260816/C7">新馬</a></div>
-<div class="r_class"></div>
-</div>
-<div class="place_line">
-<div class="place">5<span>着</span></div>
-<div class="num"><span class="max">13<span>頭</span></span><span class="gate">2<span>番</span></span><span class="pop">10<span>番人気</span></span></div>
-</div>
-<div class="info_line1">
-<div class="jockey">江田 照男</div>
+<div class="jockey">三浦 皇成</div>
 <div class="weight">55.0<span>kg</span></div>
 </div>
 <div class="info_line2">
 <div class="line">
 <div class="col left"><span class="dist">1600芝</span></div>
-<div class="col right"><p class="time">1:35.1</p></div>
+<div class="col right"><p class="time">1:35.2</p></div>
 </div>
 <div class="line">
 <div class="col left"><span class="condition">良</span></div>
 <div class="col center">
 </div>
-<div class="col right"><p class="h_weight">416<span>kg</span></p></div>
-</div>
-</div>
-<div class="info_line3">
-<div class="line">
-<div class="corner_list"><ul><li title="3コーナー通過順位">10</li><li title="4コーナー通過順位">10</li></ul></div>
-<div class="f3">3F 33.1</div>
-</div>
-<p class="fin">トップレイアー<span class="time">(0.8)</span></p>
-</div>
-</td>
-</tr>
-<tr>
-<td class="waku"></td>
-<td class="num"></td>
-<td class="horse">
-<div class="name_line">
-<div class="name"><span class="horse_icon"><img src="/JRADB/img/kigo/maru-gai.png" alt="マルガイ"></span><a href="/JRADB/accessU.html?CNAME=pw01dud002024108388/11">ピニドローマ</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001038/12');">手塚 貴久</a><span class="division">(美浦)</span></p>
-<ul class="family_line">
-<li class="sire"><span>父：</span>Pinehurst</li>
-<li class="mare"><span>母：</span>Batalha<span class="bloodmare">(母の父：Smart Strike)</span></li>
-</ul>
-</td>
-<td class="jockey"><p class="age">牝2/鹿</p>
-<p class="weight">
-55.0<span>kg</span>
-</p>
-<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk005339/DD');">C.ルメール</a></p>
-</td><td class="past p1" data-place="" data-same-race="">
-<div class="date_line">
-<div class="date">2026年11月7日</div>
-<div class="rc">東京</div>
-</div>
-<div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202605010620261107/07">新馬</a></div>
-<div class="r_class"></div>
-</div>
-<div class="place_line">
-<div class="place">4<span>着</span></div>
-<div class="num"><span class="max">16<span>頭</span></span><span class="gate">8<span>番</span></span><span class="pop">2<span>番人気</span></span></div>
-</div>
-<div class="info_line1">
-<div class="jockey">C.ルメール</div>
-<div class="weight">55.0<span>kg</span></div>
-</div>
-<div class="info_line2">
-<div class="line">
-<div class="col left"><span class="dist">1300ダ</span></div>
-<div class="col right"><p class="time">1:19.2</p></div>
-</div>
-<div class="line">
-<div class="col left"><span class="condition">稍重</span></div>
-<div class="col center">
-</div>
-<div class="col right"><p class="h_weight">454<span>kg</span></p></div>
-</div>
-</div>
-<div class="info_line3">
-<div class="line">
-<div class="corner_list"><ul><li title="3コーナー通過順位">6</li><li title="4コーナー通過順位">6</li></ul></div>
-<div class="f3">3F 36.8</div>
-</div>
-<p class="fin">サトノヘラクレス<span class="time">(1.6)</span></p>
-</div>
-</td>
-<td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
-<tr>
-<td class="waku"></td>
-<td class="num"></td>
-<td class="horse">
-<div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024105555/1D">ピリナカピリナ</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001094/64');">水野 貴広</a><span class="division">(美浦)</span></p>
-<ul class="family_line">
-<li class="sire"><span>父：</span>ステルヴィオ</li>
-<li class="mare"><span>母：</span>オールプリュネル<span class="bloodmare">(母の父：ステイゴールド)</span></li>
-</ul>
-</td>
-<td class="jockey"><p class="age">牝2/鹿</p>
-<p class="weight">
-55.0<span>kg</span>
-</p>
-<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001169/E6');">武藤 雅</a></p>
-</td><td class="past p1" data-place="" data-same-race="sameRace2">
-<div class="date_line">
-<div class="date">2026年11月8日</div>
-<div class="rc">福島</div>
-</div>
-<div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1003202603020220261108/6D">未勝利</a></div>
-<div class="r_class"></div>
-</div>
-<div class="place_line">
-<div class="place">11<span>着</span></div>
-<div class="num"><span class="max">16<span>頭</span></span><span class="gate">8<span>番</span></span><span class="pop">15<span>番人気</span></span></div>
-</div>
-<div class="info_line1">
-<div class="jockey">武藤 雅</div>
-<div class="weight">55.0<span>kg</span></div>
-</div>
-<div class="info_line2">
-<div class="line">
-<div class="col left"><span class="dist">1200芝</span></div>
-<div class="col right"><p class="time">1:12.2</p></div>
-</div>
-<div class="line">
-<div class="col left"><span class="condition">稍重</span></div>
-<div class="col center">
-</div>
-<div class="col right"><p class="h_weight">448<span>kg</span></p></div>
-</div>
-</div>
-<div class="info_line3">
-<div class="line">
-<div class="corner_list"><ul><li title="3コーナー通過順位">7</li><li title="4コーナー通過順位">7</li></ul></div>
-<div class="f3">3F 37.3</div>
-</div>
-<p class="fin">ゴールドショーマン<span class="time">(1.5)</span></p>
-</div>
-</td>
-<td class="past p2" data-place="" data-same-race="sameRace8">
-<div class="date_line">
-<div class="date">2026年7月18日</div>
-<div class="rc">福島</div>
-</div>
-<div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1003202602070120260718/EA">未勝利</a></div>
-<div class="r_class"></div>
-</div>
-<div class="place_line">
-<div class="place stop">除外</div>
-<div class="num"><span class="max">12<span>頭</span></span><span class="gate">7<span>番</span></span></div>
-</div>
-<div class="info_line1">
-<div class="jockey">武藤 雅</div>
-<div class="weight">55.0<span>kg</span></div>
-</div>
-<div class="info_line2">
-<div class="line">
-<div class="col left"><span class="dist">1200芝</span></div>
-<div class="col right"><p class="time">&nbsp;</p></div>
-</div>
-<div class="line">
-<div class="col left"><span class="condition">良</span></div>
-<div class="col center">
-</div>
-<div class="col right"><p class="h_weight">442<span>kg</span></p></div>
-</div>
-</div>
-<div class="info_line3">
-<div class="line">
-<div class="corner_list">&nbsp;</div>
-<div class="f3"></div>
-</div>
-<p class="fin">ショウナンハーヴェ</p>
-</div>
-</td>
-<td class="past p3" data-place="" data-same-race="">
-<div class="date_line">
-<div class="date">2026年6月28日</div>
-<div class="rc">福島</div>
-</div>
-<div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1003202602020420260628/A9">牝新馬</a></div>
-<div class="r_class"></div>
-</div>
-<div class="place_line">
-<div class="place">11<span>着</span></div>
-<div class="num"><span class="max">14<span>頭</span></span><span class="gate">5<span>番</span></span><span class="pop">4<span>番人気</span></span></div>
-</div>
-<div class="info_line1">
-<div class="jockey">武藤 雅</div>
-<div class="weight">55.0<span>kg</span></div>
-</div>
-<div class="info_line2">
-<div class="line">
-<div class="col left"><span class="dist">1200芝</span></div>
-<div class="col right"><p class="time">1:11.2</p></div>
-</div>
-<div class="line">
-<div class="col left"><span class="condition">良</span></div>
-<div class="col center">
-</div>
-<div class="col right"><p class="h_weight">442<span>kg</span></p></div>
-</div>
-</div>
-<div class="info_line3">
-<div class="line">
-<div class="corner_list"><ul><li title="3コーナー通過順位">12</li><li title="4コーナー通過順位">11</li></ul></div>
-<div class="f3">3F 34.9</div>
-</div>
-<p class="fin">ジーティーマイカ<span class="time">(2.8)</span></p>
-</div>
-</td>
-<td class="past p4"></td></tr>
-<tr>
-<td class="waku"></td>
-<td class="num"></td>
-<td class="horse">
-<div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024103522/B6">フェロックス</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001079/4A');">古賀 慎明</a><span class="division">(美浦)</span></p>
-<ul class="family_line">
-<li class="sire"><span>父：</span>アドマイヤマーズ</li>
-<li class="mare"><span>母：</span>ワールドイズマイン<span class="bloodmare">(母の父：Elusive Quality)</span></li>
-</ul>
-</td>
-<td class="jockey"><p class="age">牡2/鹿</p>
-<p class="weight">
-56.0<span>kg</span>
-</p>
-<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04krc015509/41');">J.モレイラ</a></p>
-</td><td class="past p1" data-place="" data-same-race="sameRace4">
-<div class="date_line">
-<div class="date">2026年11月7日</div>
-<div class="rc">東京</div>
-</div>
-<div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202605010320261107/E8">未勝利</a></div>
-<div class="r_class"></div>
-</div>
-<div class="place_line">
-<div class="place">4<span>着</span></div>
-<div class="num"><span class="max">16<span>頭</span></span><span class="gate">15<span>番</span></span><span class="pop">6<span>番人気</span></span></div>
-</div>
-<div class="info_line1">
-<div class="jockey">三浦 皇成</div>
-<div class="weight">56.0<span>kg</span></div>
-</div>
-<div class="info_line2">
-<div class="line">
-<div class="col left"><span class="dist">1400芝</span></div>
-<div class="col right"><p class="time">1:23.0</p></div>
-</div>
-<div class="line">
-<div class="col left"><span class="condition">良</span></div>
-<div class="col center">
-</div>
-<div class="col right"><p class="h_weight">436<span>kg</span></p></div>
-</div>
-</div>
-<div class="info_line3">
-<div class="line">
-<div class="corner_list"><ul><li title="3コーナー通過順位">2</li><li title="4コーナー通過順位">2</li></ul></div>
-<div class="f3">3F 34.9</div>
-</div>
-<p class="fin">ハマナスノサクコロ<span class="time">(0.5)</span></p>
-</div>
-</td>
-<td class="past p2" data-place="" data-same-race="">
-<div class="date_line">
-<div class="date">2026年10月10日</div>
-<div class="rc">東京</div>
-</div>
-<div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202604030620261010/70">新馬</a></div>
-<div class="r_class"></div>
-</div>
-<div class="place_line">
-<div class="place">4<span>着</span></div>
-<div class="num"><span class="max">14<span>頭</span></span><span class="gate">8<span>番</span></span><span class="pop">3<span>番人気</span></span></div>
-</div>
-<div class="info_line1">
-<div class="jockey">三浦 皇成</div>
-<div class="weight">56.0<span>kg</span></div>
-</div>
-<div class="info_line2">
-<div class="line">
-<div class="col left"><span class="dist">1600芝</span></div>
-<div class="col right"><p class="time">1:36.7</p></div>
-</div>
-<div class="line">
-<div class="col left"><span class="condition">良</span></div>
-<div class="col center">
-</div>
-<div class="col right"><p class="h_weight">436<span>kg</span></p></div>
-</div>
-</div>
-<div class="info_line3">
-<div class="line">
-<div class="corner_list"><ul><li title="3コーナー通過順位">4</li><li title="4コーナー通過順位">2</li></ul></div>
-<div class="f3">3F 34.3</div>
-</div>
-<p class="fin">ブレイクソロ<span class="time">(0.5)</span></p>
-</div>
-</td>
-<td class="past p3"></td><td class="past p4"></td></tr>
-<tr>
-<td class="waku"></td>
-<td class="num"></td>
-<td class="horse">
-<div class="name_line">
-<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024105183/A3">ユリア</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001067/C7');">久保田 貴士</a><span class="division">(美浦)</span></p>
-<ul class="family_line">
-<li class="sire"><span>父：</span>シスキン</li>
-<li class="mare"><span>母：</span>アルギュロス<span class="bloodmare">(母の父：マンハッタンカフェ)</span></li>
-</ul>
-</td>
-<td class="jockey"><p class="age">牝2/青鹿</p>
-<p class="weight">
-55.0<span>kg</span>
-</p>
-<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001160/FA');">荻野 極</a></p>
-</td><td class="past p1" data-place="" data-same-race="">
-<div class="date_line">
-<div class="date">2026年11月23日</div>
-<div class="rc">福島</div>
-</div>
-<div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1003202603060620261123/10">未勝利</a></div>
-<div class="r_class"></div>
-</div>
-<div class="place_line">
-<div class="place">8<span>着</span></div>
-<div class="num"><span class="max">16<span>頭</span></span><span class="gate">3<span>番</span></span><span class="pop">1<span>番人気</span></span></div>
-</div>
-<div class="info_line1">
-<div class="jockey">荻野 極</div>
-<div class="weight">55.0<span>kg</span></div>
-</div>
-<div class="info_line2">
-<div class="line">
-<div class="col left"><span class="dist">1200芝</span></div>
-<div class="col right"><p class="time">1:12.1</p></div>
-</div>
-<div class="line">
-<div class="col left"><span class="condition">良</span></div>
-<div class="col center">
-</div>
-<div class="col right"><p class="h_weight">474<span>kg</span></p></div>
+<div class="col right"><p class="h_weight">444<span>kg</span></p></div>
 </div>
 </div>
 <div class="info_line3">
 <div class="line">
 <div class="corner_list"><ul><li title="3コーナー通過順位">4</li><li title="4コーナー通過順位">4</li></ul></div>
-<div class="f3">3F 37.3</div>
+<div class="f3">3F 35.5</div>
 </div>
-<p class="fin">ロジパンドラ<span class="time">(1.3)</span></p>
+<p class="fin">キムケンシーサー<span class="time">(0.3)</span></p>
 </div>
 </td>
-<td class="past p2 place2" data-place="place2" data-same-race="sameRace5">
+<td class="past p3" data-place="" data-same-race="">
 <div class="date_line">
-<div class="date">2026年11月1日</div>
+<div class="date">2026年6月13日</div>
 <div class="rc">東京</div>
 </div>
 <div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202604110120261101/EF">牝未勝利</a></div>
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202603030620260613/40">新馬</a></div>
 <div class="r_class"></div>
 </div>
 <div class="place_line">
-<div class="place">2<span>着</span></div>
-<div class="num"><span class="max">15<span>頭</span></span><span class="gate">13<span>番</span></span><span class="pop">2<span>番人気</span></span></div>
+<div class="place">4<span>着</span></div>
+<div class="num"><span class="max">9<span>頭</span></span><span class="gate">7<span>番</span></span><span class="pop">3<span>番人気</span></span></div>
 </div>
 <div class="info_line1">
-<div class="jockey">荻野 極</div>
+<div class="jockey">菊沢 一樹</div>
 <div class="weight">55.0<span>kg</span></div>
 </div>
 <div class="info_line2">
 <div class="line">
 <div class="col left"><span class="dist">1400芝</span></div>
-<div class="col right"><p class="time">1:21.7</p></div>
+<div class="col right"><p class="time">1:23.2</p></div>
 </div>
 <div class="line">
 <div class="col left"><span class="condition">良</span></div>
 <div class="col center">
 </div>
-<div class="col right"><p class="h_weight">468<span>kg</span></p></div>
+<div class="col right"><p class="h_weight">450<span>kg</span></p></div>
 </div>
 </div>
 <div class="info_line3">
 <div class="line">
-<div class="corner_list"><ul><li title="3コーナー通過順位">1</li><li title="4コーナー通過順位">1</li></ul></div>
-<div class="f3">3F 35.7</div>
+<div class="corner_list"><ul><li title="3コーナー通過順位">7</li><li title="4コーナー通過順位">7</li></ul></div>
+<div class="f3">3F 33.8</div>
 </div>
-<p class="fin">インサイドエッジ<span class="time">(0.3)</span></p>
+<p class="fin">デミアン<span class="time">(0.4)</span></p>
 </div>
 </td>
-<td class="past p3 place3" data-place="place3" data-same-race="">
+<td class="past p4"></td></tr>
+<tr>
+<td class="waku"><img src="/JRADB/img/waku/7.png" alt="枠7橙" /></td>
+<td class="num">14</td>
+<td class="horse">
+<div class="name_line">
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024105987/F7">ヴァルフォース</a></div></div>
+<div class="result_line">
+<div class="cell result">(0.0.1.1)</div><div class="cell win" title="2,890,000円">289万円</div></div><p class="owner">平田 修</p><p class="breeder">社台ファーム</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001059/74');">加藤 征弘</a><span class="division">(美浦)</span></p>
+<ul class="family_line">
+<li class="sire"><span>父：</span>ロードカナロア</li>
+<li class="mare"><span>母：</span>ハーエミネンシー<span class="bloodmare">(母の父：Successful Appeal)</span></li>
+</ul>
+</td>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牝2/鹿</p>
+<p class="weight">
+55.0<span>kg</span>
+</p>
+<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04krc015504/85');">M.バルザローナ</a></p>
+</td><td class="past p1" data-place="" data-same-race="">
 <div class="date_line">
-<div class="date">2026年6月20日</div>
+<div class="date">2026年10月10日</div>
 <div class="rc">東京</div>
 </div>
 <div class="race_line">
-<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202603050420260620/DF">牝新馬</a></div>
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202604030220261010/9C">牝未勝利</a></div>
 <div class="r_class"></div>
 </div>
 <div class="place_line">
-<div class="place">3<span>着</span></div>
-<div class="num"><span class="max">11<span>頭</span></span><span class="gate">11<span>番</span></span><span class="pop">6<span>番人気</span></span></div>
+<div class="place">4<span>着</span></div>
+<div class="num"><span class="max">13<span>頭</span></span><span class="gate">10<span>番</span></span><span class="pop">2<span>番人気</span></span></div>
 </div>
 <div class="info_line1">
-<div class="jockey">荻野 極</div>
+<div class="jockey">横山 武史</div>
 <div class="weight">55.0<span>kg</span></div>
 </div>
 <div class="info_line2">
 <div class="line">
-<div class="col left"><span class="dist">1400芝</span></div>
-<div class="col right"><p class="time">1:22.7</p></div>
+<div class="col left"><span class="dist">1600芝</span></div>
+<div class="col right"><p class="time">1:34.6</p></div>
 </div>
 <div class="line">
-<div class="col left"><span class="condition">稍重</span></div>
+<div class="col left"><span class="condition">良</span></div>
 <div class="col center">
 </div>
-<div class="col right"><p class="h_weight">460<span>kg</span></p></div>
+<div class="col right"><p class="h_weight">430<span>kg</span></p></div>
 </div>
 </div>
 <div class="info_line3">
 <div class="line">
 <div class="corner_list"><ul><li title="3コーナー通過順位">2</li><li title="4コーナー通過順位">2</li></ul></div>
-<div class="f3">3F 34.2</div>
+<div class="f3">3F 35.4</div>
 </div>
-<p class="fin">ルークウォーム<span class="time">(0.4)</span></p>
+<p class="fin">ゴールデンハニビー<span class="time">(0.4)</span></p>
 </div>
 </td>
-<td class="past p4"></td></tr>
+<td class="past p2 place3" data-place="place3" data-same-race="">
+<div class="date_line">
+<div class="date">2026年8月2日</div>
+<div class="rc">新潟</div>
+</div>
+<div class="race_line">
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1004202602040320260802/F8">新馬</a></div>
+<div class="r_class"></div>
+</div>
+<div class="place_line">
+<div class="place">3<span>着</span></div>
+<div class="num"><span class="max">13<span>頭</span></span><span class="gate">11<span>番</span></span><span class="pop">3<span>番人気</span></span></div>
+</div>
+<div class="info_line1">
+<div class="jockey">三浦 皇成</div>
+<div class="weight">55.0<span>kg</span></div>
+</div>
+<div class="info_line2">
+<div class="line">
+<div class="col left"><span class="dist">1600芝</span></div>
+<div class="col right"><p class="time">1:37.0</p></div>
+</div>
+<div class="line">
+<div class="col left"><span class="condition">良</span></div>
+<div class="col center">
+</div>
+<div class="col right"><p class="h_weight">434<span>kg</span></p></div>
+</div>
+</div>
+<div class="info_line3">
+<div class="line">
+<div class="corner_list"><ul><li title="3コーナー通過順位">12</li><li title="4コーナー通過順位">11</li></ul></div>
+<div class="f3">3F 34.4</div>
+</div>
+<p class="fin">ニシノトラノスケ<span class="time">(0.3)</span></p>
+</div>
+</td>
+<td class="past p3"></td><td class="past p4"></td></tr>
 <tr>
-<td class="waku"></td>
-<td class="num"></td>
+<td class="waku"><img src="/JRADB/img/waku/7.png" alt="枠7橙" /></td>
+<td class="num">15</td>
+<td class="horse">
+<div class="name_line">
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024101524/BE">トムキャット</a></div></div>
+<div class="result_line">
+<div class="cell result">(0.0.0.4)</div><div class="cell win" title="780,000円">78万円</div></div><p class="owner">田頭 勇貴</p><p class="breeder">富田 恭司</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001031/3E');">伊藤 伸一</a><span class="division">(美浦)</span></p>
+<ul class="family_line">
+<li class="sire"><span>父：</span>ステルヴィオ</li>
+<li class="mare"><span>母：</span>メガミチャン<span class="bloodmare">(母の父：クロフネ)</span></li>
+</ul>
+</td>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牝2/鹿</p>
+<p class="weight">
+55.0<span>kg</span>
+</p>
+<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001085/42');">松岡 正海</a></p>
+</td><td class="past p1" data-place="" data-same-race="sameRace3">
+<div class="date_line">
+<div class="date">2026年11月8日</div>
+<div class="rc">東京</div>
+</div>
+<div class="race_line">
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202605020220261108/63">牝未勝利</a></div>
+<div class="r_class"></div>
+</div>
+<div class="place_line">
+<div class="place">9<span>着</span></div>
+<div class="num"><span class="max">11<span>頭</span></span><span class="gate">5<span>番</span></span><span class="pop">11<span>番人気</span></span></div>
+</div>
+<div class="info_line1">
+<div class="jockey">松岡 正海</div>
+<div class="weight">55.0<span>kg</span></div>
+</div>
+<div class="info_line2">
+<div class="line">
+<div class="col left"><span class="dist">1600芝</span></div>
+<div class="col right"><p class="time">1:36.6</p></div>
+</div>
+<div class="line">
+<div class="col left"><span class="condition">良</span></div>
+<div class="col center">
+</div>
+<div class="col right"><p class="h_weight">436<span>kg</span></p></div>
+</div>
+</div>
+<div class="info_line3">
+<div class="line">
+<div class="corner_list"><ul><li title="3コーナー通過順位">1</li><li title="4コーナー通過順位">1</li></ul></div>
+<div class="f3">3F 36.4</div>
+</div>
+<p class="fin">クリスタルシュガー<span class="time">(1.8)</span></p>
+</div>
+</td>
+<td class="past p2" data-place="" data-same-race="sameRace6">
+<div class="date_line">
+<div class="date">2026年10月18日</div>
+<div class="rc">東京</div>
+</div>
+<div class="race_line">
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202604070220261018/50">未勝利</a></div>
+<div class="r_class"></div>
+</div>
+<div class="place_line">
+<div class="place">6<span>着</span></div>
+<div class="num"><span class="max">10<span>頭</span></span><span class="gate">4<span>番</span></span><span class="pop">6<span>番人気</span></span></div>
+</div>
+<div class="info_line1">
+<div class="jockey">松岡 正海</div>
+<div class="weight">55.0<span>kg</span></div>
+</div>
+<div class="info_line2">
+<div class="line">
+<div class="col left"><span class="dist">1600芝</span></div>
+<div class="col right"><p class="time">1:37.3</p></div>
+</div>
+<div class="line">
+<div class="col left"><span class="condition">良</span></div>
+<div class="col center">
+</div>
+<div class="col right"><p class="h_weight">436<span>kg</span></p></div>
+</div>
+</div>
+<div class="info_line3">
+<div class="line">
+<div class="corner_list"><ul><li title="3コーナー通過順位">4</li><li title="4コーナー通過順位">5</li></ul></div>
+<div class="f3">3F 36.1</div>
+</div>
+<p class="fin">ティアラード<span class="time">(1.5)</span></p>
+</div>
+</td>
+<td class="past p3" data-place="" data-same-race="">
+<div class="date_line">
+<div class="date">2026年7月19日</div>
+<div class="rc">福島</div>
+</div>
+<div class="race_line">
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1003202602080120260719/1A">未勝利</a></div>
+<div class="r_class"></div>
+</div>
+<div class="place_line">
+<div class="place">6<span>着</span></div>
+<div class="num"><span class="max">10<span>頭</span></span><span class="gate">4<span>番</span></span><span class="pop">6<span>番人気</span></span></div>
+</div>
+<div class="info_line1">
+<div class="jockey">松岡 正海</div>
+<div class="weight">55.0<span>kg</span></div>
+</div>
+<div class="info_line2">
+<div class="line">
+<div class="col left"><span class="dist">1150ダ</span></div>
+<div class="col right"><p class="time">1:12.5</p></div>
+</div>
+<div class="line">
+<div class="col left"><span class="condition">良</span></div>
+<div class="col center">
+</div>
+<div class="col right"><p class="h_weight">434<span>kg</span></p></div>
+</div>
+</div>
+<div class="info_line3">
+<div class="line">
+<div class="corner_list"><ul><li title="3コーナー通過順位">7</li><li title="4コーナー通過順位">6</li></ul></div>
+<div class="f3">3F 39.5</div>
+</div>
+<p class="fin">ムーンベリル<span class="time">(2.9)</span></p>
+</div>
+</td>
+<td class="past p4" data-place="" data-same-race="">
+<div class="date_line">
+<div class="date">2026年7月11日</div>
+<div class="rc">福島</div>
+</div>
+<div class="race_line">
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1003202602050520260711/AD">新馬</a></div>
+<div class="r_class"></div>
+</div>
+<div class="place_line">
+<div class="place">5<span>着</span></div>
+<div class="num"><span class="max">11<span>頭</span></span><span class="gate">6<span>番</span></span><span class="pop">10<span>番人気</span></span></div>
+</div>
+<div class="info_line1">
+<div class="jockey">松岡 正海</div>
+<div class="weight">55.0<span>kg</span></div>
+</div>
+<div class="info_line2">
+<div class="line">
+<div class="col left"><span class="dist">1200芝</span></div>
+<div class="col right"><p class="time">1:11.4</p></div>
+</div>
+<div class="line">
+<div class="col left"><span class="condition">良</span></div>
+<div class="col center">
+</div>
+<div class="col right"><p class="h_weight">436<span>kg</span></p></div>
+</div>
+</div>
+<div class="info_line3">
+<div class="line">
+<div class="corner_list"><ul><li title="3コーナー通過順位">5</li><li title="4コーナー通過順位">7</li></ul></div>
+<div class="f3">3F 35.6</div>
+</div>
+<p class="fin">ニシノイサリビ<span class="time">(0.6)</span></p>
+</div>
+</td>
+</tr>
+<tr>
+<td class="waku"><img src="/JRADB/img/waku/8.png" alt="枠8桃" /></td>
+<td class="num">16</td>
+<td class="horse">
+<div class="name_line">
+<div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024101106/C0">スウィートルミナス</a></div></div>
+<div class="result_line">
+<div class="cell result">(0.0.0.1)</div></div><p class="owner">(株)ヒダカ・ブリーダーズ・ユニオン</p><p class="breeder">槇本牧場</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001189/FF');">堀内 岳志</a><span class="division">(美浦)</span></p>
+<ul class="family_line">
+<li class="sire"><span>父：</span>タワーオブロンドン</li>
+<li class="mare"><span>母：</span>スウィートラブミー<span class="bloodmare">(母の父：キングズベスト)</span></li>
+</ul>
+</td>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牝2/栗</p>
+<p class="weight">
+55.0<span>kg</span>
+</p>
+<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk001153/33');">木幡 初也</a></p>
+</td><td class="past p1" data-place="" data-same-race="">
+<div class="date_line">
+<div class="date">2026年11月7日</div>
+<div class="rc">福島</div>
+</div>
+<div class="race_line">
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1003202603010520261107/5C">新馬</a></div>
+<div class="r_class"></div>
+</div>
+<div class="place_line">
+<div class="place">8<span>着</span></div>
+<div class="num"><span class="max">16<span>頭</span></span><span class="gate">5<span>番</span></span><span class="pop">5<span>番人気</span></span></div>
+</div>
+<div class="info_line1">
+<div class="jockey">木幡 初也</div>
+<div class="weight">55.0<span>kg</span></div>
+</div>
+<div class="info_line2">
+<div class="line">
+<div class="col left"><span class="dist">1200芝</span></div>
+<div class="col right"><p class="time">1:11.3</p></div>
+</div>
+<div class="line">
+<div class="col left"><span class="condition">良</span></div>
+<div class="col center">
+</div>
+<div class="col right"><p class="h_weight">428<span>kg</span></p></div>
+</div>
+</div>
+<div class="info_line3">
+<div class="line">
+<div class="corner_list"><ul><li title="3コーナー通過順位">12</li><li title="4コーナー通過順位">12</li></ul></div>
+<div class="f3">3F 35.1</div>
+</div>
+<p class="fin">ツクバディーヴァ<span class="time">(1.2)</span></p>
+</div>
+</td>
+<td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
+<tr>
+<td class="waku"><img src="/JRADB/img/waku/8.png" alt="枠8桃" /></td>
+<td class="num">17</td>
 <td class="horse">
 <div class="name_line">
 <div class="name"><a href="/JRADB/accessU.html?CNAME=pw01dud002024103545/2F">レミニシング</a></div></div>
-<p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001024/77');">萱野 浩二</a><span class="division">(美浦)</span></p>
+<div class="result_line">
+<div class="cell result">(0.0.0.2)</div></div><p class="owner">グリーンスウォード</p><p class="breeder">浜口牧場</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001024/77');">萱野 浩二</a><span class="division">(美浦)</span></p>
 <ul class="family_line">
 <li class="sire"><span>父：</span>ステルヴィオ</li>
 <li class="mare"><span>母：</span>ボロブドゥール<span class="bloodmare">(母の父：ハイアーゲーム)</span></li>
 </ul>
 </td>
-<td class="jockey"><p class="age">牝2/鹿</p>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牝2/鹿</p>
 <p class="weight">
 52.0<span>kg</span>
 </p>
@@ -3130,6 +3092,62 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 </td>
 <td class="past p3"></td><td class="past p4"></td></tr>
+<tr>
+<td class="waku"><img src="/JRADB/img/waku/8.png" alt="枠8桃" /></td>
+<td class="num">18</td>
+<td class="horse">
+<div class="name_line">
+<div class="name"><span class="horse_icon"><img src="/JRADB/img/kigo/maru-gai.png" alt="マルガイ"></span><a href="/JRADB/accessU.html?CNAME=pw01dud002024108388/11">ピニドローマ</a></div></div>
+<div class="result_line">
+<div class="cell result">(0.0.0.1)</div><div class="cell win" title="1,200,000円">120万円</div></div><p class="owner">グリーンフィールズ(株)</p><p class="breeder">Jay Goodwin & Rick Smith</p><p class="trainer"><a href="#" onclick="return doAction('/JRADB/accessC.html', 'pw05cmk001038/12');">手塚 貴久</a><span class="division">(美浦)</span></p>
+<ul class="family_line">
+<li class="sire"><span>父：</span>Pinehurst</li>
+<li class="mare"><span>母：</span>Batalha<span class="bloodmare">(母の父：Smart Strike)</span></li>
+</ul>
+</td>
+<td class="jockey"><p class="cloth"><img src="data:image/png;base64,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" alt="勝負服の画像" /></p><p class="age">牝2/鹿</p>
+<p class="weight">
+55.0<span>kg</span>
+</p>
+<p class="jockey"><a href="#" onclick="return doAction('/JRADB/accessK.html', 'pw04kmk005339/DD');">C.ルメール</a></p>
+</td><td class="past p1" data-place="" data-same-race="">
+<div class="date_line">
+<div class="date">2026年11月7日</div>
+<div class="rc">東京</div>
+</div>
+<div class="race_line">
+<div class="name"><a href="/JRADB/accessS.html?CNAME=pw01sde1005202605010620261107/07">新馬</a></div>
+<div class="r_class"></div>
+</div>
+<div class="place_line">
+<div class="place">4<span>着</span></div>
+<div class="num"><span class="max">16<span>頭</span></span><span class="gate">8<span>番</span></span><span class="pop">2<span>番人気</span></span></div>
+</div>
+<div class="info_line1">
+<div class="jockey">C.ルメール</div>
+<div class="weight">55.0<span>kg</span></div>
+</div>
+<div class="info_line2">
+<div class="line">
+<div class="col left"><span class="dist">1300ダ</span></div>
+<div class="col right"><p class="time">1:19.2</p></div>
+</div>
+<div class="line">
+<div class="col left"><span class="condition">稍重</span></div>
+<div class="col center">
+</div>
+<div class="col right"><p class="h_weight">454<span>kg</span></p></div>
+</div>
+</div>
+<div class="info_line3">
+<div class="line">
+<div class="corner_list"><ul><li title="3コーナー通過順位">6</li><li title="4コーナー通過順位">6</li></ul></div>
+<div class="f3">3F 36.8</div>
+</div>
+<p class="fin">サトノヘラクレス<span class="time">(1.6)</span></p>
+</div>
+</td>
+<td class="past p2"></td><td class="past p3"></td><td class="past p4"></td></tr>
 </tbody>
 </table>
 </div>
